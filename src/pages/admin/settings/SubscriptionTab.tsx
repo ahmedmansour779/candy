@@ -1,9 +1,8 @@
-import React from "react";
-import SettingHeader from "../../../components/SettingHeader";
-import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { Button, Flex, Form, Input, Select, Switch } from "antd";
+import { Controller, useForm } from "react-hook-form";
+import * as yup from "yup";
+import SettingHeader from "../../../components/SettingHeader";
 import CheckBoxWrapper from "../../../components/UI/CheckBoxWrapper";
 import InputWrapper from "../../../components/UI/InputWrapper";
 import { PAYMENT_METHODS } from "../../../constants/paymentMethods";
@@ -13,6 +12,7 @@ interface Inputs {
   "billing->paypal->enable": boolean;
   paypal_client_id: string;
   paypal_secret: string;
+  paypal_gateway: string;
   paypal_webhook_id: string;
   paypal_test_mode: number;
   stripe_gateway: number;
@@ -45,8 +45,8 @@ const subscriptionSchema = yup.object({
 
 const SubscriptionTab = ({
   data,
-  onSave,
-  isLoading,
+  // onSave,
+  // isLoading,
 }: {
   data: SubscriptionSettings;
   onSave: (data: Inputs) => void;
@@ -100,7 +100,7 @@ const SubscriptionTab = ({
                 desc="Enable PayPal payment gateway integration."
               >
                 <Switch
-                  checked={field.value === 1}
+                  checked={field.value == "1"}
                   onChange={(e) => field.onChange(e ? 1 : 0)}
                 />
               </CheckBoxWrapper>
