@@ -1,12 +1,12 @@
-import SettingHeader from "../../../components/SettingHeader";
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import { useQuery } from "@tanstack/react-query";
+import { Button, Flex, Form, Select } from "antd";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
-import { Button, Flex, Form, Select } from "antd";
-import InputWrapper from "../../../components/UI/InputWrapper";
-import { useQuery } from "@tanstack/react-query";
 import countriesApi from "../../../api/countriesApi";
-import { useEffect } from "react";
+import SettingHeader from "../../../components/SettingHeader";
+import InputWrapper from "../../../components/UI/InputWrapper";
 
 interface Inputs {
   language: number;
@@ -29,7 +29,7 @@ const LocationsAndLanguageTab = () => {
   });
 
   const country = watch("country");
-  const t = watch("timezone");
+  // const t = watch("timezone");
 
   const countries = useQuery({
     queryKey: ["countries"],

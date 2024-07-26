@@ -1,4 +1,5 @@
 import axiosInstance from "..";
+import { User } from "../../types/backend";
 
 function getAllUsers(params?: Record<string, number | string>) {
   return axiosInstance.get<null, { data: User[] }>(`/handleUsers`, { params });

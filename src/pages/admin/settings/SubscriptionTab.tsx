@@ -6,6 +6,7 @@ import SettingHeader from "../../../components/SettingHeader";
 import CheckBoxWrapper from "../../../components/UI/CheckBoxWrapper";
 import InputWrapper from "../../../components/UI/InputWrapper";
 import { PAYMENT_METHODS } from "../../../constants/paymentMethods";
+import { SubscriptionSettings } from "../../../types/backend";
 
 interface Inputs {
   enable_subscription: number;

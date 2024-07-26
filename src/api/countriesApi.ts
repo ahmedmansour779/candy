@@ -1,4 +1,5 @@
 import axios from "axios";
+import { country } from "../types/backend";
 
 function getCountries() {
   return axios.get<null, { data: country[] }>(

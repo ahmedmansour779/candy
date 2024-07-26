@@ -1,12 +1,11 @@
-import React from "react";
-import SettingHeader from "../../../components/SettingHeader";
-import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { Button, Flex, Form, Radio, Select, Space, Switch } from "antd";
+import { Controller, useForm } from "react-hook-form";
+import * as yup from "yup";
+import SettingHeader from "../../../components/SettingHeader";
+import CheckBoxWrapper from "../../../components/UI/CheckBoxWrapper";
 import InputWrapper from "../../../components/UI/InputWrapper";
 import RadioWrapper from "../../../components/UI/RadioWrapper";
-import CheckBoxWrapper from "../../../components/UI/CheckBoxWrapper";
 interface Inputs {
   default_timezone: number;
   default_language: number;

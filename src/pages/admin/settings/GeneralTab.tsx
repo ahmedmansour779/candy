@@ -1,10 +1,10 @@
-import React from "react";
-import SettingHeader from "../../../components/SettingHeader";
-import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { Button, Flex, Form, Input, Select } from "antd";
+import { Controller, useForm } from "react-hook-form";
+import * as yup from "yup";
+import SettingHeader from "../../../components/SettingHeader";
 import InputWrapper from "../../../components/UI/InputWrapper";
+import { GeneralSettings } from "../../../types/backend";
 interface Inputs {
   app_url: string;
   "homepage->type": string;

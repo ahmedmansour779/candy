@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import PageHeading from "../../../components/PageHeading";
 import { Button, Table, TableColumnsType, Typography } from "antd";
+import { useState } from "react";
+import PageHeading from "../../../components/PageHeading";
 const { Text } = Typography;
 
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
 import plansApi from "../../../api/admin/plansApi";
 import DeleteModal from "../../../components/modals/DeleteModal";
 import useDisclosure from "../../../hooks/useDisclosure";
+import { Plan } from "../../../types/backend";
 
 const SubscriptionsPlansPage = () => {
   return (

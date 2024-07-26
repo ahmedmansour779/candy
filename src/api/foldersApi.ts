@@ -1,3 +1,4 @@
+import { Folders } from "../types/backend";
 import axiosInstance from "./index";
 function getFolders() {
   return axiosInstance.get<null, { folders: Folders[] }>("users/1/folders", {

@@ -1,3 +1,4 @@
+import { WorkSpace } from "../types/backend";
 import axiosInstance from "./index";
 
 function getWorkspaces() {

@@ -1,28 +1,28 @@
-import React, {
-  useEffect,
-  //  useState
-} from "react";
-import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { useMutation } from "@tanstack/react-query";
 import {
   Button,
-  Input,
-  Form,
-  Select,
-  Switch,
   // Collapse,
   // Typography,
   Flex,
+  Form,
+  Input,
+  Select,
+  Switch,
 } from "antd";
-import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
-import PageHeading from "../PageHeading";
-import InputWrapper from "../UI/InputWrapper";
 import TextArea from "antd/es/input/TextArea";
-import CheckBoxWrapper from "../UI/CheckBoxWrapper";
-import { useMutation } from "@tanstack/react-query";
-import plansApi from "../../api/admin/plansApi";
+import {
+  useEffect,
+} from "react";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import plansApi from "../../api/admin/plansApi";
+import { AddPlan, Plan } from "../../types/backend";
+import PageHeading from "../PageHeading";
+import CheckBoxWrapper from "../UI/CheckBoxWrapper";
+import InputWrapper from "../UI/InputWrapper";
 
 const { Option } = Select;
 // const { Text } = Typography;
@@ -88,8 +88,8 @@ const SubsciptionsPlanForm = ({ target }: { target?: Plan }) => {
     ),
     defaultValues: target
       ? {
-          ...target,
-        }
+        ...target,
+      }
       : {},
   });
 

@@ -69,7 +69,7 @@ interface Role extends Base {
   guests: boolean;
   type: string;
   internal?: number;
-  description: string | null;
+  description?: string | undefined;
 }
 
 interface AddRole extends Base {
@@ -236,7 +236,7 @@ interface DriveSettings {
   "share->suggest_emails": boolean;
 }
 
-interface SubscriptionSettings {
+export interface SubscriptionSettings {
   "billing->enable": boolean;
   "billing->paypal->enable": boolean;
   "billing->paypal_test_mode": boolean;

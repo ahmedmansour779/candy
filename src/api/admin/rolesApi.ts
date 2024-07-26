@@ -1,3 +1,4 @@
+import { AddRole, Role } from "../../types/backend";
 import axiosInstance from "../index";
 
 function getAllRoles(params?: Record<string, number>) {

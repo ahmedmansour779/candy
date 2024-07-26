@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import SearchBar from "../cards/SearchBar";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   Button,
   Divider,
@@ -10,19 +9,21 @@ import {
   Typography,
   theme,
 } from "antd";
-import useDisclosure from "../../hooks/useDisclosure";
-import CreateWorkspaceModal from "../modals/CreateWorkspaceModal";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
 import workspaceApi from "../../api/workspaceApi";
 import WorkspaceActive from "../../assets/icons/WorkspaceActive.svg";
+import useDisclosure from "../../hooks/useDisclosure";
+import SearchBar from "../cards/SearchBar";
+import CreateWorkspaceModal from "../modals/CreateWorkspaceModal";
 
 import Cookies from "js-cookie";
 import { Cell, Label, Pie, PieChart, ResponsiveContainer } from "recharts";
 
-import imagesIcon from "../../assets/icons/images-icon.svg";
-import playIcon from "../../assets/icons/play-icon.svg";
 import docsIcon from "../../assets/icons/docs-icon.svg";
 import downloadsIcon from "../../assets/icons/downloads-icon.svg";
+import imagesIcon from "../../assets/icons/images-icon.svg";
+import playIcon from "../../assets/icons/play-icon.svg";
+import { WorkSpace } from "../../types/backend";
 import DeleteModal from "../modals/DeleteModal";
 
 const { useToken } = theme;

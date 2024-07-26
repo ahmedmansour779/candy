@@ -1,3 +1,4 @@
+import { AddPlan, Subscription } from "../../types/backend";
 import axiosInstance from "../index";
 
 function getAllSubscriptions(params?: Record<string, number>) {

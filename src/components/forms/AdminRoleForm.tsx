@@ -1,18 +1,19 @@
-import React, {
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import { useMutation } from "@tanstack/react-query";
+import { Flex, Form, Input, Select, Switch } from "antd";
+import TextArea from "antd/es/input/TextArea";
+import {
   forwardRef,
-  useImperativeHandle,
   useCallback,
   useEffect,
+  useImperativeHandle,
 } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
-import { Flex, Form, Input, Select, Switch } from "antd";
-import InputWrapper from "../UI/InputWrapper";
-import CheckBoxWrapper from "../UI/CheckBoxWrapper";
-import TextArea from "antd/es/input/TextArea";
-import { useMutation } from "@tanstack/react-query";
 import rolesApi from "../../api/admin/rolesApi";
+import { AddRole, Role } from "../../types/backend";
+import CheckBoxWrapper from "../UI/CheckBoxWrapper";
+import InputWrapper from "../UI/InputWrapper";
 
 interface Inputs {
   name: string;
@@ -50,17 +51,16 @@ const AdminRoleForm = forwardRef<ChildComponentHandle, Props>(
           isGuest: yup.number().label("Required"),
         })
       ),
-      //@ts-expect-error: IJob error
       defaultValues: target
         ? {
-            ...target,
-            default: target.default ? 1 : 0,
-            guests: target.guests ? 1 : 0,
-          }
+          ...target,
+          default: target.default ? 1 : 0,
+          guests: target.guests ? 1 : 0,
+        }
         : {
-            default: 0,
-            guests: 0,
-          },
+          default: 0,
+          guests: 0,
+        },
     });
 
     const childFunction = useCallback(() => {

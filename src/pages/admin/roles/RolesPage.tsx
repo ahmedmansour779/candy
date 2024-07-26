@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import PageHeading from "../../../components/PageHeading";
 import { Button, Select, Table, TableColumnsType, Typography } from "antd";
+import { useState } from "react";
+import PageHeading from "../../../components/PageHeading";
 const { Text } = Typography;
 
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
-import useDisclosure from "../../../hooks/useDisclosure";
-import DeleteModal from "../../../components/modals/DeleteModal";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
 import rolesApi from "../../../api/admin/rolesApi";
+import DeleteModal from "../../../components/modals/DeleteModal";
+import useDisclosure from "../../../hooks/useDisclosure";
+import { Role } from "../../../types/backend";
 
 const RolesPage = () => {
   return (

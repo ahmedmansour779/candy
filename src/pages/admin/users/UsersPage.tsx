@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-import PageHeading from "../../../components/PageHeading";
 import {
   Button,
   DatePicker,
@@ -14,9 +12,10 @@ import {
   Tag,
   Typography,
 } from "antd";
+import { useState } from "react";
+import PageHeading from "../../../components/PageHeading";
 const { Text } = Typography;
 
-import FilterIcon from "../../../assets/icons/FilterIcon";
 import {
   CheckOutlined,
   CloseOutlined,
@@ -26,16 +25,18 @@ import {
   SearchOutlined,
   UserDeleteOutlined,
 } from "@ant-design/icons";
-import CustomPagination from "../../../components/shared/CustomPagination";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import DeleteModal from "../../../components/modals/DeleteModal";
-import useDisclosure from "../../../hooks/useDisclosure";
-import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import usersApi from "../../../api/admin/usersApi";
 import TextArea from "antd/es/input/TextArea";
+import { Controller, useForm } from "react-hook-form";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import * as yup from "yup";
+import usersApi from "../../../api/admin/usersApi";
+import FilterIcon from "../../../assets/icons/FilterIcon";
+import DeleteModal from "../../../components/modals/DeleteModal";
+import CustomPagination from "../../../components/shared/CustomPagination";
+import useDisclosure from "../../../hooks/useDisclosure";
+import { User } from "../../../types/backend";
 
 const UsersPage = () => {
   const [userEmail, setUserEmail] = useState<string | null>(null);

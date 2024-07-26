@@ -1,9 +1,10 @@
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Flex, Form, Input, Modal, Typography } from "antd";
-import workspaceApi from "../../api/workspaceApi";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import workspaceApi from "../../api/workspaceApi";
+import { WorkSpace } from "../../types/backend";
 
 interface Inputs {
   name: string;
@@ -31,8 +32,8 @@ const CreateWorkspaceModal = ({
     ),
     defaultValues: target
       ? {
-          name: target.name,
-        }
+        name: target.name,
+      }
       : {},
   });
   const queryClient = useQueryClient();

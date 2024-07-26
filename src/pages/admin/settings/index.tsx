@@ -1,17 +1,17 @@
-import React from "react";
-import { Input, Tabs } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import PageHeading from "../../../components/PageHeading";
-import GeneralTab from "./GeneralTab";
-import DriveTab from "./DriveTab";
-import SubscriptionTab from "./SubscriptionTab";
-import LocalizationTab from "./LocalizationTab";
-import AnalyticsTab from "./AnalyticsTab";
-import { useSearchParams } from "react-router-dom";
-import AuthenticationTab from "./AuthenticationTab";
-import OutgoingEmailTab from "./OutgoingEmailTab";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { Input, Tabs } from "antd";
+import { useSearchParams } from "react-router-dom";
 import settingApi from "../../../api/admin/settingApi";
+import PageHeading from "../../../components/PageHeading";
+import { ISettingKey, SubscriptionSettings } from "../../../types/backend";
+import AnalyticsTab from "./AnalyticsTab";
+import AuthenticationTab from "./AuthenticationTab";
+import DriveTab from "./DriveTab";
+import GeneralTab from "./GeneralTab";
+import LocalizationTab from "./LocalizationTab";
+import OutgoingEmailTab from "./OutgoingEmailTab";
+import SubscriptionTab from "./SubscriptionTab";
 
 enum EnumTab {
   general = 1,
@@ -83,7 +83,7 @@ const Index = () => {
               label: "Subscription",
               children: (
                 <SubscriptionTab
-                  data={SettingData.data?.Subscriptions}
+                  data={SettingData.data.Subscriptions as unknown as SubscriptionSettings}
                   onSave={updateMutation.mutate}
                   isLoading={updateMutation.isLoading}
                 />
@@ -94,9 +94,9 @@ const Index = () => {
               label: "Localization",
               children: (
                 <LocalizationTab
-                  data={SettingData.data?.Localization}
-                  onSave={updateMutation.mutate}
-                  isLoading={updateMutation.isLoading}
+                // data={SettingData.data?.Localization}
+                // onSave={updateMutation.mutate}
+                // isLoading={updateMutation.isLoading}
                 />
               ),
             },
@@ -105,9 +105,9 @@ const Index = () => {
               label: "Analytics",
               children: (
                 <AnalyticsTab
-                  data={SettingData.data?.analytics}
-                  onSave={updateMutation.mutate}
-                  isLoading={updateMutation.isLoading}
+                // data={SettingData.data?.analytics}
+                // onSave={updateMutation.mutate}
+                // isLoading={updateMutation.isLoading}
                 />
               ),
             },
@@ -116,9 +116,9 @@ const Index = () => {
               label: "Authentication",
               children: (
                 <AuthenticationTab
-                  data={SettingData.data?.Authentication}
-                  onSave={updateMutation.mutate}
-                  isLoading={updateMutation.isLoading}
+                // data={SettingData.data?.Authentication}
+                // onSave={updateMutation.mutate}
+                // isLoading={updateMutation.isLoading}
                 />
               ),
             },
@@ -127,9 +127,9 @@ const Index = () => {
               label: "Outgoing email",
               children: (
                 <OutgoingEmailTab
-                  data={SettingData.data?.Outgoing_email_settings}
-                  onSave={updateMutation.mutate}
-                  isLoading={updateMutation.isLoading}
+                // data={SettingData.data?.Outgoing_email_settings}
+                // onSave={updateMutation.mutate}
+                // isLoading={updateMutation.isLoading}
                 />
               ),
             },

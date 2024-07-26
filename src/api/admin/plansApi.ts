@@ -1,3 +1,4 @@
+import { AddPlan, Plan } from "../../types/backend";
 import axiosInstance from "../index";
 
 function getAllplans(params?: Record<string, number>) {

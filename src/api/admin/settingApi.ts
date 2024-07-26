@@ -1,3 +1,4 @@
+import { ISettingKey, Setting } from "../../types/backend";
 import axiosInstance from "../index";
 function getAllSettings() {
   return axiosInstance.get<null, Setting>(`/allsettings`);

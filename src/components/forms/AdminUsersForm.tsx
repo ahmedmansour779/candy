@@ -1,28 +1,29 @@
-import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
+import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import { useMutation } from "@tanstack/react-query";
 import {
   Avatar,
   Button,
   Flex,
   Form,
+  Image,
   Input,
   Select,
   Spin,
+  Switch,
   Upload,
   UploadProps,
-  Image,
-  Switch,
 } from "antd";
-import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
 import { UploadFile } from "antd/lib/upload/interface";
-import InputWrapper from "../UI/InputWrapper";
-import CheckBoxWrapper from "../UI/CheckBoxWrapper";
-import PageHeading from "../PageHeading";
-import { useMutation } from "@tanstack/react-query";
-import usersApi from "../../api/admin/usersApi";
+import React, { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import usersApi from "../../api/admin/usersApi";
+import { User } from "../../types/backend";
+import PageHeading from "../PageHeading";
+import CheckBoxWrapper from "../UI/CheckBoxWrapper";
+import InputWrapper from "../UI/InputWrapper";
 
 const { Option } = Select;
 
