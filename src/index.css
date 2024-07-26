@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* @import "~antd/dist/antd.css"; */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-family: 'Poppins', sans-serif;
+
+html {
+  scroll-behavior: smooth;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+.flex-center {
+  @apply flex items-center justify-center;
+}
+.card {
+  @apply bg-white transition-all shadow-sm hover:shadow-md  rounded-2xl  cursor-pointer leading-none;
+}
+.card-pricing {
+  @apply bg-white transition-all shadow-sm hover:shadow-md  rounded-2xl  cursor-pointer leading-none;
+}
+
+.workspace_menu .ant-dropdown-menu {
+  @apply flex flex-col gap-4;
+}
+
+.workspace_menu .ant-dropdown-menu .ant-dropdown-menu-item {
+  @apply !p-0;
+}
+
+.home_table .ant-table-content table {
+  @apply max-md:w-full max-md:max-w-[1000px];
+}
+.pricing-segment .ant-segmented-item {
+  @apply !rounded-2xl flex-1 justify-center;
+}
+.pricing-segment .ant-segmented-item .ant-segmented-item-label {
+  @apply text-[14px];
+}
+
+.partener-anim {
+  animation: partenerAnim 10s linear infinite;
+}
+
+@keyframes partenerAnim {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

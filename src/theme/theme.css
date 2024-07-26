@@ -1,0 +1,37 @@
+/* segmented */
+.ant-segmented-item {
+  @apply flex items-center;
+}
+
+/* pagination */
+.ant-pagination-prev {
+  @apply !mr-auto;
+}
+
+.ant-pagination-next {
+  @apply !ml-auto;
+}
+
+/* tabs */
+
+.ant-tabs-tab {
+  @apply !bg-transparent z-10 !px-3 !py-4 !m-0;
+}
+
+.ant-tabs-ink-bar {
+  @apply !h-full rounded-md;
+}
+
+/* radio */
+.ant-radio-wrapper {
+  @apply items-center text-[#222E57];
+}
+
+/* select   */
+.ant-select-selection-item {
+  @apply !h-9 !rounded-[10px] !p-2 items-center gap-1 flex;
+}
+
+.ant-layout-sider-zero-width-trigger {
+  @apply !bg-[#0154a0];
+}
