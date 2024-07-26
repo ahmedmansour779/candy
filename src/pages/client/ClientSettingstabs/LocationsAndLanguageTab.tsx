@@ -58,7 +58,7 @@ const LocationsAndLanguageTab = () => {
 
   useEffect(() => {
     setValue("timezone", null);
-  }, [country]);
+  }, [country, setValue]);
 
   return (
     <div>
