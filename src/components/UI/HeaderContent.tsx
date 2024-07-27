@@ -11,8 +11,8 @@ function HeaderContent({
   const properItems: { link: string; icon: JSX.Element }[] =
     location.pathname.includes("admin") ? adminItems : clientItems;
   return (
-    <div className="py-4 flex justify-center sm:flex-col sm:justify-between items-center gap-[30px] h-full overflow-y-scroll">
-      <div className="flex sm:flex-col gap-[30px]  items-center">
+    <div className="py-4 flex flex-col justify-between items-center gap-[30px] h-full overflow-y-scroll">
+      <div className="flex flex-col gap-[30px]  items-center">
         {properItems.map(({ link, icon }, index) => (
           <Link to={link} key={index}>
             <IconItem

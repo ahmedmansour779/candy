@@ -15,10 +15,8 @@ import WorkspaceActive from "../../assets/icons/WorkspaceActive.svg";
 import useDisclosure from "../../hooks/useDisclosure";
 import SearchBar from "../cards/SearchBar";
 import CreateWorkspaceModal from "../modals/CreateWorkspaceModal";
-
 import Cookies from "js-cookie";
 import { Cell, Label, Pie, PieChart, ResponsiveContainer } from "recharts";
-
 import docsIcon from "../../assets/icons/docs-icon.svg";
 import downloadsIcon from "../../assets/icons/downloads-icon.svg";
 import imagesIcon from "../../assets/icons/images-icon.svg";
@@ -26,6 +24,7 @@ import playIcon from "../../assets/icons/play-icon.svg";
 import { BellIcon, DataIcon } from "../../icons/icons";
 import { WorkSpace } from "../../types/backend";
 import DeleteModal from "../modals/DeleteModal";
+import AddMemberModal from "../modals/AddMember";
 
 const { useToken } = theme;
 const data = [
@@ -49,6 +48,7 @@ function HomeHead() {
   const { open, onOpen, onClose } = useDisclosure();
   const storageClosure = useDisclosure();
   const deleteModal = useDisclosure();
+  const addMemberModal = useDisclosure(); // Add state for AddMemberModal
   const [target, setTarget] = useState<WorkSpace | undefined>(undefined);
 
   const contentStyle: React.CSSProperties = {
@@ -139,11 +139,19 @@ function HomeHead() {
                           deleteModal.onOpen();
                         },
                       },
+                      {
+                        label: "Add a member",
+                        key: "3",
+                        onClick: () => {
+                          setTarget(item);
+                          addMemberModal.onOpen(); // Open AddMemberModal
+                        },
+                      },
                     ],
                     onClick: (key) => key,
                   }}
                   destroyPopupOnHide={false}
-                  trigger={["hover"]}
+                  trigger={["click"]}
                 >
                   <Button
                     icon
@@ -205,6 +213,11 @@ function HomeHead() {
       setWorkspaceItems(workspaceItemsMapping);
     }
   }, [workspaces.data]);
+
+  const handleAddMember = (values: { name: string; email: string }) => {
+    console.log("Adding member", values);
+    // Your API call to add member goes here
+  };
 
   return (
     <div className="leading-none mb-8 flex items-center w-full justify-between gap-2 lg:gap-8 ">
@@ -344,6 +357,14 @@ function HomeHead() {
             onClose={deleteModal.onClose}
             handleOk={deleteMutation.mutate}
             deleteIsLoading={deleteMutation.isLoading}
+          />
+        }
+        {
+          <AddMemberModal
+            open={addMemberModal.open}
+            onClose={addMemberModal.onClose}
+            handleOk={handleAddMember}
+            addIsLoading={false} // Adjust this based on your API call status
           />
         }
       </div>
