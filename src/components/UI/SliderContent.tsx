@@ -22,6 +22,9 @@ import SidebarFolders from "./SidebarFolders";
 import BottomMenuCurve from "../../assets/images/bottom-side.png";
 import TopMenuCurve from "../../assets/images/top-side.png";
 import { TrashIcon } from "../../icons/icons";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { setCatchFile } from "../../store/slices/GlobalSlice";
 
 interface FileWithNewProperty extends File {
   newProperty: string;
@@ -30,9 +33,14 @@ interface FileWithNewProperty extends File {
 export default function SliderContent() {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch: AppDispatch = useDispatch()
   const isAdminLink = location.pathname.includes("admin");
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    console.log("acceptedFiles", acceptedFiles);
+    // console.log("acceptedFiles", acceptedFiles);
+
+    //this part is for testing (progressbar on upload a file)
+
+    dispatch(setCatchFile(acceptedFiles));
 
     // Mutate the uploaded file here
     const modifiedFiles: FileWithNewProperty[] = acceptedFiles.map((file) => {
