@@ -12,8 +12,21 @@ const ChatPageLayout = () => {
   const screen = useBreakpoint();
 
   return (
-    <Layout className="p-8 max-md:p-4 h-screen">
-      <Flex gap={24} className="h-full">
+    <Layout
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginLeft:"80pxp",
+        width:"100%"
+      }}
+      className="p-8 max-md:p-4 h-screen"
+    >
+      <Flex style={{
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center"
+      }} gap={24} className="h-full">
         <Chats></Chats>
         <main
           className={`flex-1 ${screen.xs && mobileStyles} ${
@@ -26,7 +39,12 @@ const ChatPageLayout = () => {
               align="center"
               className="h-full max-md:hidden"
             >
-              <Flex vertical gap={16} align="center">
+              <Flex
+                style={{ display: "none" }}
+                vertical
+                gap={16}
+                align="center"
+              >
                 <Text className="text-lg font-semibold text-[#222E57]">
                   Welcome
                 </Text>

@@ -77,10 +77,10 @@ export default function SliderContent() {
 
   return (
     <div className="px-6 flex flex-col h-full gap-9">
-      {/* <div className="demo-logo-vertical" /> */}
       <div className="cursor-pointer flex" onClick={() => navigate("/drive")}>
         <Image src={Logo} preview={false} width={130} />
       </div>
+
       <div className="flex items-center gap-4">
         <Image
           preview={false}
@@ -107,6 +107,7 @@ export default function SliderContent() {
       </Dropdown>
 
       <SidebarFolders />
+
       <div className="flex flex-col gap-6">
         <Button
           type="link"
@@ -120,7 +121,7 @@ export default function SliderContent() {
           className="p-0 flex items-center justify-start gap-2 text-sm font-medium text-[#888888]"
         >
           <ClockCircleFilled />
-          <Text>Recent</Text>
+          <Text> ent</Text>
         </Button>
         <Button
           type="link"
@@ -137,10 +138,12 @@ export default function SliderContent() {
           <Text>Trash</Text>
         </Button>
       </div>
-      <div className="absolute top-0 left-0 w-28 max-lg:hidden">
+
+      {/* These elements are now always visible */}
+      <div className="absolute top-0 left-0 w-28">
         <img src={TopMenuCurve}></img>
       </div>
-      <div className="absolute bottom-0 left-0 w-28 max-lg:hidden">
+      <div className="absolute bottom-0 left-0 w-28">
         <img src={BottomMenuCurve}></img>
       </div>
     </div>
@@ -159,7 +162,7 @@ const itemsmenu: MenuProps["items"] = [
 
 const TrashIcon = () => (
   <svg
-    width="12"
+    width="6"
     height="15"
     viewBox="0 0 12 15"
     fill="none"

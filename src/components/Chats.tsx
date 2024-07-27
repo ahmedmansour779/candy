@@ -11,7 +11,7 @@ const Chats = () => {
     <Flex
       vertical
       gap={24}
-      className="p-4 rounded-2xl bg-white h-full     max-w-[336px] min-w-[336px] max-lg:max-w-[280px] max-lg:min-w-[280px] max-sm:max-w-full max-sm:min-w-0 w-auto max-sm:w-full "
+      className="p-4 rounded-2xl bg-white h-full  max-w-[36px] min-w-[336px] max-lg:max-w-[280px] max-lg:min-w-[280px] max-sm:max-w-full max-sm:min-w-0 w-auto max-sm:w-full "
     >
       <Flex justify="space-between" align="center">
         <Text className="text-lg font-medium text-[#222E57]">Inbox</Text>
@@ -51,7 +51,7 @@ const ChatCard = ({ chatId }: { chatId: number }) => {
       <div className="relative  w-10 h-10">
         <Image
           preview={false}
-          src="https://i.pravatar.cc/200/?img=11"
+          src="https://avatars.githubusercontent.com/u/121273938?v=4"
           alt=""
           className="rounded-full"
         />
@@ -66,7 +66,7 @@ const ChatCard = ({ chatId }: { chatId: number }) => {
       <Flex vertical gap={6} flex={1}>
         <Flex justify="space-between" align="center">
           <Text className="text-sm font-medium text-[#0154A0]">
-            Jamie Spencer
+            Hamdy Mohamed
           </Text>
           <Text
             className={`text-[#888888] text-xs ${
@@ -82,7 +82,7 @@ const ChatCard = ({ chatId }: { chatId: number }) => {
           } `}
         >
           {truncate(
-            "Nulla aliquam ultricies dignis velit tellus. Nunc scelerisque..Nulla aliquam ultricies dignis velit tellus. Nunc scelerisque..",
+            "Hello world",
             { length: 60 }
           )}{" "}
         </Text>

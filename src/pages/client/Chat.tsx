@@ -36,7 +36,7 @@ const ChatHeader = () => {
         <div className="relative  w-10 h-10">
           <Image
             preview={false}
-            src={`https://i.pravatar.cc/40/?img=11`}
+            src={`https://i.pravatar.cc/200/?img=11`}
             alt=""
             className="rounded-full"
           />
@@ -47,7 +47,7 @@ const ChatHeader = () => {
           </div>
         </div>
         <Text className="text-lg font-medium text-[#222E57]">
-          Jamie Spencer
+          Hamdy Mohamed
         </Text>
       </Flex>
       <Flex gap={8}>
@@ -97,6 +97,8 @@ const ChatMessages = () => {
       vertical
       flex={1}
       gap={20}
+      style={{ maxHeight: "20rem", overflow: "scroll" }}
+      id="Flex-ChatSide"
       className=" overflow-y-scroll py-16 bg-[#f5f5f5] max-md:px-3"
       ref={(el) => el && el.scrollTo(0, el.scrollHeight)}
     >
@@ -161,6 +163,7 @@ const ChatMessageCard = ({ message }: { message: messageProps }) => {
   );
 };
 
+// Send Bar
 const ChatInput = () => {
   return (
     <Flex gap={16} className="h-20 max-md:px-4 py-4  bg-[#f5f5f5] ">
