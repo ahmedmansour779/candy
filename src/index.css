@@ -13,22 +13,27 @@ html {
   font-weight: 500;
   box-sizing: border-box;
 }
+
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   max-width: 1920px;
   margin: 0 auto;
 }
+
 .flex-center {
   @apply flex items-center justify-center;
 }
+
 .card {
-  @apply bg-white transition-all shadow-sm hover:shadow-md  rounded-2xl  cursor-pointer leading-none;
+  @apply bg-white transition-all shadow-sm hover:shadow-md rounded-2xl cursor-pointer leading-none;
 }
+
 .card-pricing {
-  @apply bg-white transition-all shadow-sm hover:shadow-md  rounded-2xl  cursor-pointer leading-none;
+  @apply bg-white transition-all shadow-sm hover:shadow-md rounded-2xl cursor-pointer leading-none;
 }
 
 .workspace_menu .ant-dropdown-menu {
@@ -42,9 +47,11 @@ body {
 .home_table .ant-table-content table {
   @apply max-md:w-full max-md:max-w-[1000px];
 }
+
 .pricing-segment .ant-segmented-item {
   @apply !rounded-2xl flex-1 justify-center;
 }
+
 .pricing-segment .ant-segmented-item .ant-segmented-item-label {
   @apply text-[14px];
 }
@@ -57,6 +64,7 @@ body {
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(0);
   }
@@ -65,5 +73,35 @@ body {
 @media (min-width: 768px) and (max-width: 1200px) {
   html {
     font-size: 13px;
+  }
+}
+
+/* scroll bar */
+
+
+* {
+  --sb-track-color: #232E33;
+  --sb-thumb-color: #0154a0;
+  --sb-size: 7px;
+}
+
+*::-webkit-scrollbar {
+  width: var(--sb-size)
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 7px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 7px;
+  border: 2px solid #232E33;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
   }
 }

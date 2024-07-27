@@ -3,6 +3,7 @@ import { Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
+// import "../../index.css";
 import HeaderContent from "../UI/HeaderContent";
 import SliderContent from "../UI/SliderContent";
 
