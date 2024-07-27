@@ -13,7 +13,7 @@ const Chats = () => {
       gap={24}
       className="p-4 rounded-2xl bg-white h-full  max-w-[36px] min-w-[336px] max-lg:max-w-[280px] max-lg:min-w-[280px] max-sm:max-w-full max-sm:min-w-0 w-auto max-sm:w-full "
     >
-      <Flex justify="space-between" align="center">
+      <Flex  justify="space-between" align="center">
         <Text className="text-lg font-medium text-[#222E57]">Inbox</Text>
         <Button
           icon={<PlusOutlined />}

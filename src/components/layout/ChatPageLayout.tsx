@@ -14,11 +14,14 @@ const ChatPageLayout = () => {
   return (
     <Layout
       style={{
+        width:"100%",
+        height:"100vh",
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        marginLeft:"80pxp",
-        width:"100%"
+        alignItems: "baseline",
+        overflow: "hidden",
+        flexDirection: "row",
+        alignContent: "space-around",
+        justifyContent: "flex-end",
       }}
       className="p-8 max-md:p-4 h-screen"
     >

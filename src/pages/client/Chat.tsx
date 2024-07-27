@@ -7,6 +7,7 @@ import { Button, Flex, Grid, Image, Input, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import AttachIcon from "../../assets/icons/AttachIcon";
 import SmileFace from "../../assets/icons/SmileFace";
+import { useEffect, useState } from "react";
 const { Text } = Typography;
 const { useBreakpoint } = Grid;
 
@@ -29,7 +30,7 @@ const ChatHeader = () => {
     <Flex
       justify="space-between"
       align="center"
-      className="h-[72px] p-4 bg-white rounded-2xl"
+      className="h-[72px] p-4 bg-white"
     >
       <Flex align="center" gap={8}>
         {xs && <LeftOutlined onClick={() => navigate("/chat")} />}
@@ -92,27 +93,37 @@ const messages: messageProps[] = [
 ];
 
 const ChatMessages = () => {
+  const [maxHeight, setMaxHeight] = useState("77vh");
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 325 && window.innerWidth <= 700) {
+        setMaxHeight("100vh");
+      } else {
+        setMaxHeight("77vh");
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Call once to set the initial value
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <Flex
       vertical
       flex={1}
       gap={20}
-      style={{ maxHeight: "20rem", overflow: "scroll" }}
-      id="Flex-ChatSide"
-      className=" overflow-y-scroll py-16 bg-[#f5f5f5] max-md:px-3"
+      style={{
+        maxHeight: maxHeight,
+        overflowY: "scroll",
+      }}
+      className="overflow-y-scroll py-16 bg-[#f5f5f5] max-md:px-3"
       ref={(el) => el && el.scrollTo(0, el.scrollHeight)}
     >
       {messages.map((message, index) => (
-        <ChatMessageCard key={index} message={message}></ChatMessageCard>
-      ))}
-      {messages.map((message, index) => (
-        <ChatMessageCard key={index} message={message}></ChatMessageCard>
-      ))}
-      {messages.map((message, index) => (
-        <ChatMessageCard key={index} message={message}></ChatMessageCard>
-      ))}
-      {messages.map((message, index) => (
-        <ChatMessageCard key={index} message={message}></ChatMessageCard>
+        <ChatMessageCard key={index} message={message} />
       ))}
     </Flex>
   );
