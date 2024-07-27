@@ -11,7 +11,7 @@ interface Items {
 
 const BriefInfo = ({ items }: Items) => {
   return (
-    <div className="grid grid-cols-4 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1 text-sm">
+    <div className="grid grid-cols-4 gap-4 max-md:grid-cols-2 max-sm:grid-cols-1 text-sm">
       {items.map((item: Item, index) => (
         <div
           key={index}
@@ -21,7 +21,7 @@ const BriefInfo = ({ items }: Items) => {
             <div className="h-[30px] bg-[#0154A01A] flex justify-center items-center rounded-lg w-[30%] p-2">
               <img src={item.icon} alt="icon"  className="w-[70%]" />
             </div>
-            <p className="h-fit self-end  flex justify-end bg-green-500  p-1 rounded-lg shadow">
+            <p className="h-fit self-end  flex justify-end bg-green-100 border border-green-300  p-1 rounded-lg shadow text-green-500">
               7.2%
             </p>
           </div>

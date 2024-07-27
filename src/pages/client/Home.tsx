@@ -14,6 +14,9 @@ import { BarChart, Bar, ResponsiveContainer, Rectangle, XAxis } from "recharts";
 
 import uploadIcon from "../../assets/icons/upload_icon.svg";
 import red from "../../assets/icons/download_icon.svg";
+import { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const { Text } = Typography;
 
@@ -28,6 +31,24 @@ const data = [
 ];
 
 export default function Home() {
+
+  // this part is only for simulate file uploading
+  const { catchFile } = useSelector((state: RootState) => state.GlobalReducer);
+
+  const [filesType, setFilesType] = useState<string[]>([]);
+  
+  useEffect(() => {
+    if (catchFile) {
+      const newFilesType = Array.from(catchFile).map((item: any) => item.type?.split("/")[0]);
+      setFilesType(newFilesType);
+    }
+  }, [catchFile]);
+  
+
+
+
+
+
   const fileEntries = useQuery({
     queryKey: ["file_entries"],
     queryFn: () => {
@@ -142,6 +163,7 @@ export default function Home() {
                 icon={item.icon}
                 text={item.text}
                 dataSize={12}
+                filesType={filesType}
               />
             ))}
           </div>
