@@ -133,7 +133,7 @@ export default function SliderContent() {
         </Button>
         <Button
           type="link"
-          className="p-0 flex items-center justify-start gap-2 text-sm font-medium text-[#888888]"
+          className="p-0 z-50 flex items-center justify-start gap-2 text-sm font-medium text-[#888888]"
         >
           <TrashIcon />
           <Text>Trash</Text>

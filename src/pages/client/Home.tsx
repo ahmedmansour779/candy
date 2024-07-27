@@ -135,7 +135,7 @@ export default function Home() {
             </div>
           </div>
           <SectionTitle title="File Success Upload" />
-          <div className="flex flex-col gap-4 mt-4">
+          <div className="flex flex-col pb-20 sm:pb-0 gap-4 mt-4">
             {Card1Icons.map((item, i) => (
               <CardUpload
                 key={i}

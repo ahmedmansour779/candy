@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Flex, Grid, Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
@@ -43,12 +44,12 @@ export default function LayoutPage() {
         {" "}
         <Flex className="fixed top-0 left-0 z-10">
           <Sider
-            style={headerStyle}
+            // style={headerStyle}
             breakpoint="lg"
             collapsedWidth="0"
-            className=" !bg-[#0154a0]  max-lg:!order-1 max-md:!fixed max-sm:right-0 z-10"
             reverseArrow={true}
-            width={84}
+            // width={84}
+            className=" !bg-[#0154a0]  max-lg:!order-1 !min-w-full h-16 bottom-0 sm:h-[100vh] sm:!min-w-[84px] sm:!max-w-[84px] max-md:!fixed max-sm:right-0 z-50"
             collapsed={xs && isNavCollapsed}
             onCollapse={(collapsed) => {
               setIsNavCollapsed(collapsed);
@@ -64,7 +65,7 @@ export default function LayoutPage() {
             collapsedWidth="0"
             width={235}
             collapsed={xs && isSliderCollapsed}
-            className="h-lvh py-12 font-sans max-md:!fixed max-sm:left-0 max-sm:h-screen z-10 relative"
+            className="h-lvh py-12 font-sans pb-20 sm:pb-12 max-md:!fixed max-sm:left-0 max-sm:h-screen z-10 relative"
             onCollapse={(collapsed) => {
               setIsSliderCollapsed(collapsed);
               setIsNavCollapsed(true);
