@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import SliderContent from "../UI/SliderContent";
 import { Flex, Grid, Layout } from "antd";
 import { Content } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import HeaderContent from "../UI/HeaderContent";
+import SliderContent from "../UI/SliderContent";
 
 const { useBreakpoint } = Grid;
 
@@ -36,9 +36,8 @@ export default function LayoutPage() {
     <Layout style={layoutStyle} className={`bg-secondary-500 font-sans `}>
       <Layout
         style={{ minHeight: "100vh" }}
-        className={`bg-[#FAFAFB] ms[${headerWidth}] ${
-          isSliderCollapsed ? "ps-[85px]" : "ps-[320px]"
-        } max-sm:ps-0 `}
+        className={`bg-[#FAFAFB] ms[${headerWidth}] ${isSliderCollapsed ? "ps-[85px]" : "ps-[320px]"
+          } max-sm:ps-0 `}
       >
         {" "}
         <Flex className="fixed top-0 left-0 z-10">
@@ -64,7 +63,7 @@ export default function LayoutPage() {
             collapsedWidth="0"
             width={235}
             collapsed={xs && isSliderCollapsed}
-            className="rounded-r-[40px] py-12 font-sans max-md:!fixed max-sm:left-0 max-sm:h-screen z-10 relative"
+            className="h-lvh py-12 font-sans max-md:!fixed max-sm:left-0 max-sm:h-screen z-10 relative"
             onCollapse={(collapsed) => {
               setIsSliderCollapsed(collapsed);
               setIsNavCollapsed(true);
