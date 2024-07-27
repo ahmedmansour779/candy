@@ -82,7 +82,7 @@ body {
 * {
   --sb-track-color: #232E33;
   --sb-thumb-color: #0154a0;
-  --sb-size: 7px;
+  --sb-size: 0px;
 }
 
 *::-webkit-scrollbar {
@@ -92,12 +92,16 @@ body {
 *::-webkit-scrollbar-track {
   background: var(--sb-track-color);
   border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
 }
 
 *::-webkit-scrollbar-thumb {
   background: var(--sb-thumb-color);
   border-radius: 7px;
-  border: 2px solid #232E33;
+  border: 0px solid #232E33;
 }
 
 @supports not selector(::-webkit-scrollbar) {
