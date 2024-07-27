@@ -10,13 +10,13 @@ const data = [
 
 const COLORS = ["#EC008C", "#0154A0"];
 
-const HomePieChart = () => {
+const PieChartComponent = () => {
   return (
-    <div className="bg-white  p-6 flex-1  max-w-[392px] max-md:max-w-full h-fit">
+    <div className="w-full h-full  max-w-[392px] max-md:max-w-full">
       <div className="flex justify-between max-md:flex-col gap-4">
         <Text className="font-semibold text-[14px]">Top Devices</Text>
       </div>
-      <div className="h-52 my-6">
+      <div className="h-[80%]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart width={400} height={400}>
             <Pie
@@ -71,7 +71,7 @@ const HomePieChart = () => {
   );
 };
 
-export default HomePieChart;
+export default PieChartComponent;
 
 function CustomLabel({
   viewBox,

@@ -85,9 +85,9 @@ const data = [
 ];
 
 const { Text } = Typography;
-const HomelineChart = () => {
+const LineChartComponent = () => { 
   return (
-    <div className="bg-white  p-6 flex-1">
+    <div className="w-full h-full">
       <div className="flex justify-between max-md:flex-col gap-4">
         <div className="flex flex-col gap-1">
           <Text className="font-semibold text-[14px]">Page View</Text>
@@ -155,4 +155,4 @@ const HomelineChart = () => {
   );
 };
 
-export default HomelineChart;
+export default LineChartComponent;

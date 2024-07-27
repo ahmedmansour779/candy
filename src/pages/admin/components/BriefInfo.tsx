@@ -1,5 +1,3 @@
-import { Tag, Typography } from "antd";
-import React from "react";
 
 interface Item {
   title: string;
@@ -10,30 +8,29 @@ interface Items {
   items: Item[];
 }
 
-const { Text } = Typography;
 
 const BriefInfo = ({ items }: Items) => {
   return (
-    <div className="grid grid-cols-4 max-lg:grid-cols-2 max-sm:grid-cols-1  gap-6 ">
+    <div className="grid grid-cols-4 gap-2 max-md:grid-cols-2 max-sm:grid-cols-1 text-sm">
       {items.map((item: Item, index) => (
         <div
           key={index}
-          className="p-5 flex justify-between bg-white rounded-lg"
+          className="shadow bg-white rounded-lg p-4 flex flex-col gap-y-2"
         >
-          <div className="flex gap-3 items-center">
-            <div className="w-14 h-14 bg-[#0154A01A] flex justify-center items-center rounded-lg">
-              <img src={item.icon} alt="" />
+          <div className="flex items-center justify-between">
+            <div className="h-[30px] bg-[#0154A01A] flex justify-center items-center rounded-lg w-[30%] p-2">
+              <img src={item.icon} alt="icon"  className="w-[70%]" />
             </div>
-            <div className="flex flex-col">
-              <Text className="text-[18px] font-medium leading-7">
-                {item.value}
-              </Text>
-              <Text className="text-[12px] font-medium">{item.title}</Text>
-            </div>
+            <p className="h-fit self-end  flex justify-end bg-green-500  p-1 rounded-lg shadow">
+              7.2%
+            </p>
           </div>
-          <Tag color="green" className="h-fit self-end">
-            7.2%
-          </Tag>
+          <div className="flex items-center justify-between">
+            <p className="text-[18px] font-medium leading-7">
+              {item.value}
+            </p>
+            <p className="text-[12px] font-medium">{item.title}</p>
+          </div>
         </div>
       ))}
     </div>

@@ -1,14 +1,15 @@
-import React from "react";
 import PageHeading from "../../components/PageHeading";
-import { Flex, Segmented, Select } from "antd";
+import { Segmented, Select } from "antd";
 import BriefInfo from "./components/BriefInfo";
-import HomelineChart from "./components/HomelineChart";
-import HomePieChart from "./components/HomePieChart";
 
 import fileIcon from "../../assets/icons/file_icon.svg";
 import folderIcon from "../../assets/icons/folder_icon.svg";
 import usersIcon from "../../assets/icons/users_icon.svg";
 import spaceIcon from "../../assets/icons/space_icon.svg";
+import HorizontalBarChartComponent from "../../components/admin/recharts/BarChart";
+import PieChartComponent from "../../components/admin/recharts/PieChart";
+import LineChartComponent from "../../components/admin/recharts/LineChart";
+import GeoChart from "../../components/admin/recharts/GeoChart";
 
 const BriefItems = [
   {
@@ -66,10 +67,21 @@ const index = () => {
         </div>
       </PageHeading>
       <BriefInfo items={BriefItems} />
-      <Flex gap={24} className="mt-6 max-md:flex-col">
-        <HomelineChart />
-        <HomePieChart />
-      </Flex>
+      <div className="grid grid-cols-2 gap-4 my-2 max-md:grid-cols-1">
+        <div className="h-full w-full p-4 rounded-lg shadow bg-white">
+          <LineChartComponent />
+        </div>
+        <div className="h-full w-full p-4 rounded-lg shadow bg-white">
+          <PieChartComponent />
+        </div>
+        <div className="h-full w-full p-4 rounded-lg shadow bg-white">
+          <HorizontalBarChartComponent />
+        </div>
+        <div className="h-full w-full p-4 rounded-lg shadow bg-white">
+          <GeoChart />
+        </div>
+      </div>
+
     </div>
   );
 };
