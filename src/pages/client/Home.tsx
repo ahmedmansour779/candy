@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Page from "../../components/shared/Page";
 import Card1 from "../../components/cards/Card1";
 import CardUpload from "../../components/cards/CardUpload";

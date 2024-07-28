@@ -12,6 +12,9 @@ import GeneralTab from "./GeneralTab";
 import LocalizationTab from "./LocalizationTab";
 import OutgoingEmailTab from "./OutgoingEmailTab";
 import SubscriptionTab from "./SubscriptionTab";
+import UploadingTab from "./UploadingTab";
+import Cache from "./Cache";
+import Logging from "./Logging";
 
 enum EnumTab {
   general = 1,
@@ -21,6 +24,9 @@ enum EnumTab {
   analytics,
   authentication,
   outgoing_email,
+  uploading,
+  cache,
+  logging,
 }
 type TabKey = keyof typeof EnumTab;
 
@@ -131,6 +137,28 @@ const Index = () => {
                 // onSave={updateMutation.mutate}
                 // isLoading={updateMutation.isLoading}
                 />
+              ),
+            },
+            {
+              key: "8",
+              label: "Uploading",
+              children: (
+                <UploadingTab
+                />
+              ),
+            },
+            {
+              key: "9",
+              label: "Cache",
+              children: (
+                <Cache/>
+              ),
+            },
+            {
+              key: "10",
+              label: "Logging",
+              children: (
+                <Logging/>
               ),
             },
           ]}

@@ -9,7 +9,7 @@ const CheckBoxWrapper = ({
   children,
 }: {
   title: string;
-  desc: string;
+  desc?: string;
   children?: React.ReactNode;
 }) => {
   return (
