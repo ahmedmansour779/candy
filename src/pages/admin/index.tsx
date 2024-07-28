@@ -67,7 +67,7 @@ const index = () => {
         </div>
       </PageHeading>
       <BriefInfo items={BriefItems} />
-      <div className="grid grid-cols-2 gap-4 my-2 max-md:grid-cols-1">
+      <div className="grid grid-cols-2 gap-4 my-4 max-md:grid-cols-1">
         <div className="h-full w-full p-4 rounded-lg shadow bg-white">
           <LineChartComponent />
         </div>
