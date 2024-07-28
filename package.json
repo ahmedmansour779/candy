@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.6",
+    "@fancyapps/ui": "^5.0.36",
     "@hookform/resolvers": "^2.9.11",
     "@tanstack/react-query": "^4.36.1",
     "@types/js-cookie": "^3.0.6",

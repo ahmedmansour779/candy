@@ -19,6 +19,8 @@ import ShareFileModal from "../modals/ShareFileModal";
 import { useState } from "react";
 import RenameFileModal from "../modals/RenameFileModal";
 import fileImage from "../../assets/images/Frame 427319331.png";
+import { Fancybox } from "@fancyapps/ui";
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
 export default function CardWithMenu({
   item,
 }: {
@@ -78,6 +80,17 @@ export default function CardWithMenu({
       icon: <DeleteOutlined />,
     },
   ];
+  Fancybox.bind('[data-fancybox="gallery"]', {
+    contentClick: "toggleCover",
+    Images: {
+      Panzoom: {
+        panMode: "mousemove",
+        mouseMoveFactor: 1.1,
+        mouseMoveFriction: 0.12,
+        
+      },
+    },
+  });
   return (
     <>
       <Dropdown
@@ -90,30 +103,33 @@ export default function CardWithMenu({
           minWidth: "auto",
         }}
       >
-        <div className="h-fit flex flex-col  overflow-hidden rounded-2xl">
-          <div className="h-[125px] w-full max-md:h-[200px]">
-            <img
-              className="w-full h-full object-cover "
-              alt="example"
-              src={fileImage}
-            />
-          </div>
-          <div
-            className={`flex items-center justify-between w-full p-4 duration-150 ${
-              isDropdownVisible ? "bg-[#0154A01A]" : "bg-white"
-            }`}
-          >
-            <div className="leading-none flex-center gap-2 ">
-              <PlayCircleFilled className="text-primary-600 text-2xl" />
-              <Text className="text-primary-500">
-                {truncate(item.name, { length: 20 })}
+        
+          <div className="h-fit cursor-pointer flex flex-col  overflow-hidden rounded-2xl">
+            <div className="h-[125px] w-full max-md:h-[200px]">
+            <a href={fileImage} data-fancybox="gallery">
+              <img
+                className="w-full h-full object-cover "
+                alt="example"
+                src={fileImage}
+              />
+            </a>
+            </div>
+            <div
+              className={`flex items-center justify-between w-full p-4 duration-150 ${
+                isDropdownVisible ? "bg-[#0154A01A]" : "bg-white"
+              }`}
+            >
+              <div className="leading-none flex-center gap-2 ">
+                <PlayCircleFilled className="text-primary-600 text-2xl" />
+                <Text className="text-primary-500">
+                  {truncate(item.name, { length: 20 })}
+                </Text>
+              </div>
+              <Text className="text-gray-600">
+                {convertBytes(item.file_size)}
               </Text>
             </div>
-            <Text className="text-gray-600">
-              {convertBytes(item.file_size)}
-            </Text>
           </div>
-        </div>
       </Dropdown>
       {shareModal.open && (
         <ShareFileModal
