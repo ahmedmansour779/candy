@@ -1,30 +1,60 @@
-import { PlusCircleOutlined } from "@ant-design/icons";
-import { Modal, Typography, Form, Input } from "antd";
-import React, { useState } from "react";
+import { PlusCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { Modal, Typography, Form, Input, Tag, Tooltip, Button } from "antd";
+import React, { useState, ChangeEvent } from "react";
 
 const { Text } = Typography;
 
-const AddMemberModal = ({
+interface AddMemberModalProps {
+  open: boolean;
+  onClose: () => void;
+  handleOk: (values: { emails: string[] }) => void;
+  addIsLoading: boolean;
+}
+
+const AddMemberModal: React.FC<AddMemberModalProps> = ({
   open,
   onClose,
   handleOk,
   addIsLoading,
-}: {
-  open: boolean;
-  onClose: () => void;
-  handleOk: (values: { name: string; email: string }) => void;
-  addIsLoading: boolean;
 }) => {
   const [form] = Form.useForm();
-  const [isFormValid, setIsFormValid] = useState(false);
+  const [emails, setEmails] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [inputError, setInputError] = useState<string>("");
 
-  const handleFormChange = async () => {
-    try {
-      await form.validateFields();
-      setIsFormValid(true);
-    } catch {
-      setIsFormValid(false);
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const validateEmail = (email: string): boolean => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
+  const handleInputConfirm = () => {
+    if (inputValue && validateEmail(inputValue)) {
+      if (!emails.includes(inputValue)) {
+        setEmails([...emails, inputValue]);
+        setInputValue("");
+        setInputError("");
+      } else {
+        setInputError("This email address has already been added.");
+      }
+    } else {
+      setInputError("Please enter a valid email address.");
     }
+  };
+
+  const handleClose = (removedEmail: string) => {
+    setEmails(emails.filter((email) => email !== removedEmail));
+  };
+
+  const handleFormSubmit = () => {
+    form.validateFields().then(() => {
+      handleOk({ emails });
+      form.resetFields();
+      setEmails([]);
+    });
   };
 
   return (
@@ -49,34 +79,63 @@ const AddMemberModal = ({
         </div>
       }
       open={open}
-      onOk={() => form.submit()}
       onCancel={onClose}
       confirmLoading={addIsLoading}
-      okText="Add"
-      closeIcon={null}
+      footer={[
+        <Button key="cancel" onClick={onClose}>
+          Cancel
+        </Button>,
+        <Button key="add-email" type="primary" onClick={handleInputConfirm}>
+          Add Email
+        </Button>,
+
+        <Button
+          key="invite"
+          type="primary"
+          loading={addIsLoading}
+          onClick={handleFormSubmit}
+        >
+          Invite
+        </Button>,
+      ]}
     >
-      <Form
-        form={form}
-        layout="vertical"
-        onValuesChange={handleFormChange}
-        onFinish={handleOk}
-      >
+      <Form form={form} layout="vertical">
         <Form.Item
-          name="name"
-          label="Name"
-          rules={[{ required: true, message: "Please input the name!" }]}
+          label="Invite"
+          validateStatus={inputError ? "error" : ""}
+          help={inputError}
         >
-          <Input />
+          <Input
+            value={inputValue}
+            onChange={handleInputChange}
+            onPressEnter={handleInputConfirm}
+            placeholder="Enter email addresses"
+            suffix={
+              inputError && (
+                <Tooltip title={inputError} color="red">
+                  <CloseCircleOutlined style={{ color: "red" }} />
+                </Tooltip>
+              )
+            }
+          />
         </Form.Item>
-        <Form.Item
-          name="email"
-          label="Email"
-          rules={[
-            { required: true, message: "Please input the email!" },
-            { type: "email", message: "Please enter a valid email!" },
-          ]}
-        >
-          <Input />
+        <Form.Item>
+          <div>
+            {emails.map((email) => (
+              <Tag
+                key={email}
+                closable
+                onClose={() => handleClose(email)}
+                style={{
+                  marginBottom: "8px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                }}
+              >
+                {email}
+              </Tag>
+            ))}
+          </div>
         </Form.Item>
       </Form>
     </Modal>
