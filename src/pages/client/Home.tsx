@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Page from "../../components/shared/Page";
 import Card1 from "../../components/cards/Card1";
 import CardUpload from "../../components/cards/CardUpload";
@@ -37,11 +38,6 @@ export default function Home() {
 
   return (
     <Page
-      style={{
-        scale: "0.9",
-        width: "104%",
-        height: "10vh",
-      }}
       className="p-4"
     >
       <HomeHead />

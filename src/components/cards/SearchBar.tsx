@@ -13,7 +13,7 @@ export default function SearchBar() {
       allowClear
       size="large"
       // onSearch={onSearch}
-      className="min-w-[300px] flex-1 rounded-[20px] p-4 border-none outline-none"
+      className="min-w-[100px] flex-1 rounded-[20px] p-4 border-none outline-none"
       prefix={
         <button onClick={() => "Custom action"}>
           <SearchOutlined

@@ -12,7 +12,7 @@ interface Props {
   text: string;
   icon: string | JSX.Element;
   dataSize: string | number;
-  filesType: string[];
+  filesType?: string[];
 }
 
 export default function CardUpload({ text, icon, dataSize, filesType }: Props) {
@@ -40,7 +40,7 @@ export default function CardUpload({ text, icon, dataSize, filesType }: Props) {
     }
   }, [catchFile, dispatch]);
 
-  const isFileTypeMatched = filesType.some((item) => text.toString().toLowerCase().includes(item));
+  const isFileTypeMatched = filesType?.some((item) => text.toString().toLowerCase().includes(item));
 
 
 
