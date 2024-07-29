@@ -4,6 +4,8 @@ function login(data: { email: string; password: string }) {
   return axiosInstance.post<null>("auth/login", {
     ...data,
     token_name: "iphone 12",
+  }).then((res)=>{
+    console.log(res);
   });
 }
 function register() {

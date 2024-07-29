@@ -56,10 +56,10 @@ const Login = () => {
   errors;
 
   function onSubmit(data: Inputs) {
+    login.mutate(data);
+    // console.log(data);
     navigate("/drive");
-    console.log(data);
 
-    // login.mutate(data);
   }
 
   return (

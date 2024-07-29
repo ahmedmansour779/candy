@@ -13,10 +13,8 @@ import {
   ShareAltOutlined,
   StarFilled,
 } from "@ant-design/icons";
-import { useMutation } from "@tanstack/react-query";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import filesApi from "../../api/filesApi";
 import SidebarFolders from "./SidebarFolders";
 
 import BottomMenuCurve from "../../assets/images/bottom-side.png";
@@ -25,41 +23,31 @@ import { TrashIcon } from "../../icons/icons";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { setCatchFile } from "../../store/slices/GlobalSlice";
+import { addFiles } from "../../api/amt/files/addFilesApi";
 
-interface FileWithNewProperty extends File {
-  newProperty: string;
-}
+
 
 export default function SliderContent() {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch: AppDispatch = useDispatch()
   const isAdminLink = location.pathname.includes("admin");
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    // console.log("acceptedFiles", acceptedFiles);
 
-    //this part is for testing (progressbar on upload a file)
+  const [data, setData] = useState<string | null>(null);
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    const formData = new FormData();
+    formData.append("workspaceId", "15");
+    formData.append("owner_id", "15");
+
+    // Object.entries(acceptedFiles).forEach((file: any) => {
+      formData.append("file", acceptedFiles[0]);
+    // })
 
     dispatch(setCatchFile(acceptedFiles));
-
-    // Mutate the uploaded file here
-    const modifiedFiles: FileWithNewProperty[] = acceptedFiles.map((file) => {
-      // Example mutation
-      const modifiedFile: FileWithNewProperty = {
-        ...file,
-        newProperty: "someValue",
-      };
-      return modifiedFile;
-    });
-
-    // Do something with the modified files
-    storeFile.mutate({ file: modifiedFiles[0] });
+    addFiles(setData,formData);
   }, []);
-  const storeFile = useMutation({
-    mutationFn: (data: { file: File }) => {
-      return filesApi.storeFileEntry(data);
-    },
-  });
+
 
   const { open } = useDropzone({
     onDrop,

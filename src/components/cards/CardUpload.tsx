@@ -59,21 +59,16 @@ export default function CardUpload({ text, icon, dataSize, filesType }: Props) {
           <Text className="text-gray-500 text-xs">{dataSize} MB</Text>
         </div>
       </div>
-      {loading && isFileTypeMatched ? (
-        <Progress percent={progress} status="active" style={{ width: 120 }} />
-      ) : (
-        <CheckCircleFilled className="text-xl text-[#27C72B]" />
-      )}
       {loading && isFileTypeMatched && text.toLowerCase() !== "documents" ? (
         <Progress percent={progress} status="active" style={{ width: 120 }} />
-      ) :
-        loading && text.toLowerCase() == "documents" ?
-          (
-            <Progress percent={progress} status="active" style={{ width: 120 }} />
-          ) :
-          (
-            <CheckCircleFilled className="text-xl text-[#27C72B]" />
-          )}
+      ) :(
+        loading && !isFileTypeMatched && text.toLowerCase() === "documents" 
+          
+      ) ? <Progress percent={progress} status="active" style={{ width: 120 }} />
+      :
+      (
+        <CheckCircleFilled className="text-xl text-[#27C72B]" />
+      )}
     </div>
   );
 }
