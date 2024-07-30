@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Page from "../../components/shared/Page";
 import Card1 from "../../components/cards/Card1";
@@ -15,6 +17,12 @@ import { BarChart, Bar, ResponsiveContainer, Rectangle, XAxis } from "recharts";
 
 import uploadIcon from "../../assets/icons/upload_icon.svg";
 import red from "../../assets/icons/download_icon.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { useEffect, useState } from "react";
+import { fetchDataRecentView } from "../../api/amt/workspace/recent";
+import Cookies from "js-cookie";
+import { addUser } from "../../store/slices/userSlice";
 
 const { Text } = Typography;
 
@@ -32,6 +40,7 @@ export default function Home() {
 
   // this part is only for simulate file uploading
   const { catchFile } = useSelector((state: RootState) => state.GlobalReducer);
+  const user = useSelector((state: RootState) => state.user);
 
   const [filesType, setFilesType] = useState<string[]>([]);
   
@@ -41,11 +50,6 @@ export default function Home() {
       setFilesType(newFilesType);
     }
   }, [catchFile]);
-  
-
-
-
-
 
   const fileEntries = useQuery({
     queryKey: ["file_entries"],
@@ -53,6 +57,16 @@ export default function Home() {
       return filesApi.getFileEntries();
     },
   });
+
+  const dispatch = useDispatch()
+  const [recent,setRecent] = useState<any[]>([])
+  useEffect(() => {
+    fetchDataRecentView(setRecent)
+    const user = Cookies.get("user")
+    // console.log(JSON.parse(user as string));
+    dispatch(addUser(JSON.parse(user as string)))
+  },[])
+  // console.log(user)
 
   return (
     <Page className="p-4">

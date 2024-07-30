@@ -32,6 +32,8 @@ import ChatPageLayout from "./components/layout/ChatPageLayout";
 import LayoutPage from "./components/shared/Layout";
 import SubsciptionsPlanAdd from "./pages/admin/plans/SubsciptionsPlanAdd";
 import SubsciptionsPlanEdit from "./pages/admin/plans/SubsciptionsPlanEdit";
+import ProtectRoute from "./pages/client/ProtectRoute";
+import Register from "./pages/client/Register";
 
 const router = createBrowserRouter([
   {
@@ -41,129 +43,139 @@ const router = createBrowserRouter([
 
     children: [
       {
-        index: true,
-        element: <LandingPage />,
-      },
-      {
-        element: <LayoutPage />,
-        children: [
+        element: <ProtectRoute/>,
+        children : [
           {
-            path: "/drive",
-            children: [
-              {
-                index: true,
-                element: <Home />,
-                errorElement: <Error />,
-              },
-              {
-                path: "pricing",
-                element: <Pricing />,
-                errorElement: <Error />,
-              },
-              {
-                path: "settings",
-                element: <ClientSettingsPage />,
-              },
-              {
-                path: "chat",
-                element: <ChatPageLayout />,
-                children: [
-                  { index: true, errorElement: <Error /> },
-                  { path: ":id", element: <Chat />, errorElement: <Error /> },
-                ],
-              },
-            ],
+            index: true,
+            element: <LandingPage />,
           },
           {
-            path: "admin",
+            element: <LayoutPage />,
             children: [
               {
-                index: true,
-                element: <Admin />,
-                errorElement: <Error />,
-              },
-              {
-                path: "users",
-                errorElement: <Error />,
+                path: "/drive",
                 children: [
                   {
                     index: true,
-                    errorElement: <Error />,
-                    element: <UsersPage />,
-                  },
-                  {
-                    path: "new",
-                    element: <UserAddPage />,
+                    element: <Home />,
                     errorElement: <Error />,
                   },
                   {
-                    path: ":id/edit",
-                    element: <UserEditPage />,
+                    path: "pricing",
+                    element: <Pricing />,
                     errorElement: <Error />,
+                  },
+                  {
+                    path: "settings",
+                    element: <ClientSettingsPage />,
+                  },
+                  {
+                    path: "chat",
+                    element: <ChatPageLayout />,
+                    children: [
+                      { index: true, errorElement: <Error /> },
+                      { path: ":id", element: <Chat />, errorElement: <Error /> },
+                    ],
                   },
                 ],
               },
               {
-                path: "roles",
-                errorElement: <Error />,
+                path: "admin",
                 children: [
                   {
                     index: true,
-                    errorElement: <Error />,
-                    element: <RolesPage />,
-                  },
-                  {
-                    path: "new",
-                    element: <RoleAddPage />,
+                    element: <Admin />,
                     errorElement: <Error />,
                   },
                   {
-                    path: ":id/edit",
-                    element: <RoleEditPage />,
+                    path: "users",
+                    errorElement: <Error />,
+                    children: [
+                      {
+                        index: true,
+                        errorElement: <Error />,
+                        element: <UsersPage />,
+                      },
+                      {
+                        path: "new",
+                        element: <UserAddPage />,
+                        errorElement: <Error />,
+                      },
+                      {
+                        path: ":id/edit",
+                        element: <UserEditPage />,
+                        errorElement: <Error />,
+                      },
+                    ],
+                  },
+                  {
+                    path: "roles",
+                    errorElement: <Error />,
+                    children: [
+                      {
+                        index: true,
+                        errorElement: <Error />,
+                        element: <RolesPage />,
+                      },
+                      {
+                        path: "new",
+                        element: <RoleAddPage />,
+                        errorElement: <Error />,
+                      },
+                      {
+                        path: ":id/edit",
+                        element: <RoleEditPage />,
+                        errorElement: <Error />,
+                      },
+                    ],
+                  },
+                  {
+                    path: "subscriptions",
+                    element: <SubscriptionsPage />,
+                    errorElement: <Error />,
+                  },
+                  {
+                    path: "subscriptions-plans",
+    
+                    errorElement: <Error />,
+                    children: [
+                      {
+                        index: true,
+                        errorElement: <Error />,
+                        element: <SubscriptionsPlansPage />,
+                      },
+                      {
+                        path: "new",
+                        element: <SubsciptionsPlanAdd />,
+                        errorElement: <Error />,
+                      },
+                      {
+                        path: ":id/edit",
+                        element: <SubsciptionsPlanEdit />,
+                        errorElement: <Error />,
+                      },
+                    ],
+                  },
+                  {
+                    path: "settings",
+                    element: <AdminSettingsPage />,
                     errorElement: <Error />,
                   },
                 ],
               },
-              {
-                path: "subscriptions",
-                element: <SubscriptionsPage />,
-                errorElement: <Error />,
-              },
-              {
-                path: "subscriptions-plans",
-
-                errorElement: <Error />,
-                children: [
-                  {
-                    index: true,
-                    errorElement: <Error />,
-                    element: <SubscriptionsPlansPage />,
-                  },
-                  {
-                    path: "new",
-                    element: <SubsciptionsPlanAdd />,
-                    errorElement: <Error />,
-                  },
-                  {
-                    path: ":id/edit",
-                    element: <SubsciptionsPlanEdit />,
-                    errorElement: <Error />,
-                  },
-                ],
-              },
-              {
-                path: "settings",
-                element: <AdminSettingsPage />,
-                errorElement: <Error />,
-              },
-            ],
-          },
+            ]
+          }
         ],
       },
 
       {
         path: "login",
         element: <Login />,
+        errorElement: <Error />,
+      },
+      {
+        path: "register",
+        element: <Register />,
         errorElement: <Error />,
       },
     ],

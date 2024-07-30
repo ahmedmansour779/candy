@@ -1,4 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { removeUser } from "../../store/slices/userSlice";
 
 // import { HomeIcon } from "../shared/CustomIcons";
 
@@ -10,6 +13,14 @@ function HeaderContent({
   const location = useLocation();
   const properItems: { link: string; icon: JSX.Element }[] =
     location.pathname.includes("admin") ? adminItems : clientItems;
+
+  const dispatch = useDispatch()
+  const myUrl = useNavigate()
+  const logout = () => {
+    Cookies.remove("user")
+    dispatch(removeUser())
+    myUrl("/login")
+  };
   return (
     <div className="overflow-y-scroll h-full">
       <div className="flex px-5 justify-center sm:flex-col sm:justify-between items-center gap-[15px] sm:gap-[30px] h-full">
@@ -27,9 +38,9 @@ function HeaderContent({
             </Link>
           ))}
         </div>
-        <Link to={"/login"}>
+        <button onClick={()=>logout()}>
           <IconItem link="none" icon={<ExitIcon />} />
-        </Link>
+        </button>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-import React from "react";
 import Logo from "../../assets/images/logo@2x.png";
 import {
   Button,
@@ -13,12 +12,12 @@ import {
 } from "antd";
 const { Text } = Typography;
 
-import { useMutation } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
-import authApi from "../../api/authApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { fetchDataLogin } from "../../api/login";
+import { useDispatch } from "react-redux";
 
 interface Inputs {
   email: string;
@@ -29,7 +28,6 @@ const Login = () => {
   const {
     handleSubmit,
     control,
-    setError,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(
@@ -39,31 +37,15 @@ const Login = () => {
       })
     ),
   });
-
-  const login = useMutation({
-    mutationFn: (data: Inputs) => {
-      return authApi.login(data);
-    },
-    onError: (e: unknown) => {
-      e;
-
-      setError("email", {
-        message: (e as { response: { data: { message: string } } }).response
-          .data.message,
-      });
-    },
-  });
-  errors;
-
+  
+  const dispatch = useDispatch();
   function onSubmit(data: Inputs) {
-    login.mutate(data);
     // console.log(data);
-    navigate("/drive");
-
+    fetchDataLogin(data,navigate,dispatch)
   }
 
   return (
-    <div className="bg-[#EAEBF0] h-screen flex justify-center items-center p-1rem">
+    <div className="bg-[#EAEBF0] min-h-screen flex justify-center items-center px-3 py-6">
       <div className="w-full max-w-[512px]  bg-white rounded-2xl p-12">
         <div className="text-center">
           <div>
@@ -114,8 +96,8 @@ const Login = () => {
                 {errors.password?.message}
               </Text>
             </Flex>
-            <div className="flex justify-between items-center mb-6">
-              <Checkbox onChange={() => {}} className="mt-4 text-[#888888]">
+            <div className="flex flex-wrap gap-3 justify-between items-center mt-3 mb-5">
+              <Checkbox onChange={() => {}} className=" text-[#888888]">
                 Remember for 30 days
               </Checkbox>
               <a href="" className="text-[#0154A0]">
@@ -123,7 +105,7 @@ const Login = () => {
               </a>
             </div>
             <Button
-              loading={login.isLoading}
+              // loading={login.isLoading}
               htmlType="submit"
               type="primary"
               className="px-8 py-3 h-auto w-full"
@@ -134,7 +116,7 @@ const Login = () => {
           <Divider className="!mt-6">Or</Divider>
           <Text className="text-[#888888]">
             Don’t have an account?{" "}
-            <Text className="text-[#0154A0] cursor-pointer">Sign Up</Text>{" "}
+            <Link to={"/register"} className="text-[#0154A0] cursor-pointer">Sign Up</Link>{" "}
           </Text>
         </div>
       </div>

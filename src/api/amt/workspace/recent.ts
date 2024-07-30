@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-export const fetchDataAboutUs = async (setData: SetStateAction<Dispatch<string | null>>) => {
-    const url = `${import.meta.env.VITE_API_URL}/about-us`;
+export const fetchDataRecentView = async (setData: any) => {
+    const url = `${import.meta.env.VITE_API_URL}/v1/drive/file-entries?recentOnly=true`;
 
     try {
         const response = await fetch(url, {
@@ -17,7 +17,7 @@ export const fetchDataAboutUs = async (setData: SetStateAction<Dispatch<string |
         }
 
         const data = await response.json();
-        setData(data)
+        setData(data.data)
     } catch (error) {
         console.error('Error fetching data:', error);
     }
