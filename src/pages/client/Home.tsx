@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Page from "../../components/shared/Page";
 import Card1 from "../../components/cards/Card1";
@@ -16,8 +15,6 @@ import { BarChart, Bar, ResponsiveContainer, Rectangle, XAxis } from "recharts";
 
 import uploadIcon from "../../assets/icons/upload_icon.svg";
 import red from "../../assets/icons/download_icon.svg";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 const { Text } = Typography;
 
@@ -32,6 +29,24 @@ const data = [
 ];
 
 export default function Home() {
+
+  // this part is only for simulate file uploading
+  const { catchFile } = useSelector((state: RootState) => state.GlobalReducer);
+
+  const [filesType, setFilesType] = useState<string[]>([]);
+  
+  useEffect(() => {
+    if (catchFile) {
+      const newFilesType = Array.from(catchFile).map((item: any) => item.type?.split("/")[0]);
+      setFilesType(newFilesType);
+    }
+  }, [catchFile]);
+  
+
+
+
+
+
   const fileEntries = useQuery({
     queryKey: ["file_entries"],
     queryFn: () => {
@@ -39,27 +54,13 @@ export default function Home() {
     },
   });
 
-  const [recent,setRecent] = useState<any[]>([])
-  useEffect(()=>{
-    axios.get("https://angeloai.co/api/v1/drive/file-entries?recentOnly=true")
-    .then(res=>setRecent([...res.data.data]))
-  },[])
-  console.log(recent);
-  
-
   return (
-    <Page
-      className="p-4"
-    >
+    <Page className="p-4">
       <HomeHead />
 
       <Flex gap={24} className="max-xl:flex-col">
         <Flex vertical gap={32} flex={1} className="w-full">
-          <div
-          style={{
-            
-          }}
-           className="grid grid-cols-3 max-lg:grid-cols-2    gap-6">
+          <div className="grid grid-cols-3 max-lg:grid-cols-2    gap-6">
             {Card1Icons.map((item, i) => (
               <Card1 key={i} icon={item.icon} text={item.text} dataSize={12} />
             ))}
@@ -162,6 +163,7 @@ export default function Home() {
                 icon={item.icon}
                 text={item.text}
                 dataSize={12}
+                filesType={filesType}
               />
             ))}
           </div>

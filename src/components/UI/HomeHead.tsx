@@ -215,9 +215,12 @@ function HomeHead() {
     }
   }, [workspaces.data]);
 
-  const handleAddMember = (values: { name: string; email: string }) => {
-    console.log("Adding member", values);
-    // Your API call to add member goes here
+  const handleAddMember = (values: { emails: string[] }) => {
+    // Assuming you need to process each email separately
+    values.emails.forEach((email) => {
+      console.log("Inviting member with email:", email);
+      // Add your logic to handle each email here
+    });
   };
 
   return (
@@ -365,7 +368,7 @@ function HomeHead() {
             open={addMemberModal.open}
             onClose={addMemberModal.onClose}
             handleOk={handleAddMember}
-            addIsLoading={false} // Adjust this based on your API call status
+            addIsLoading={false}
           />
         }
       </div>

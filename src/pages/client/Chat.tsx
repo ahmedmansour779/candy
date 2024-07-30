@@ -13,11 +13,13 @@ const { useBreakpoint } = Grid;
 
 const Chat = () => {
   return (
-    <Flex vertical className={`h-full  `}>
-      <ChatHeader />
-      <ChatMessages />
-      <ChatInput />
-    </Flex>
+    <div className="chat-container">
+      <Flex vertical className={`h-full border rounded-lg shadow-lg bg-white`}>
+        <ChatHeader />
+        <ChatMessages />
+        <ChatInput />
+      </Flex>
+    </div>
   );
 };
 
@@ -30,11 +32,11 @@ const ChatHeader = () => {
     <Flex
       justify="space-between"
       align="center"
-      className="h-[72px] p-4 bg-white"
+      className="h-[72px] p-4 bg-white border-b shadow-md"
     >
       <Flex align="center" gap={8}>
         {xs && <LeftOutlined onClick={() => navigate("/chat")} />}
-        <div className="relative  w-10 h-10">
+        <div className="relative w-10 h-10">
           <Image
             preview={false}
             src={`https://i.pravatar.cc/200/?img=11`}
@@ -118,8 +120,9 @@ const ChatMessages = () => {
       style={{
         maxHeight: maxHeight,
         overflowY: "scroll",
+        padding: '0 16px',
       }}
-      className="overflow-y-scroll py-16 bg-[#f5f5f5] max-md:px-3"
+      className="bg-[#f5f5f5] rounded-b-lg"
       ref={(el) => el && el.scrollTo(0, el.scrollHeight)}
     >
       {messages.map((message, index) => (
@@ -141,7 +144,7 @@ const ChatMessageCard = ({ message }: { message: messageProps }) => {
       gap={8}
     >
       <Flex>
-        <div className="relative  w-10 h-10">
+        <div className="relative w-10 h-10">
           <Image
             preview={false}
             src={`https://i.pravatar.cc/200/?img=${
@@ -160,7 +163,7 @@ const ChatMessageCard = ({ message }: { message: messageProps }) => {
       <div
         className={`py-3 px-4 rounded-2xl max-w-[436px] ${
           message.sender_Type === 1 ? "bg-[#0154A0] " : "bg-white "
-        } `}
+        } shadow-md`}
       >
         <Text
           className={` font-light ${
@@ -177,8 +180,8 @@ const ChatMessageCard = ({ message }: { message: messageProps }) => {
 // Send Bar
 const ChatInput = () => {
   return (
-    <Flex gap={16} className="h-20 max-md:px-4 py-4  bg-[#f5f5f5] ">
-      <div className="relative  h-full " style={{ aspectRatio: "1/1" }}>
+    <Flex gap={16} className="h-20 max-md:px-4 py-4  bg-[#f5f5f5] border-t shadow-md">
+      <div className="relative h-full " style={{ aspectRatio: "1/1" }}>
         <Image
           preview={false}
           src={`https://i.pravatar.cc/300/?img=12`}
@@ -187,7 +190,6 @@ const ChatInput = () => {
         />
       </div>
       <div className="relative flex-1 h-full">
-        {" "}
         <Input
           placeholder="Write your message here..."
           className="rounded-2xl h-full"
