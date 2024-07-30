@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Page from "../../components/shared/Page";
 import Card1 from "../../components/cards/Card1";
@@ -15,6 +16,8 @@ import { BarChart, Bar, ResponsiveContainer, Rectangle, XAxis } from "recharts";
 
 import uploadIcon from "../../assets/icons/upload_icon.svg";
 import red from "../../assets/icons/download_icon.svg";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const { Text } = Typography;
 
@@ -35,6 +38,14 @@ export default function Home() {
       return filesApi.getFileEntries();
     },
   });
+
+  const [recent,setRecent] = useState<any[]>([])
+  useEffect(()=>{
+    axios.get("https://angeloai.co/api/v1/drive/file-entries?recentOnly=true")
+    .then(res=>setRecent([...res.data.data]))
+  },[])
+  console.log(recent);
+  
 
   return (
     <Page
@@ -63,9 +74,12 @@ export default function Home() {
           <SectionTitle title="Recent view" />
 
           <div className="grid grid-cols-3 max-xl:grid-cols-2 max-lg:grid-cols-1  gap-6">
-            <CardWithMenu item={{ name: "GOT", file_size: 36000 }} />
-            <CardWithMenu item={{ name: "GOT", file_size: 36000 }} />
-            <CardWithMenu item={{ name: "GOT", file_size: 36000 }} />
+            {
+              recent.map((items,index)=>
+                <CardWithMenu 
+              item={{ name: items.mime, file_size: items.file_size , link:items.url, type:items.type }} />
+              )
+            }
           </div>
 
           <SectionTitle title="My Folders" />

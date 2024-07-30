@@ -24,7 +24,7 @@ import "@fancyapps/ui/dist/fancybox/fancybox.css";
 export default function CardWithMenu({
   item,
 }: {
-  item: { name: string; file_size: number };
+  item: { name: string; file_size: number; link:string, type:string };
 }) {
   const shareModal = useDisclosure();
   const renameModal = useDisclosure();
@@ -80,17 +80,30 @@ export default function CardWithMenu({
       icon: <DeleteOutlined />,
     },
   ];
-  Fancybox.bind('[data-fancybox="gallery"]', {
-    contentClick: "toggleCover",
-    Images: {
-      Panzoom: {
-        panMode: "mousemove",
-        mouseMoveFactor: 1.1,
-        mouseMoveFriction: 0.12,
-        
-      },
-    },
-  });
+  
+  const show = (ele:string)=>{
+    if(ele==="image"){
+      Fancybox.bind(`[data-fancybox="gallery"]`, {
+        contentClick: "toggleCover",
+        Images: {
+          Panzoom: {
+            panMode: "mousemove",
+            mouseMoveFactor: 1.1,
+            mouseMoveFriction: 0.12,
+          },
+        },
+      });
+    }
+    else{
+      Fancybox.show([
+        {
+          src: `https://angeloai.co/${item.link}`,
+          width: 640,
+          height: 360,
+        },
+      ]);
+    }
+  }
   return (
     <>
       <Dropdown
@@ -103,33 +116,37 @@ export default function CardWithMenu({
           minWidth: "auto",
         }}
       >
-        
-          <div className="h-fit cursor-pointer flex flex-col  overflow-hidden rounded-2xl">
-            <div className="h-[125px] w-full max-md:h-[200px]">
-            <a href={fileImage} data-fancybox="gallery">
-              <img
-                className="w-full h-full object-cover "
-                alt="example"
-                src={fileImage}
-              />
-            </a>
-            </div>
-            <div
-              className={`flex items-center justify-between w-full p-4 duration-150 ${
-                isDropdownVisible ? "bg-[#0154A01A]" : "bg-white"
-              }`}
-            >
-              <div className="leading-none flex-center gap-2 ">
-                <PlayCircleFilled className="text-primary-600 text-2xl" />
-                <Text className="text-primary-500">
-                  {truncate(item.name, { length: 20 })}
+          <a href={`https://angeloai.co/${item.link}`} onClick={()=>show(item.type)} data-fancybox={`gallery`}>
+            <div className="h-fit cursor-pointer flex flex-col  overflow-hidden rounded-2xl">
+              <div className="h-[125px] w-full max-md:h-[200px]">
+                {
+                  item.type === "video" ? 
+                  <video src={`https://angeloai.co/${item.link}`} className="w-full h-full object-cover" controls></video>
+                  :
+                  <img
+                    className="w-full h-full object-cover "
+                    alt="example"
+                    src={`https://angeloai.co/${item.link}` || fileImage}
+                  />
+                }
+              </div>
+              <div
+                className={`flex flex-col items-center justify-center w-full gap-2 p-2 px-2 duration-150 ${
+                  isDropdownVisible ? "bg-[#0154A01A]" : "bg-white"
+                }`}
+              >
+                <div className="leading-none flex-center gap-2 ">
+                  <PlayCircleFilled className="text-primary-600 text-2xl" />
+                  <Text className="text-primary-500">
+                    {truncate(item.name, { length: 20 })}
+                  </Text>
+                </div>
+                <Text className="text-gray-600">
+                  {convertBytes(item.file_size)}
                 </Text>
               </div>
-              <Text className="text-gray-600">
-                {convertBytes(item.file_size)}
-              </Text>
             </div>
-          </div>
+          </a>
       </Dropdown>
       {shareModal.open && (
         <ShareFileModal

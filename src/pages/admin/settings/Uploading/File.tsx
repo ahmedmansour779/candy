@@ -6,7 +6,7 @@ const File = () => {
             <div>
                 <p>File delivery optimization</p>
                 <div className="my-3">
-                    <Radio.Group defaultValue={1}>
+                    <Radio.Group>
                         <Space className="" direction="vertical">
                             <Radio value={"none"}>None</Radio>
                             <Radio value={"X-Sendfile"}>X-Sendfile (Apache)</Radio>
