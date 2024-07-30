@@ -1,49 +1,76 @@
-import { useQuery } from "@tanstack/react-query";
 import { Menu, MenuProps } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import foldersApi from "../../api/foldersApi";
 import { FolderIcon } from "../../icons/icons";
+import { getFilesApi } from "../../api/amt/files/getFilesApi";
+
+export interface Root {
+  id: number;
+  name: string;
+  description: any;
+  file_name: string;
+  mime: any;
+  file_size: number;
+  user_id: any;
+  parent_id: any;
+  created_at: string;
+  updated_at: string;
+  deleted_at: any;
+  path: string;
+  disk_prefix: any;
+  type: string;
+  extension: any;
+  public: boolean;
+  thumbnail: boolean;
+  workspace_id: number;
+  owner_id: number;
+  hash: string;
+  url: any;
+  users: User[];
+  tags: any[];
+  permissions: any[];
+}
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  // Define other properties of User if necessary
+}
 
 export default function SidebarFolders() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const navigate = useNavigate();
-  const folders = useQuery({
-    queryKey: ["fileEntries"],
-    queryFn: () => {
-      return foldersApi.getFolders();
-    },
-  });
+  const [data, setData] = useState<Root[]>([]);
+
+  useEffect(() => {
+    getFilesApi(setData);
+  }, []);
 
   useEffect(() => {
     const arr: MenuItem[] = [];
-    if (!folders.data) {
-      //@ts-expect-error: IJob error
-
-      folders?.data?.folders.forEach((item) => {
+    if (data.length > 0) {
+      data.forEach((item) => {
         if (item.parent_id && arr.length !== 0) {
-          const targetedItem = findItemByKey(arr, item.parent_id);
-          if (targetedItem) {
-            // @ts-expect-error TODO
+          const targetedItem = findItemByKey(arr, String(item.parent_id));
+          if (targetedItem && isSubMenu(targetedItem)) {
             targetedItem.children = [
-              // @ts-expect-error TODO
               ...(targetedItem.children || []),
               {
-                key: item.id,
+                key: String(item.id),
                 label: item.name,
                 hash: item.hash,
                 icon: <FolderIcon />,
-              },
+              } as MenuItem,
             ];
           }
         } else {
           arr.push({
             key: String(item.id),
             label: item.name,
-            // @ts-expect-error TODO
             hash: item.hash,
             icon: <FolderIcon />,
-          });
+          } as MenuItem);
         }
       });
     }
@@ -53,27 +80,23 @@ export default function SidebarFolders() {
         key: "0",
         label: "My Files",
         children: arr,
-      },
+      } as MenuItem,
     ]);
-  }, [folders.data, folders.isLoading]);
+  }, [data]);
 
   return (
     <div className="leading-none">
       <Menu
-        style={{
-          borderInlineEnd: "none",
-        }}
+        style={{ borderInlineEnd: "none" }}
         mode="inline"
-        // openKeys={stateOpenKeys}
-        // onOpenChange={onOpenChange}
         onClick={(e) => {
-          // @ts-expect-error TODO
-          const item = findItemByKey(menuItems[0].children, e.key);
-          //@ts-expect-error TODO
-          navigate(`/folders/${item?.hash}`);
-        }}
-        onAuxClick={(e) => {
-          e;
+          const item:any = menuItems[0];
+          if (isSubMenu(item)) {
+            const foundItem = findItemByKey(item.children, e.key);
+            if (foundItem?.hash) {
+              navigate(`/folders/${foundItem.hash}`);
+            }
+          }
         }}
         items={menuItems}
       />
@@ -81,17 +104,20 @@ export default function SidebarFolders() {
   );
 }
 
-
 type MenuItem = Required<MenuProps>["items"][number];
-// @ts-expect-error TODO
-function findItemByKey(items, key): MenuItem | null {
+
+function isSubMenu(item: any): item is any & { children: any[] } {
+  return 'children' in item;
+}
+
+function findItemByKey(items: any[], key: string): any | null {
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
-    if (item.key == key) {
+    if (item.key === key) {
       return item;
     }
-    if (item.children) {
-      const foundInChildren: MenuItem = findItemByKey(item.children, key);
+    if (isSubMenu(item)) {
+      const foundInChildren = findItemByKey(item.children, key);
       if (foundInChildren) {
         return foundInChildren;
       }
