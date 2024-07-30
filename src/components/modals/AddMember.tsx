@@ -1,6 +1,6 @@
-import { PlusCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import { Modal, Typography, Form, Input, Tag, Tooltip, Button } from "antd";
-import React, { useState, ChangeEvent } from "react";
+import { CloseCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Modal, Tag, Tooltip, Typography } from "antd";
+import React, { ChangeEvent, useState } from "react";
 
 const { Text } = Typography;
 
@@ -25,7 +25,7 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
-
+  // add any thing to access posh
   const validateEmail = (email: string): boolean => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
