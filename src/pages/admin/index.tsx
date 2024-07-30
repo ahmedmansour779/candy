@@ -2,39 +2,23 @@ import PageHeading from "../../components/PageHeading";
 import { Segmented, Select } from "antd";
 import BriefInfo from "./components/BriefInfo";
 
-import fileIcon from "../../assets/icons/file_icon.svg";
-import folderIcon from "../../assets/icons/folder_icon.svg";
-import usersIcon from "../../assets/icons/users_icon.svg";
-import spaceIcon from "../../assets/icons/space_icon.svg";
+
 import HorizontalBarChartComponent from "../../components/admin/recharts/BarChart";
 import PieChartComponent from "../../components/admin/recharts/PieChart";
 import LineChartComponent from "../../components/admin/recharts/LineChart";
 import GeoChart from "../../components/admin/recharts/GeoChart";
+import { useEffect, useState } from "react";
+import { briefINfoAllInOne } from "../../api/amt/briefInfo/briefInfoApi";
 
-const BriefItems = [
-  {
-    title: "New Files",
-    value: "11,930",
-    icon: fileIcon,
-  },
-  {
-    title: "New Folder",
-    value: "872",
-    icon: folderIcon,
-  },
-  {
-    title: "New Users",
-    value: "134",
-    icon: usersIcon,
-  },
-  {
-    title: "Total Space ",
-    value: "1.4 GB",
-    icon: spaceIcon,
-  },
-];
 
 const index = () => {
+  const [briefItems, setBriefItems] = useState<any>(null);
+  useEffect(() => {
+    briefINfoAllInOne(setBriefItems);
+  }, [])
+
+
+
   return (
     <div className="p-8">
       <PageHeading title="Visitors Report">
@@ -66,7 +50,9 @@ const index = () => {
           />
         </div>
       </PageHeading>
-      <BriefInfo items={BriefItems} />
+      {
+        briefItems && <BriefInfo items={briefItems} />
+      }
       <div className="grid grid-cols-2 gap-4 my-4 max-md:grid-cols-1">
         <div className="h-full w-full p-4 rounded-lg shadow bg-white">
           <LineChartComponent />
