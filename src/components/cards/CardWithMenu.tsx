@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dropdown, MenuProps, Typography } from "antd";
 const { Text } = Typography;
 import {
@@ -9,6 +11,7 @@ import {
   FolderAddOutlined,
   LinkOutlined,
   PlayCircleFilled,
+  StarFilled,
   StarOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
@@ -21,13 +24,32 @@ import RenameFileModal from "../modals/RenameFileModal";
 import fileImage from "../../assets/images/Frame 427319331.png";
 import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
+import { fetchAddToStar } from "../../api/amt/workspace/AddToStar";
+import { fetchRemoveFrStar } from "../../api/amt/workspace/RemoveFrStar";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 export default function CardWithMenu({
   item,
 }: {
-  item: { name: string; file_size: number; link:string, type:string };
+  item: {id:string, name: string; file_size: number; link:string, type:string };
 }) {
   const shareModal = useDisclosure();
   const renameModal = useDisclosure();
+
+  const starred = useSelector((state: RootState) => state.starred);
+  // console.log(starred);
+  const eleInStar = starred.find((ele:any)=>+(ele?.taggable_id)===+(item.id))
+  // console.log(eleInStar)
+
+  const dispatch = useDispatch()
+  const AddOrRemoveStarr = ()=>{
+    if(eleInStar){
+      fetchRemoveFrStar(item.id,dispatch)
+    }
+    else{
+      fetchAddToStar(item.id,dispatch)
+    }
+  }
 
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
@@ -49,9 +71,10 @@ export default function CardWithMenu({
       icon: <LinkOutlined />,
     },
     {
-      label: "Add to starred",
+      label: eleInStar ? "Remove to starred"  : "Add to starred",
       key: "3",
-      icon: <StarOutlined />,
+      icon: eleInStar ? <StarFilled/> : <StarOutlined />,
+      onClick: () => AddOrRemoveStarr(),
     },
     {
       label: "Move to",
@@ -136,7 +159,10 @@ export default function CardWithMenu({
                 }`}
               >
                 <div className="leading-none flex-center gap-2 ">
-                  <PlayCircleFilled className="text-primary-600 text-2xl" />
+                  {
+                    item.type === "video" ? <PlayCircleFilled className="text-primary-600 text-2xl" />
+                    :null
+                  }
                   <Text className="text-primary-500">
                     {truncate(item.name, { length: 20 })}
                   </Text>

@@ -23,6 +23,7 @@ import { useEffect, useState } from "react";
 import { fetchDataRecentView } from "../../api/amt/workspace/recent";
 import Cookies from "js-cookie";
 import { addUser } from "../../store/slices/userSlice";
+import { fetchGetAllStar } from "../../api/amt/workspace/GetAllStar";
 
 const { Text } = Typography;
 
@@ -60,11 +61,13 @@ export default function Home() {
 
   const dispatch = useDispatch()
   const [recent,setRecent] = useState<any[]>([])
+  const [dataStar,setData] = useState<any[]>([])
   useEffect(() => {
     fetchDataRecentView(setRecent)
     const user = Cookies.get("user")
     // console.log(JSON.parse(user as string));
     dispatch(addUser(JSON.parse(user as string)))
+    fetchGetAllStar(setData,dispatch)
   },[])
   // console.log(user)
 
@@ -91,8 +94,8 @@ export default function Home() {
           <div className="grid grid-cols-3 max-xl:grid-cols-2 max-lg:grid-cols-1  gap-6">
             {
               recent.map((items,index)=>
-                <CardWithMenu 
-              item={{ name: items.mime, file_size: items.file_size , link:items.url, type:items.type }} />
+                <CardWithMenu key={index}
+              item={{id:items.id, name: items.mime, file_size: items.file_size , link:items.url, type:items.type }} />
               )
             }
           </div>
