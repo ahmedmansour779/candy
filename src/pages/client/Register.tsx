@@ -18,15 +18,19 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchDataRegister } from "../../api/register";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 interface Inputs {
-    firstName:string;
-    lastName:string;
+    first_name:string;
+    last_name:string;
     age:string;
     gender: string;
     email: string;
     password: string;
-    job: string;
+    password_confirmation: string;
+    job_occubation: string;
+    Add_company: string;
 }
 const Register = () => {
     const navigate = useNavigate();
@@ -37,20 +41,34 @@ const Register = () => {
     } = useForm<Inputs>({
         resolver: yupResolver(
             yup.object({
-                firstName: yup.string().required().label("Please enter your first name"),
-                lastName: yup.string().required().label("Please enter your last name"),
-                age: yup.string().required().label("Please enter your age"),
-                gender: yup.string().required().label("Please enter your gender"),
-                job: yup.string().required().label("Please enter your job occupation"),
-                email: yup.string().email().required().label("Please enter your email"),
-                password: yup.string().required().label("Please enter your password"),
+                first_name: yup.string().required().label("The first name"),
+                last_name: yup.string().required().label("The last name"),
+                age: yup.string().required().label("The age"),
+                gender: yup.string().required().label("The gender"),
+                job_occubation: yup.string().required().label("The job occupation"),
+                Add_company: yup.string().required().label("The company name"),
+                email: yup.string().email().required().label("The email"),
+                password: yup.string().required().min(8).label("The password"),
+                password_confirmation: yup.string().required().label("The password confirmation"),
             })
         ),
     });
+
+    const [showPass,setShowPass] = useState("password")
+    const [showPassCon,setShowPassCon] = useState("password")
+    const [passNotCon,setNot] = useState(false)
     
     function onSubmit(data: Inputs) {
-        console.log(data);
-        // fetchDataRegister(data,navigate)
+        if(data.password !== data.password_confirmation){
+            setNot(true)
+        }
+        else{
+            setNot(false)
+            // console.log(data);
+            const sendData = {...data,token_name:"alia"}
+            console.log(sendData);
+            fetchDataRegister(sendData,navigate)
+        }
     }
 
     return (
@@ -75,14 +93,14 @@ const Register = () => {
                     gap={"0.5rem"}
                     >
                         <Controller
-                            name="firstName"
+                            name="first_name"
                             control={control}
                             render={({ field }) => (
                             <Input {...field} placeholder="First Name" defaultValue="" />
                             )}
                         />
                         <Text type={"danger"} className="font-normal text-start">
-                            {errors.firstName?.message}
+                            {errors.first_name?.message}
                         </Text>
                     </Flex>
                     <Flex
@@ -90,14 +108,14 @@ const Register = () => {
                     gap={"0.5rem"}
                     >
                         <Controller
-                            name="lastName"
+                            name="last_name"
                             control={control}
                             render={({ field }) => (
                             <Input {...field} placeholder="Last Name" defaultValue="" />
                             )}
                         />
                         <Text type={"danger"} className="font-normal text-start">
-                            {errors.lastName?.message}
+                            {errors.last_name?.message}
                         </Text>
                     </Flex>
                     <Flex
@@ -123,17 +141,60 @@ const Register = () => {
                             name="password"
                             control={control}
                             render={({ field }) => (
-                            <Input
-                                type="password"
-                                {...field}
-                                placeholder="Password"
-                                defaultValue=""
-                            />
+                                <div className="flex justify-between items-center border border-[#d9d9d9] hover:border-[#1d6dad] focus:border-[#1d6dad] rounded-lg pr-3">
+                                    <Input
+                                        type={showPass}
+                                        {...field}
+                                        placeholder="Password"
+                                        defaultValue=""
+                                        className="border-none focus:shadow-none"
+                                    />
+                                    {
+                                        showPass === "password" ?
+                                        <EyeInvisibleOutlined onClick={()=>setShowPass("text")} className="cursor-pointer"/>
+                                        :<EyeOutlined onClick={()=>setShowPass("password")} className="cursor-pointer"/>
+                                    }
+                                </div>
                             )}
                         />
                         <Text type={"danger"} className="font-normal text-start">
                             {errors.password?.message}
                         </Text>
+                    </Flex>
+                    <Flex
+                    style={{ marginTop: "1rem", flexDirection: "column" }}
+                    gap={"0.5rem"}
+                    >
+                        <Controller
+                            name="password_confirmation"
+                            control={control}
+                            render={({ field }) => (
+                                <div className="flex justify-between items-center border border-[#d9d9d9] hover:border-[#1d6dad] focus:border-[#1d6dad] rounded-lg pr-3">
+                                    <Input
+                                        type={showPassCon}
+                                        {...field}
+                                        placeholder="Password Confirmation"
+                                        defaultValue=""
+                                        className="border-none focus:shadow-none"
+                                    />
+                                    {
+                                        showPassCon === "password" ?
+                                        <EyeInvisibleOutlined onClick={()=>setShowPassCon("text")} className="cursor-pointer"/>
+                                        :<EyeOutlined onClick={()=>setShowPassCon("password")} className="cursor-pointer"/>
+                                    }
+                                </div>
+                            )}
+                        />
+                        <Text type={"danger"} className="font-normal text-start">
+                            {errors.password_confirmation?.message}
+                        </Text>
+                        {
+                            passNotCon ? 
+                                <Text type={"danger"} className="font-normal text-start">
+                                    password conformation is not same password
+                                </Text>
+                            :null
+                        }
                     </Flex>
                     <Flex
                     style={{ marginTop: "1rem", flexDirection: "column" }}
@@ -155,14 +216,29 @@ const Register = () => {
                     gap={"0.5rem"}
                     >
                         <Controller
-                            name="job"
+                            name="job_occubation"
                             control={control}
                             render={({ field }) => (
                             <Input {...field} placeholder="Job Occupation" defaultValue="" />
                             )}
                         />
                         <Text type={"danger"} className="font-normal text-start">
-                            {errors.job?.message}
+                            {errors.job_occubation?.message}
+                        </Text>
+                    </Flex>
+                    <Flex
+                    style={{ marginTop: "1rem", flexDirection: "column" }}
+                    gap={"0.5rem"}
+                    >
+                        <Controller
+                            name="Add_company"
+                            control={control}
+                            render={({ field }) => (
+                            <Input {...field} placeholder="Company Name" defaultValue="" />
+                            )}
+                        />
+                        <Text type={"danger"} className="font-normal text-start">
+                            {errors.Add_company?.message}
                         </Text>
                     </Flex>
                     <Flex

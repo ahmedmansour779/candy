@@ -32,7 +32,7 @@ export default function LayoutPage() {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
   const [isSliderCollapsed, setIsSliderCollapsed] = useState(false);
 
-  const { xs } = useBreakpoint();
+  const { xs , sm } = useBreakpoint();
 
   return (
     <Layout style={layoutStyle} className={`bg-secondary-500 font-sans `}>

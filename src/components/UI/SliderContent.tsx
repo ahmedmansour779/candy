@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Dropdown, Image, MenuProps, Typography } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../../src/assets/images/logo@2x.png";
@@ -12,6 +13,7 @@ import {
   PlusCircleOutlined,
   ShareAltOutlined,
   StarFilled,
+  DeleteFilled
 } from "@ant-design/icons";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -105,7 +107,7 @@ export default function SliderContent() {
 
       <SidebarFolders />
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-3">
         <Button
           type="link"
           className="p-0 flex items-center justify-start gap-2 text-sm font-medium text-[#888888]"
@@ -120,7 +122,7 @@ export default function SliderContent() {
           <ClockCircleFilled />
           <Text> ent</Text>
         </Button>
-        <Button
+        <Button onClick={()=>navigate("/drive/starred")}
           type="link"
           className="p-0 flex items-center justify-start gap-2 text-sm font-medium text-[#888888]"
         >
@@ -129,9 +131,9 @@ export default function SliderContent() {
         </Button>
         <Button
           type="link"
-          className="p-0 flex items-center justify-start gap-2 text-sm font-medium text-[#888888]"
+          className="p-0 z-50 flex items-center justify-start gap-2 text-sm font-medium text-[#888888]"
         >
-          <TrashIcon />
+          <DeleteFilled/>
           <Text>Trash</Text>
         </Button>
       </div>

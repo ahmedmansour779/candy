@@ -15,7 +15,7 @@ export const FolderIcon = () => (
 
 export const TrashIcon = () => (
     <svg
-        width="6"
+        width="15"
         height="15"
         viewBox="0 0 12 15"
         fill="none"

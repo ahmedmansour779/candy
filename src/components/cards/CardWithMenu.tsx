@@ -37,8 +37,8 @@ export default function CardWithMenu({
   const renameModal = useDisclosure();
 
   const starred = useSelector((state: RootState) => state.starred);
-  // console.log(starred);
-  const eleInStar = starred.find((ele:any)=>+(ele?.taggable_id)===+(item.id))
+  console.log(starred);
+  const eleInStar = starred.find((ele:any)=>+(ele?.id)===+(item.id))
   // console.log(eleInStar)
 
   const dispatch = useDispatch()
@@ -104,29 +104,16 @@ export default function CardWithMenu({
     },
   ];
   
-  const show = (ele:string)=>{
-    if(ele==="image"){
-      Fancybox.bind(`[data-fancybox="gallery"]`, {
-        contentClick: "toggleCover",
-        Images: {
-          Panzoom: {
-            panMode: "mousemove",
-            mouseMoveFactor: 1.1,
-            mouseMoveFriction: 0.12,
-          },
-        },
-      });
-    }
-    else{
-      Fancybox.show([
-        {
-          src: `https://angeloai.co/${item.link}`,
-          width: 640,
-          height: 360,
-        },
-      ]);
-    }
-  }
+  Fancybox.bind(`[data-fancybox="gallery"]`, {
+    contentClick: "toggleCover",
+    Images: {
+      Panzoom: {
+        panMode: "mousemove",
+        mouseMoveFactor: 1.1,
+        mouseMoveFriction: 0.12,
+      },
+    },
+  });
   return (
     <>
       <Dropdown
@@ -139,7 +126,7 @@ export default function CardWithMenu({
           minWidth: "auto",
         }}
       >
-          <a href={`https://angeloai.co/${item.link}`} onClick={()=>show(item.type)} data-fancybox={`gallery`}>
+          <a href={`https://angeloai.co/${item.link}`} data-fancybox={`gallery`}>
             <div className="h-fit cursor-pointer flex flex-col  overflow-hidden rounded-2xl">
               <div className="h-[125px] w-full max-md:h-[200px]">
                 {

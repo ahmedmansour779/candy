@@ -2,3 +2,15 @@
 /* @tailwind base;
 @tailwind components;
 @tailwind utilities; */
+
+
+@media(min-width:576px) and (max-width:640px){
+    .side{
+        margin-left: 230px !important;
+    }
+}
+@media(min-width:992px) and (max-width:1023px){
+    .side{
+        margin-left: 0px !important;
+    }
+}

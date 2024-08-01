@@ -72,7 +72,7 @@ export default function Home() {
   // console.log(user)
 
   return (
-    <Page className="p-4">
+    <Page className="p-4 ml-[30px] side sm:ml-[160px] md:ml-[250px] lg:ml-0">
       <HomeHead />
 
       <Flex gap={24} className="max-xl:flex-col">

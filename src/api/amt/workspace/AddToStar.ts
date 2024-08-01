@@ -12,7 +12,7 @@ export const fetchAddToStar = (id: string,dispatch:any)=>{
         }
     }).then(res=>{
         console.log(res)
-        dispatch(addToStarred({...res.data.tag,taggable_id:id}))
+        dispatch(addToStarred({...res.data.tag,id:id}))
     })
     .catch(()=>console.log("Error Fetch Data"))
 }

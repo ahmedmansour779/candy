@@ -34,6 +34,7 @@ import SubsciptionsPlanAdd from "./pages/admin/plans/SubsciptionsPlanAdd";
 import SubsciptionsPlanEdit from "./pages/admin/plans/SubsciptionsPlanEdit";
 import ProtectRoute from "./pages/client/ProtectRoute";
 import Register from "./pages/client/Register";
+import Stareed from "./pages/client/Stareed";
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
                   {
                     path: "settings",
                     element: <ClientSettingsPage />,
+                  },
+                  {
+                    path: "starred",
+                    element: <Stareed />,
                   },
                   {
                     path: "chat",

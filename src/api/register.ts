@@ -3,13 +3,16 @@
 import axios from "axios";
 
 interface IProp {
-    firstName:string;
-    lastName:string;
+    first_name:string;
+    last_name:string;
     age:string;
     gender: string;
     email: string;
     password: string;
-    job: string;
+    password_confirmation: string;
+    job_occubation: string;
+    Add_company: string;
+    token_name: string;
 }
 
 export const fetchDataRegister = (data:IProp,navigate:any) => {
@@ -21,8 +24,8 @@ export const fetchDataRegister = (data:IProp,navigate:any) => {
             "Accept": "application/json"
         }
     }).then(res=>{
-        console.log(res)
+        // console.log(res)
         // navigate("/login")
     })
-    .catch(()=>console.log('Error fetching data:'))
+    .catch((err)=>console.log(err))
 };

@@ -18,6 +18,8 @@ import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchDataLogin } from "../../api/login";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 interface Inputs {
   email: string;
@@ -38,6 +40,8 @@ const Login = () => {
     ),
   });
   
+  const [showPass,setShowPass] = useState("password")
+
   const dispatch = useDispatch();
   function onSubmit(data: Inputs) {
     // console.log(data);
@@ -84,12 +88,20 @@ const Login = () => {
                 name="password"
                 control={control}
                 render={({ field }) => (
-                  <Input
-                    type="password"
-                    {...field}
-                    placeholder="Password"
-                    defaultValue=""
-                  />
+                  <div className="flex justify-between items-center border border-[#d9d9d9] hover:border-[#1d6dad] focus:border-[#1d6dad] rounded-lg pr-3">
+                    <Input
+                      type={showPass}
+                      {...field}
+                      placeholder="Password"
+                      defaultValue=""
+                      className="border-none focus:shadow-none"
+                      />
+                    {
+                      showPass === "password" ?
+                        <EyeInvisibleOutlined onClick={()=>setShowPass("text")} className="cursor-pointer"/>
+                      :<EyeOutlined onClick={()=>setShowPass("password")} className="cursor-pointer"/>
+                    }
+                  </div>
                 )}
               />
               <Text type={"danger"} className="font-normal text-start">

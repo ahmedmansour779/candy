@@ -317,7 +317,7 @@ function HomeHead() {
               if (index === array.length - 1) return null;
 
               return (
-                <Flex justify="space-between" align="center">
+                <Flex key={index} justify="space-between" align="center">
                   <Flex gap={16}>
                     <div
                       className={`w-10 h-10 rounded-xl flex justify-center items-center relative overflow-hidden `}

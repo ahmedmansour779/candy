@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const getFilesApi = async (setData: any) => {
     const url = `${import.meta.env.VITE_API_URL}/v1/drive/file-entries`;
 

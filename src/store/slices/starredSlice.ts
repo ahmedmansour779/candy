@@ -6,7 +6,7 @@ const starredSlice = createSlice({
     initialState:[],
     reducers:{
         addToStarred:(state:any,action:any)=>{
-            const ele = state.find((item:any)=>item?.taggable_id===action.payload)
+            const ele = state.find((item:any)=>item?.id===action.payload.id)
             if(!ele){
                 const obj = action.payload
                 state.push(obj)
@@ -14,7 +14,7 @@ const starredSlice = createSlice({
             return state;
         },
         removeFromStarred:(state,action)=>{
-            state = state.filter((item:any)=>item?.taggable_id!==action.payload)
+            state = state.filter((item:any)=>item?.id!==action.payload)
             return state;
         },
         getStarred:(state,action)=>{

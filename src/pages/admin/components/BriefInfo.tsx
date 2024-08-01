@@ -33,7 +33,7 @@ const BriefInfo: React.FC<{ items: Items }> = ({ items }) => {
       className="shadow bg-white rounded-lg p-4 flex flex-col gap-y-2"
     >
       <div className="flex items-center justify-between">
-        <div className="flex justify-center items-center rounded-lg p-2 bg-slate-100 p-1">
+        <div className="flex justify-center items-center rounded-lg bg-slate-100 p-1">
           <img src={item.icon} alt="icon" className="w-6 h-6" />
         </div>
         <p className="h-fit flex justify-end bg-green-100 border border-green-300 p-1 rounded-lg shadow text-green-500">
