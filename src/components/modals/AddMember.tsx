@@ -1,6 +1,7 @@
 import { CloseCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal, Tag, Tooltip, Typography } from "antd";
 import React, { ChangeEvent, useState } from "react";
+import { postShareWithEmail } from "../../api/amt/files/postShareWithEmail";
 
 const { Text } = Typography;
 
@@ -55,7 +56,12 @@ const AddMemberModal: React.FC<AddMemberModalProps> = ({
       form.resetFields();
       setEmails([]);
     });
+
+    postShareWithEmail(emails)
   };
+
+  console.log(emails);
+
 
   return (
     <Modal
