@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import SettingHeader from "../../../components/SettingHeader";
 import { Controller, useForm } from "react-hook-form";
@@ -18,9 +19,9 @@ const { Text } = Typography;
 interface Inputs {
   google_analytics_id: string;
   google_tag_manager_id: string;
-  google_maps_key: string;
+  "analytics->gchart_api_key": string;
 }
-const AnalyticsTab = () => {
+const AnalyticsTab = ({data}:{data:any}) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
@@ -32,12 +33,14 @@ const AnalyticsTab = () => {
       yup.object({
         email: yup.string().email().label("Required"),
         view_status: yup.number().label("Required"),
+        "analytics->gchart_api_key": yup.string().label("Required"),
       })
     ),
+    defaultValues: { ...data },
   });
 
   const onSubmit = (data: Inputs) => {
-    data;
+    console.log(data);
   };
   return (
     <div className="">
@@ -96,7 +99,7 @@ const AnalyticsTab = () => {
             )}
           />
           <Controller
-            name="google_maps_key"
+            name="analytics->gchart_api_key"
             control={control}
             render={({ field }) => (
               <InputWrapper

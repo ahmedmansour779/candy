@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { Button, Flex, Form, Input, Select, Switch } from "antd";
 import { Controller, useForm } from "react-hook-form";
@@ -6,17 +7,15 @@ import SettingHeader from "../../../components/SettingHeader";
 import CheckBoxWrapper from "../../../components/UI/CheckBoxWrapper";
 import InputWrapper from "../../../components/UI/InputWrapper";
 import { PAYMENT_METHODS } from "../../../constants/paymentMethods";
-import { SubscriptionSettings } from "../../../types/backend";
 
 interface Inputs {
-  enable_subscription: number;
+  "billing->enable": boolean;
   "billing->paypal->enable": boolean;
   paypal_client_id: string;
   paypal_secret: string;
-  paypal_gateway: string;
   paypal_webhook_id: string;
-  paypal_test_mode: number;
-  stripe_gateway: number;
+  "billing->paypal_test_mode": boolean;
+  "billing->stripe->enable": boolean;
   stripe_publishable_key: string;
   stripe_secret_key: string;
   stripe_webhook_signing_secret: string;
@@ -24,13 +23,13 @@ interface Inputs {
 }
 
 const subscriptionSchema = yup.object({
-  enable_subscription: yup.number().label("Enable Subscription"),
-  paypal_gateway: yup.number().label("PayPal Gateway"),
+  "billing->enable": yup.boolean().label("Enable Subscription"),
+  "billing->paypal->enable": yup.boolean().label("PayPal Gateway"),
   paypal_client_id: yup.string().label("PayPal Client ID"),
   paypal_secret: yup.string().label("PayPal Secret"),
   paypal_webhook_id: yup.string().label("PayPal Webhook ID"),
-  paypal_test_mode: yup.boolean().label("PayPal Test Mode"),
-  stripe_gateway: yup.boolean().label("Stripe Gateway"),
+  "billing->paypal_test_mode": yup.boolean().label("PayPal Test Mode"),
+  "billing->stripe->enable": yup.boolean().label("Stripe Gateway"),
   stripe_publishable_key: yup
     .string()
     .label("Stripe Publishable Key")
@@ -46,19 +45,15 @@ const subscriptionSchema = yup.object({
 
 const SubscriptionTab = ({
   data,
-  // onSave,
-  // isLoading,
 }: {
-  data: SubscriptionSettings;
-  onSave: (data: Inputs) => void;
-  isLoading: boolean;
+  data: any;
 }) => {
   const { handleSubmit, control, reset } = useForm<Inputs>({
     resolver: yupResolver(subscriptionSchema),
     defaultValues: { ...data },
   });
   const onSubmit = (data: Inputs) => {
-    data;
+    console.log(data);
   };
   return (
     <div className="">
@@ -78,7 +73,7 @@ const SubscriptionTab = ({
           gap={"0.5rem"}
         >
           <Controller
-            name="enable_subscription"
+            name="billing->enable"
             control={control}
             render={({ field }) => (
               <CheckBoxWrapper
@@ -86,14 +81,14 @@ const SubscriptionTab = ({
                 desc="Enable or disable all subscription related functionality across the site."
               >
                 <Switch
-                  checked={field.value === 1}
-                  onChange={(e) => field.onChange(e ? 1 : 0)}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e)}
                 />
               </CheckBoxWrapper>
             )}
           />
           <Controller
-            name="paypal_gateway"
+            name="billing->paypal->enable"
             control={control}
             render={({ field }) => (
               <CheckBoxWrapper
@@ -101,8 +96,8 @@ const SubscriptionTab = ({
                 desc="Enable PayPal payment gateway integration."
               >
                 <Switch
-                  checked={field.value == "1"}
-                  onChange={(e) => field.onChange(e ? 1 : 0)}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e)}
                 />
               </CheckBoxWrapper>
             )}
@@ -147,7 +142,7 @@ const SubscriptionTab = ({
             )}
           />
           <Controller
-            name="paypal_test_mode"
+            name="billing->paypal_test_mode"
             control={control}
             render={({ field }) => (
               <CheckBoxWrapper
@@ -155,14 +150,14 @@ const SubscriptionTab = ({
                 desc="Allows testing PayPal payments with sandbox accounts."
               >
                 <Switch
-                  checked={field.value === 1}
-                  onChange={(e) => field.onChange(e ? 1 : 0)}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e)}
                 />
               </CheckBoxWrapper>
             )}
           />
           <Controller
-            name="stripe_gateway"
+            name="billing->stripe->enable"
             control={control}
             render={({ field }) => (
               <CheckBoxWrapper
@@ -170,8 +165,8 @@ const SubscriptionTab = ({
                 desc="Enable Stripe payment gateway integration."
               >
                 <Switch
-                  checked={field.value === 1}
-                  onChange={(e) => field.onChange(e ? 1 : 0)}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e)}
                 />
               </CheckBoxWrapper>
             )}

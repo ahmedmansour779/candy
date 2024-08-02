@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SearchOutlined } from "@ant-design/icons";
-import { useMutation, useQuery } from "@tanstack/react-query";
+// import { useMutation, useQuery } from "@tanstack/react-query";
 import { Input, Tabs } from "antd";
 import { useSearchParams } from "react-router-dom";
-import settingApi from "../../../api/admin/settingApi";
+// import settingApi from "../../../api/admin/settingApi";
 import PageHeading from "../../../components/PageHeading";
-import { ISettingKey, SubscriptionSettings } from "../../../types/backend";
+// import { ISettingKey } from "../../../types/backend";
 import AnalyticsTab from "./AnalyticsTab";
 import AuthenticationTab from "./AuthenticationTab";
 import DriveTab from "./DriveTab";
@@ -15,6 +16,8 @@ import SubscriptionTab from "./SubscriptionTab";
 import UploadingTab from "./UploadingTab";
 import Cache from "./Cache";
 import Logging from "./Logging";
+import { useEffect, useState } from "react";
+import { fetchAdminSetting } from "../../../api/getAdminSetting";
 
 enum EnumTab {
   general = 1,
@@ -35,21 +38,27 @@ const Index = () => {
   const tabKey = (searchParams.get("tab") || "general") as TabKey;
   const tabIndex = String(EnumTab[tabKey]) || "1";
 
-  const SettingData = useQuery({
-    queryKey: ["roles"],
-    queryFn: () => settingApi.getAllSettings(),
-  });
+  // const SettingData = useQuery({
+  //   queryKey: ["roles"],
+  //   queryFn: () => settingApi.getAllSettings(),
+  // });
 
-  const updateMutation = useMutation({
-    mutationFn: (data: ISettingKey) => settingApi.updateSetting(data),
-    onSuccess: () => {
-      SettingData.refetch();
-    },
-  });
-  console.log(SettingData.data?.General);
+  // const updateMutation = useMutation({
+  //   mutationFn: (data: ISettingKey) => settingApi.updateSetting(data),
+  //   onSuccess: () => {
+  //     SettingData.refetch();
+  //   },
+  // });
+  // console.log(SettingData.data)
+
+  const [data,setData] = useState<any>({})
+  useEffect(()=>{
+    fetchAdminSetting(setData)
+  },[])
+  console.log(data)
 
   return (
-    <div className="p-8 max-md:p-4">
+    <div className="mb-16 sm:mb-0 p-8 max-md:p-4 ml-[30px] side sm:ml-[160px] md:ml-[250px] lg:ml-0">
       {" "}
       <PageHeading title="Settings">
         <Input
@@ -58,7 +67,7 @@ const Index = () => {
           prefix={<SearchOutlined />}
         />
       </PageHeading>
-      {SettingData.data && (
+      {data && (
         <Tabs
           defaultActiveKey="1"
           items={[
@@ -66,11 +75,7 @@ const Index = () => {
               key: "1",
               label: "General",
               children: (
-                <GeneralTab
-                  data={SettingData.data?.General}
-                  onSave={updateMutation.mutate}
-                  isLoading={updateMutation.isLoading}
-                />
+                <GeneralTab data={data?.General}/>
               ),
             },
             {
@@ -78,9 +83,7 @@ const Index = () => {
               label: "Drive",
               children: (
                 <DriveTab
-                  data={SettingData.data?.Drive}
-                  onSave={updateMutation.mutate}
-                  isLoading={updateMutation.isLoading}
+                  data={data?.Drive}
                 />
               ),
             },
@@ -89,9 +92,7 @@ const Index = () => {
               label: "Subscription",
               children: (
                 <SubscriptionTab
-                  data={SettingData.data.Subscriptions as unknown as SubscriptionSettings}
-                  onSave={updateMutation.mutate}
-                  isLoading={updateMutation.isLoading}
+                  data={data?.Subscriptions}
                 />
               ),
             },
@@ -99,11 +100,7 @@ const Index = () => {
               key: "4",
               label: "Localization",
               children: (
-                <LocalizationTab
-                // data={SettingData.data?.Localization}
-                // onSave={updateMutation.mutate}
-                // isLoading={updateMutation.isLoading}
-                />
+                <LocalizationTab data={data?.Localization}/>
               ),
             },
             {
@@ -111,9 +108,7 @@ const Index = () => {
               label: "Analytics",
               children: (
                 <AnalyticsTab
-                // data={SettingData.data?.analytics}
-                // onSave={updateMutation.mutate}
-                // isLoading={updateMutation.isLoading}
+                data={data?.analytics}
                 />
               ),
             },
@@ -122,9 +117,7 @@ const Index = () => {
               label: "Authentication",
               children: (
                 <AuthenticationTab
-                // data={SettingData.data?.Authentication}
-                // onSave={updateMutation.mutate}
-                // isLoading={updateMutation.isLoading}
+                data={data?.Outgoing_email_settings}
                 />
               ),
             },
@@ -133,9 +126,7 @@ const Index = () => {
               label: "Outgoing email",
               children: (
                 <OutgoingEmailTab
-                // data={SettingData.data?.Outgoing_email_settings}
-                // onSave={updateMutation.mutate}
-                // isLoading={updateMutation.isLoading}
+                  data={data?.Authentication}
                 />
               ),
             },
@@ -143,7 +134,7 @@ const Index = () => {
               key: "8",
               label: "Uploading",
               children: (
-                <UploadingTab
+                <UploadingTab data={data?.uploads}
                 />
               ),
             },

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import SettingHeader from "../../../components/SettingHeader";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
-import { Flex, Form, Input, Select } from "antd";
+import { Button, Flex, Form, Input, Select } from "antd";
 import InputWrapper from "../../../components/UI/InputWrapper";
 
 interface Inputs {
@@ -12,10 +13,10 @@ interface Inputs {
   single_device_login: number;
   compact_buttons: number;
   google_login: number;
-  google_client_id: string;
-  google_client_secret: string;
+  "mail_from_address": string;
+  "mail->contact_page_address": string;
   facebook_login: number;
-  facebook_app_id: string;
+  "mail_from_name": string;
   facebook_app_secret: string;
   twitter_login: number;
   twitter_id: string;
@@ -40,13 +41,13 @@ const outgoingEmailSchema = yup.object({
   domain_blacklist: yup.string().label("Domain blacklist"),
 });
 
-const OutgoingEmailTab = () => {
-  const { handleSubmit, control } = useForm<Inputs>({
+const OutgoingEmailTab = ({data}:{data:any}) => {
+  const { handleSubmit, control, reset } = useForm<Inputs>({
     resolver: yupResolver(outgoingEmailSchema),
-    defaultValues: {},
+    defaultValues: {...data},
   });
   const onSubmit = (data: Inputs) => {
-    data;
+    console.log(data);
   };
   return (
     <div>
@@ -65,7 +66,7 @@ const OutgoingEmailTab = () => {
           gap={"0.5rem"}
         >
           <Controller
-            name="google_client_id"
+            name="mail_from_address"
             control={control}
             render={({ field }) => (
               <InputWrapper
@@ -82,7 +83,7 @@ const OutgoingEmailTab = () => {
             )}
           />
           <Controller
-            name="google_client_secret"
+            name="mail->contact_page_address"
             control={control}
             render={({ field }) => (
               <InputWrapper
@@ -99,7 +100,7 @@ const OutgoingEmailTab = () => {
             )}
           />
           <Controller
-            name="facebook_app_id"
+            name="mail_from_name"
             control={control}
             render={({ field }) => (
               <InputWrapper
@@ -182,6 +183,29 @@ const OutgoingEmailTab = () => {
               </InputWrapper>
             )}
           />
+        </Flex>
+        <Flex
+          gap={12}
+          justify="end"
+          className="w-full max-md:flex-col-reverse "
+        >
+          <Button
+            className="max-md:w-full h-fit py-2 px-4"
+            onClick={() => {
+              reset();
+            }}
+          >
+            {" "}
+            Cancel
+          </Button>
+          <Button
+            htmlType="submit"
+            type="primary"
+            className="max-md:w-full h-fit py-2 px-4"
+          >
+            {" "}
+            Save
+          </Button>
         </Flex>
       </Form>
     </div>

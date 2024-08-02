@@ -1,25 +1,27 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { Button, Flex, Form, Input, Select } from "antd";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import SettingHeader from "../../../components/SettingHeader";
 import InputWrapper from "../../../components/UI/InputWrapper";
-import { GeneralSettings } from "../../../types/backend";
+import { fetchAdminSetting } from "../../../api/getAdminSetting";
+import { useEffect, useState } from "react";
+
 interface Inputs {
   app_url: string;
   "homepage->type": string;
   "themes->default_id": number;
+  "themes->user_change"?: boolean;
 }
 
 const GeneralTab = ({
   data,
-  onSave,
-  isLoading,
 }: {
-  data: GeneralSettings;
-  onSave: (data: Inputs) => void;
-  isLoading: boolean;
+  data:any
 }) => {
+  
   const {
     handleSubmit,
     control,
@@ -33,14 +35,14 @@ const GeneralTab = ({
         default_theme: yup.number().label("Required"),
       })
     ),
-    defaultValues: {
-      ...data,
-    },
+    defaultValues: {...data},
   });
-  console.log(errors);
 
   const onSubmit = (data: Inputs) => {
-    onSave(data);
+    console.log(data);
+    const str = JSON.stringify(data);
+    const str2 = str.replaceAll("{","").replaceAll("}","").replaceAll(":","=").replaceAll(",","&").replaceAll('"',"").replaceAll('=//',"://")
+    console.log(str2);
   };
 
   return (
@@ -65,7 +67,7 @@ const GeneralTab = ({
             control={control}
             render={({ field }) => (
               <InputWrapper title={"Primary Site URL"}>
-                <Input
+                <Input 
                   {...field}
                   placeholder="Enter site url"
                   className=" rounded-2xl border-none py-3 px-3"
@@ -80,7 +82,6 @@ const GeneralTab = ({
               <InputWrapper title={"Site Homepage "}>
                 <Select
                   {...field}
-                  defaultValue={1}
                   className="flex-1 h-auto w-full  [&>.ant-select-selector]:!border-none [&>.ant-select-selector]:!px-3 [&>.ant-select-selector]:!py-3       "
                   options={[
                     { value: "loginPage", label: "Login Page" },
@@ -100,7 +101,6 @@ const GeneralTab = ({
                 <Flex className="w-full">
                   <Select
                     {...field}
-                    defaultValue={1}
                     className="flex-1 h-auto w-full  [&>.ant-select-selector]:!border-none [&>.ant-select-selector]:!px-3 [&>.ant-select-selector]:!py-3       "
                     options={[
                       { value: 0, label: "Default System" },
@@ -137,7 +137,6 @@ const GeneralTab = ({
               htmlType="submit"
               type="primary"
               className="max-md:w-full h-fit py-2 px-4"
-              loading={isLoading}
             >
               {" "}
               Save

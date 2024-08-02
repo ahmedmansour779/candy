@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { Button, Flex, Form, Radio, Space, Switch } from "antd";
 import { Controller, useForm } from "react-hook-form";
@@ -5,22 +6,17 @@ import * as yup from "yup";
 import SettingHeader from "../../../components/SettingHeader";
 import CheckBoxWrapper from "../../../components/UI/CheckBoxWrapper";
 import RadioWrapper from "../../../components/UI/RadioWrapper";
-import { DriveSettings } from "../../../types/backend";
 
 interface Inputs {
   "drive->default_view": string;
-  "drive->send_share_notification": boolean;
+  "drive->send_share_notification": number;
   "share->suggest_emails": boolean;
 }
 
 const DriveTab = ({
   data,
-  onSave,
-  isLoading,
 }: {
-  data: DriveSettings;
-  onSave: (data: Inputs) => void;
-  isLoading: boolean;
+  data: any;
 }) => {
   const { handleSubmit, control } = useForm<Inputs>({
     resolver: yupResolver(
@@ -33,7 +29,7 @@ const DriveTab = ({
   });
 
   const onSubmit = (data: Inputs) => {
-    onSave(data);
+    console.log(data);
   };
 
   return (
@@ -76,7 +72,7 @@ const DriveTab = ({
                 desc="Send a notification to user when a file or folder is shared with them."
               >
                 <Switch
-                  checked={field.value}
+                  checked={field.value === 1 ? true : false}
                   onChange={(e) => field.onChange(e ? 1 : 0)}
                 />
               </CheckBoxWrapper>
@@ -103,7 +99,6 @@ const DriveTab = ({
             htmlType="submit"
             type="primary"
             className="max-md:w-full h-fit py-2 px-4"
-            loading={isLoading}
           >
             {" "}
             Update

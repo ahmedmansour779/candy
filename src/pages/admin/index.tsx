@@ -20,7 +20,7 @@ const index = () => {
 
 
   return (
-    <div className="p-8">
+    <div className="p-8 ml-[30px] side sm:ml-[160px] md:ml-[250px] lg:ml-0">
       <PageHeading title="Visitors Report">
         <div className="flex h-full">
           {" "}

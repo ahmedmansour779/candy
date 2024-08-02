@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import SettingHeader from "../../../components/SettingHeader";
 import { Controller, useForm } from "react-hook-form";
@@ -9,10 +11,10 @@ import InputWrapper from "../../../components/UI/InputWrapper";
 import TextArea from "antd/es/input/TextArea";
 
 interface Inputs {
-  require_email_confirmation: number;
-  disable_registration: number;
-  single_device_login: number;
-  compact_buttons: number;
+  "require_email_confirmation": boolean;
+  "registration->disable": boolean;
+  "single_device_login": boolean;
+  "social->compact_buttons": boolean;
   google_login: number;
   google_client_id: string;
   google_client_secret: string;
@@ -22,14 +24,14 @@ interface Inputs {
   twitter_login: number;
   twitter_id: string;
   twitter_secret: string;
-  domain_blacklist: string;
+  "auth->domain_blacklist": string;
 }
 
 const authenticationSchema = yup.object({
-  require_email_confirmation: yup.number().label("Require email confirmation"),
-  disable_registration: yup.number().label("Disable registration"),
-  single_device_login: yup.number().label("Single device login"),
-  compact_buttons: yup.number().label("Compact buttons"),
+  "require_email_confirmation": yup.number().label("Require email confirmation"),
+  "registration->disable": yup.number().label("Disable registration"),
+  "single_device_login": yup.number().label("Single device login"),
+  "social->compact_buttons": yup.number().label("Compact buttons"),
   google_login: yup.number().label("Google login"),
   google_client_id: yup.string().label("Google client ID"),
   google_client_secret: yup.string().label("Google client secret"),
@@ -39,16 +41,16 @@ const authenticationSchema = yup.object({
   twitter_login: yup.number().label("Twitter login"),
   twitter_id: yup.string().label("Twitter ID"),
   twitter_secret: yup.string().label("Twitter secret"),
-  domain_blacklist: yup.string().label("Domain blacklist"),
+  "auth->domain_blacklist": yup.string().label("Domain blacklist"),
 });
 
-const AuthenticationTab = () => {
+const AuthenticationTab = ({data}:{data:any}) => {
   const { handleSubmit, control, reset } = useForm<Inputs>({
     resolver: yupResolver(authenticationSchema),
-    defaultValues: {},
+    defaultValues: {...data},
   });
   const onSubmit = (data: Inputs) => {
-    data;
+    console.log(data);
   };
   return (
     <div className="">
@@ -76,14 +78,14 @@ const AuthenticationTab = () => {
                 desc="Require newly registered users to validate their email address before being able to login.                "
               >
                 <Switch
-                  checked={field.value === 1}
-                  onChange={(e) => field.onChange(e ? 1 : 0)}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e)}
                 />
               </CheckBoxWrapper>
             )}
           />
           <Controller
-            name="disable_registration"
+            name="registration->disable"
             control={control}
             render={({ field }) => (
               <CheckBoxWrapper
@@ -91,8 +93,8 @@ const AuthenticationTab = () => {
                 desc="All registration related functionality (including social login) will be disabled.                "
               >
                 <Switch
-                  checked={field.value === 1}
-                  onChange={(e) => field.onChange(e ? 1 : 0)}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e)}
                 />
               </CheckBoxWrapper>
             )}
@@ -106,14 +108,14 @@ const AuthenticationTab = () => {
                 desc="Only allow one device to be logged into user account at the same time."
               >
                 <Switch
-                  checked={field.value === 1}
-                  onChange={(e) => field.onChange(e ? 1 : 0)}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e)}
                 />
               </CheckBoxWrapper>
             )}
           />
           <Controller
-            name="compact_buttons"
+            name="social->compact_buttons"
             control={control}
             render={({ field }) => (
               <CheckBoxWrapper
@@ -121,8 +123,8 @@ const AuthenticationTab = () => {
                 desc="Use compact design for social login buttons."
               >
                 <Switch
-                  checked={field.value === 1}
-                  onChange={(e) => field.onChange(e ? 1 : 0)}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e)}
                 />
               </CheckBoxWrapper>
             )}
@@ -254,7 +256,7 @@ const AuthenticationTab = () => {
             )}
           />
           <Controller
-            name="domain_blacklist"
+            name="auth->domain_blacklist"
             control={control}
             render={({ field }) => (
               <InputWrapper title={"Domain blacklist"}>

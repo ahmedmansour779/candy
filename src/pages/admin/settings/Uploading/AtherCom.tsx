@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-const AtherCom = () => {
+const AtherCom = ({register}:{register:any}) => {
     return (
         <div className="py-5">
             <div>
                 <label htmlFor="file">Maximum file size</label>
                 <div className="flex">
-                    <input type="number" id="file" defaultValue={"3"} className="h-9 mt-2 outline-none w-[200px] rounded px-2 border focus:border-blue-400 focus:shadow focus:shadow-blue-300"/>
+                    <input  {...register("uploads->max_size")} type="number" id="file" defaultValue={"3"} className="h-9 mt-2 outline-none w-[200px] rounded px-2 border focus:border-blue-400 focus:shadow focus:shadow-blue-300"/>
                     <select name="" id="" className="h-9 mt-2 outline-none w-[100px] rounded px-2 border focus:border-blue-400 focus:shadow focus:shadow-blue-300">
                         <option value="bytes">Bytes</option>
                         <option value="KB">KB</option>
@@ -21,7 +22,7 @@ const AtherCom = () => {
             <div className="mt-5">
                 <label htmlFor="space">Available space</label>
                 <div className="flex">
-                    <input type="number" id="space" defaultValue={"100"} className="h-9 mt-2 outline-none w-[200px] rounded px-2 border focus:border-blue-400 focus:shadow focus:shadow-blue-300"/>
+                    <input  {...register("uploads->available_space")} type="number" id="space" defaultValue={100} className="h-9 mt-2 outline-none w-[200px] rounded px-2 border focus:border-blue-400 focus:shadow focus:shadow-blue-300"/>
                     <select name="" id="" className="h-9 mt-2 outline-none w-[100px] rounded px-2 border focus:border-blue-400 focus:shadow focus:shadow-blue-300">
                         <option value="bytes">Bytes</option>
                         <option value="KB">KB</option>
@@ -36,14 +37,14 @@ const AtherCom = () => {
             </div>
             <div className="mt-5">
                 <label htmlFor="Allowed">Allowed extensions</label><br />
-                <input type="text" id="Allowed" placeholder="Add extension..." className="h-9 mt-2 outline-none w-[300px] rounded px-2 border focus:border-blue-400 focus:shadow focus:shadow-blue-300"/>
+                <input {...register("uploads->allowed_extensions")} type="text" id="Allowed" placeholder="Add extension..." className="h-9 mt-2 outline-none w-[300px] rounded px-2 border focus:border-blue-400 focus:shadow focus:shadow-blue-300"/>
                 <p className='text-xs text-gray-500 mt-2'>
                     List of allowed file types (jpg, mp3, pdf etc.). Leave empty to allow all file types.
                 </p>
             </div>
             <div className="mt-5">
                 <label htmlFor="Blocked">Blocked extensions</label><br />
-                <input type="text" id="Blocked" placeholder="Add extension..." className="h-9 mt-2 outline-none w-[300px] rounded px-2 border focus:border-blue-400 focus:shadow focus:shadow-blue-300"/>
+                <input {...register("uploads->blocked_extensions")} type="text" id="Blocked" placeholder="Add extension..." className="h-9 mt-2 outline-none w-[300px] rounded px-2 border focus:border-blue-400 focus:shadow focus:shadow-blue-300"/>
                 <p className='text-xs text-gray-500 mt-2'>
                     Prevent uploading of these file types, even if they are allowed above.
                 </p>
