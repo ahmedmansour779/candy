@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SearchOutlined } from "@ant-design/icons";
-// import { useMutation, useQuery } from "@tanstack/react-query";
 import { Input, Tabs } from "antd";
 import { useSearchParams } from "react-router-dom";
-// import settingApi from "../../../api/admin/settingApi";
 import PageHeading from "../../../components/PageHeading";
-// import { ISettingKey } from "../../../types/backend";
 import AnalyticsTab from "./AnalyticsTab";
 import AuthenticationTab from "./AuthenticationTab";
 import DriveTab from "./DriveTab";
@@ -37,19 +34,6 @@ const Index = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const tabKey = (searchParams.get("tab") || "general") as TabKey;
   const tabIndex = String(EnumTab[tabKey]) || "1";
-
-  // const SettingData = useQuery({
-  //   queryKey: ["roles"],
-  //   queryFn: () => settingApi.getAllSettings(),
-  // });
-
-  // const updateMutation = useMutation({
-  //   mutationFn: (data: ISettingKey) => settingApi.updateSetting(data),
-  //   onSuccess: () => {
-  //     SettingData.refetch();
-  //   },
-  // });
-  // console.log(SettingData.data)
 
   const [data,setData] = useState<any>({})
   useEffect(()=>{

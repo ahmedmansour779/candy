@@ -20,7 +20,7 @@ const index = () => {
 
 
   return (
-    <div className="p-8 ml-[30px] side sm:ml-[160px] md:ml-[250px] lg:ml-0">
+    <div className="p-8 mb-16 sm:mb-0 ml-[30px] side sm:ml-[160px] md:ml-[250px] lg:ml-0">
       <PageHeading title="Visitors Report">
         <div className="flex h-full">
           {" "}
@@ -53,7 +53,7 @@ const index = () => {
       {
         briefItems && <BriefInfo items={briefItems} />
       }
-      <div className="grid grid-cols-2 gap-4 my-4 max-md:grid-cols-1">
+      <div className="grid grid-cols-1 gap-4 my-4 lg:grid-cols-2">
         <div className="h-full w-full p-4 rounded-lg shadow bg-white">
           <LineChartComponent />
         </div>

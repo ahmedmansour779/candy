@@ -7,7 +7,7 @@ import PricingCard from "../../components/cards/PricingCard";
 const { Text, Title } = Typography;
 export default function Pricing() {
   return (
-    <Page docTitle="Pricing" className="py-8 px-4 leading-none ">
+    <Page docTitle="Pricing" className="py-8 px-4 leading-none mb-16 sm:mb-0 ml-[30px] side sm:ml-[160px] md:ml-[250px] lg:ml-0">
       <PricingComponent />
     </Page>
   );
@@ -61,7 +61,7 @@ export enum PricingTypes {
 
 const MonthlyPricing = () => {
   return (
-    <>
+    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
       {monthlyPricingData.map((item, i) => (
         <PricingCard
           key={i}
@@ -70,12 +70,12 @@ const MonthlyPricing = () => {
           perPrice={item.perPrice}
         />
       ))}
-    </>
+    </div>
   );
 };
 const AnnualPricing = () => {
   return (
-    <>
+    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
       {annualPricingData.map((item, i) => (
         <PricingCard
           key={i}
@@ -85,6 +85,6 @@ const AnnualPricing = () => {
           type="annual"
         />
       ))}
-    </>
+    </div>
   );
 };

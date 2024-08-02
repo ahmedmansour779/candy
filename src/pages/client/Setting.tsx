@@ -30,7 +30,7 @@ const Setting = () => {
   const tabIndex = String(EnumTab[tabKey]) || "1";
 
   return (
-    <div className="p-8 max-md:p-4">
+    <div className="p-8 max-md:p-4 mb-16 sm:mb-0 ml-[30px] side sm:ml-[160px] md:ml-[250px] lg:ml-0">
       {" "}
       <PageHeading title="Settings">
         <Input
