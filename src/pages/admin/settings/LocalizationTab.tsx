@@ -27,7 +27,7 @@ const LocalizationTab = ({data}:{data:any}) => {
   });
 
   const onSubmit = (data: Inputs) => {
-    data;
+    console.log(data);
   };
   return (
     <div className="">

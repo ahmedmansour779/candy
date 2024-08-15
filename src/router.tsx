@@ -44,12 +44,12 @@ const router = createBrowserRouter([
 
     children: [
       {
+        index: true,
+        element: <LandingPage />,
+      },
+      {
         element: <ProtectRoute/>,
         children : [
-          {
-            index: true,
-            element: <LandingPage />,
-          },
           {
             element: <LayoutPage />,
             children: [

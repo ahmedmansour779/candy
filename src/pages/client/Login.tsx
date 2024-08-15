@@ -63,7 +63,12 @@ const Login = () => {
               Welcome back! Please enter your details.
             </Text>
           </Space>
-          <Form onFinish={handleSubmit(onSubmit)} className="mt-8">
+          <div className="flex justify-center gap-3 mt-4 sm:gap-6">
+            <button className="bg-green-500 w-[120px] text-white p-2 px-3 rounded-md text-lg">Google</button>
+            <button className="bg-blue-500 w-[120px] text-white p-2 px-3 rounded-md text-lg">Facebook</button>
+            <button className="bg-black w-[120px] text-white p-2 px-3 rounded-md text-lg">X</button>
+          </div>
+          <Form onFinish={handleSubmit(onSubmit)} className="mt-5">
             {" "}
             <Flex
               style={{ marginTop: "1rem", flexDirection: "column" }}
@@ -108,7 +113,7 @@ const Login = () => {
                 {errors.password?.message}
               </Text>
             </Flex>
-            <div className="flex flex-wrap gap-3 justify-between items-center mt-3 mb-5">
+            <div className="flex flex-wrap items-center justify-between gap-3 mt-3 mb-5">
               <Checkbox onChange={() => {}} className=" text-[#888888]">
                 Remember for 30 days
               </Checkbox>
@@ -120,7 +125,7 @@ const Login = () => {
               // loading={login.isLoading}
               htmlType="submit"
               type="primary"
-              className="px-8 py-3 h-auto w-full"
+              className="w-full h-auto px-8 py-3"
             >
               Sign In
             </Button>

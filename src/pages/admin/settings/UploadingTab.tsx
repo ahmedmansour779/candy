@@ -14,7 +14,9 @@ import { useForm } from "react-hook-form";
 
 const UploadingTab = ({data}:{data:any}) => {
     const [method,setMethod] = useState("")
-    const {register,handleSubmit,control,formState:{errors}} = useForm()
+    const {register,handleSubmit,control,formState:{errors}} = useForm({
+        defaultValues:{...data},
+    })
     const onSubmit = (data:any)=>{
         console.log(data);
         const str = JSON.stringify(data);
@@ -61,7 +63,7 @@ const UploadingTab = ({data}:{data:any}) => {
                         <Dropbox method={method} />
                         <File control={control}/>
                         <Chunk register={register}/>
-                        <AtherCom register={register}/>
+                        <AtherCom register={register} control={control}/>
                         <button className='bg-blue-500 hover:bg-blue-600 p-3 rounded text-white'>
                             Update
                         </button>
