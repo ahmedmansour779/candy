@@ -101,7 +101,7 @@ const Index = () => {
               label: "Authentication",
               children: (
                 <AuthenticationTab
-                data={data?.Outgoing_email_settings}
+                data={data?.Authentication}
                 />
               ),
             },
@@ -110,7 +110,7 @@ const Index = () => {
               label: "Outgoing email",
               children: (
                 <OutgoingEmailTab
-                  data={data?.Authentication}
+                  data={data?.Outgoing_email_settings}
                 />
               ),
             },

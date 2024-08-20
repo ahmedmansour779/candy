@@ -1,9 +1,17 @@
 import { WorkSpace } from "../types/backend";
 import axiosInstance from "./index";
+import Cookies from "js-cookie";
 
 function getWorkspaces() {
+  const token = Cookies.get("user")
   return axiosInstance.get<null, { pagination: { data: WorkSpace[] } }>(
-    "v1/workspace"
+    "v1/workspace",{
+      headers:{
+        "Authorization" : `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    }
   );
 }
 

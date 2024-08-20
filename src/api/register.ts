@@ -11,7 +11,7 @@ interface IProp {
     password: string;
     password_confirmation: string;
     job_occubation: string;
-    Add_company: string;
+    add_company: string;
     token_name: string;
 }
 
@@ -25,7 +25,7 @@ export const fetchDataRegister = (data:IProp,navigate:any) => {
         }
     }).then(res=>{
         // console.log(res)
-        // navigate("/login")
+        navigate("/login")
     })
     .catch((err)=>console.log(err))
 };

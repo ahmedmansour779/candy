@@ -10,9 +10,7 @@ import { Card1Icons } from "../../utils/cardsData";
 import HomeHead from "../../components/UI/HomeHead";
 import { Flex, Select, Typography } from "antd";
 import SectionTitle from "../../components/shared/SectionTitle";
-import { useQuery } from "@tanstack/react-query";
 import MyFoldersTable from "../../components/tables/MyFoldersTable";
-import filesApi from "../../api/filesApi";
 import { BarChart, Bar, ResponsiveContainer, Rectangle, XAxis } from "recharts";
 
 import uploadIcon from "../../assets/icons/upload_icon.svg";
@@ -24,6 +22,7 @@ import { fetchDataRecentView } from "../../api/amt/workspace/recent";
 import Cookies from "js-cookie";
 import { addUser } from "../../store/slices/userSlice";
 import { fetchGetAllStar } from "../../api/amt/workspace/GetAllStar";
+import { fetchGetUser } from "../../api/getUser";
 
 const { Text } = Typography;
 
@@ -52,24 +51,14 @@ export default function Home() {
     }
   }, [catchFile]);
 
-  const fileEntries = useQuery({
-    queryKey: ["file_entries"],
-    queryFn: () => {
-      return filesApi.getFileEntries();
-    },
-  });
-
   const dispatch = useDispatch()
   const [recent,setRecent] = useState<any[]>([])
   const [dataStar,setData] = useState<any[]>([])
   useEffect(() => {
     fetchDataRecentView(setRecent)
-    const user = Cookies.get("user")
-    // console.log(JSON.parse(user as string));
-    dispatch(addUser(JSON.parse(user as string)))
+    fetchGetUser()
     fetchGetAllStar(setData,dispatch)
   },[])
-  // console.log(user)
 
   return (
     <Page className="p-4 ml-[30px] side sm:ml-[160px] md:ml-[250px] lg:ml-0">

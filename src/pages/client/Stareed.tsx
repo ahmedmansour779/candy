@@ -22,38 +22,40 @@ const Stareed = () => {
                 <h1 className="text-3xl">Starred</h1>
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5 mt-3 pb-16 sm:pb-0">
                     {
-                        data?.map((item,index)=>
-                            <div key={index} className="h-fit cursor-pointer flex flex-col border overflow-hidden rounded-2xl">
-                                <div className="h-[125px] w-full max-md:h-[200px]">
-                                    {
-                                    item.type === "video" ? 
-                                    <video src={`https://angeloai.co/${item.url}`} className="w-full h-full object-cover" controls></video>
-                                    :
-                                    <img
-                                        className="w-full h-full object-cover "
-                                        alt="example"
-                                        src={`https://angeloai.co/${item.url}`}
-                                    />
-                                    }
-                                </div>
-                                <div
-                                    className={`flex flex-col items-center justify-center w-full gap-2 p-2 px-2 duration-150 bg-[#0154A01A]`}
-                                >
-                                    <div className="leading-none flex-center gap-2 ">
+                        data.length > 0 ?
+                            data?.map((item,index)=>
+                                <div key={index} className="h-fit cursor-pointer flex flex-col border overflow-hidden rounded-2xl">
+                                    <div className="h-[125px] w-full max-md:h-[200px]">
                                         {
-                                            item.type === "video" ? <PlayCircleFilled className="text-primary-600 text-2xl" />
-                                            :null
+                                        item.type === "video" ? 
+                                        <video src={`https://angeloai.co/${item.url}`} className="w-full h-full object-cover" controls></video>
+                                        :
+                                        <img
+                                            className="w-full h-full object-cover "
+                                            alt="example"
+                                            src={`https://angeloai.co/${item.url}`}
+                                        />
                                         }
-                                        <Text className="text-primary-500">
-                                            {truncate(item.name, { length: 20 })}
+                                    </div>
+                                    <div
+                                        className={`flex flex-col items-center justify-center w-full gap-2 p-2 px-2 duration-150 bg-[#0154A01A]`}
+                                    >
+                                        <div className="leading-none flex-center gap-2 ">
+                                            {
+                                                item.type === "video" ? <PlayCircleFilled className="text-primary-600 text-2xl" />
+                                                :null
+                                            }
+                                            <Text className="text-primary-500">
+                                                {truncate(item.name, { length: 20 })}
+                                            </Text>
+                                        </div>
+                                        <Text className="text-gray-600">
+                                        {convertBytes(item.file_size)}
                                         </Text>
                                     </div>
-                                    <Text className="text-gray-600">
-                                    {convertBytes(item.file_size)}
-                                    </Text>
                                 </div>
-                            </div>
-                        )
+                            )
+                        : <p className="text-center text-xl mt-5">No items in starred</p>
                     }
                 </div>
             </div>

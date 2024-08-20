@@ -30,7 +30,7 @@ interface Inputs {
     password: string;
     password_confirmation: string;
     job_occubation: string;
-    Add_company: string;
+    add_company: string;
 }
 const Register = () => {
     const navigate = useNavigate();
@@ -46,7 +46,7 @@ const Register = () => {
                 age: yup.string().required().label("The age"),
                 gender: yup.string().required().label("The gender"),
                 job_occubation: yup.string().required().label("The job occupation"),
-                Add_company: yup.string().required().label("The company name"),
+                add_company: yup.string().required().label("The company name"),
                 email: yup.string().email().required().label("The email"),
                 password: yup.string().required().min(8).label("The password"),
                 password_confirmation: yup.string().required().label("The password confirmation"),
@@ -231,14 +231,14 @@ const Register = () => {
                     gap={"0.5rem"}
                     >
                         <Controller
-                            name="Add_company"
+                            name="add_company"
                             control={control}
                             render={({ field }) => (
                             <Input {...field} placeholder="Company Name" defaultValue="" />
                             )}
                         />
                         <Text type={"danger"} className="font-normal text-start">
-                            {errors.Add_company?.message}
+                            {errors.add_company?.message}
                         </Text>
                     </Flex>
                     <Flex
