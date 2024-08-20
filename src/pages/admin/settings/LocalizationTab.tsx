@@ -7,6 +7,7 @@ import SettingHeader from "../../../components/SettingHeader";
 import CheckBoxWrapper from "../../../components/UI/CheckBoxWrapper";
 import InputWrapper from "../../../components/UI/InputWrapper";
 import RadioWrapper from "../../../components/UI/RadioWrapper";
+import { fetchEditAdminSetting } from "../../../api/EditAdminSettings";
 interface Inputs {
   "dates->default_timezone": string;
   "locale->default": string;
@@ -27,7 +28,8 @@ const LocalizationTab = ({data}:{data:any}) => {
   });
 
   const onSubmit = (data: Inputs) => {
-    console.log(data);
+    // console.log(data);
+    fetchEditAdminSetting(data)
   };
   return (
     <div className="">

@@ -19,9 +19,6 @@ const UploadingTab = ({data}:{data:any}) => {
     })
     const onSubmit = (data:any)=>{
         console.log(data);
-        const str = JSON.stringify(data);
-        const str2 = str.replaceAll("{","").replaceAll("}","").replaceAll(":","=").replaceAll(",","&").replaceAll('"',"").replaceAll('=//',"://")
-        console.log(str2);
     }
     return (
         <div>

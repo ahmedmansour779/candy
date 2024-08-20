@@ -6,10 +6,11 @@ import * as yup from "yup";
 import SettingHeader from "../../../components/SettingHeader";
 import CheckBoxWrapper from "../../../components/UI/CheckBoxWrapper";
 import RadioWrapper from "../../../components/UI/RadioWrapper";
+import { fetchEditAdminSetting } from "../../../api/EditAdminSettings";
 
 interface Inputs {
   "drive->default_view": string;
-  "drive->send_share_notification": number;
+  "drive->send_share_notification": boolean;
   "share->suggest_emails": boolean;
 }
 
@@ -29,7 +30,8 @@ const DriveTab = ({
   });
 
   const onSubmit = (data: Inputs) => {
-    console.log(data);
+    // console.log(data);
+    fetchEditAdminSetting(data)
   };
 
   return (
@@ -72,8 +74,8 @@ const DriveTab = ({
                 desc="Send a notification to user when a file or folder is shared with them."
               >
                 <Switch
-                  checked={field.value === 1 ? true : false}
-                  onChange={(e) => field.onChange(e ? 1 : 0)}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e)}
                 />
               </CheckBoxWrapper>
             )}

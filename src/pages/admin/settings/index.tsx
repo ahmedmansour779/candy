@@ -51,7 +51,7 @@ const Index = () => {
           prefix={<SearchOutlined />}
         />
       </PageHeading>
-      {data && (
+      {data.General && (
         <Tabs
           defaultActiveKey="1"
           items={[

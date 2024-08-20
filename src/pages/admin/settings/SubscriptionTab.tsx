@@ -7,6 +7,7 @@ import SettingHeader from "../../../components/SettingHeader";
 import CheckBoxWrapper from "../../../components/UI/CheckBoxWrapper";
 import InputWrapper from "../../../components/UI/InputWrapper";
 import { PAYMENT_METHODS } from "../../../constants/paymentMethods";
+import { fetchEditAdminSetting } from "../../../api/EditAdminSettings";
 
 interface Inputs {
   "billing->enable": boolean;
@@ -19,7 +20,7 @@ interface Inputs {
   stripe_publishable_key: string;
   stripe_secret_key: string;
   stripe_webhook_signing_secret: string;
-  accepted_cards: number[];
+  "billing->accepted_cards": string[];
 }
 
 const subscriptionSchema = yup.object({
@@ -40,7 +41,7 @@ const subscriptionSchema = yup.object({
     .label("Stripe Webhook Signing Secret")
     .required(),
   view_status: yup.number().label("View Status"),
-  accepted_cards: yup.array().of(yup.number()).label("Accepted Cards"),
+  "billing->accepted_cards": yup.array().of(yup.string()).label("Accepted Cards"),
 });
 
 const SubscriptionTab = ({
@@ -48,12 +49,18 @@ const SubscriptionTab = ({
 }: {
   data: any;
 }) => {
+  const accept = JSON.parse(data["billing->accepted_cards"])
+  // console.log(accept)
+
   const { handleSubmit, control, reset } = useForm<Inputs>({
     resolver: yupResolver(subscriptionSchema),
-    defaultValues: { ...data },
+    defaultValues: { ...data,"billing->accepted_cards":accept },
   });
   const onSubmit = (data: Inputs) => {
     console.log(data);
+    const correctData = {...data,"billing->accepted_cards":JSON.stringify(data["billing->accepted_cards"])}
+    console.log(correctData)
+    fetchEditAdminSetting(correctData)
   };
   return (
     <div className="">
@@ -214,7 +221,7 @@ const SubscriptionTab = ({
             )}
           />
           <Controller
-            name="accepted_cards"
+            name="billing->accepted_cards"
             control={control}
             render={({ field }) => (
               <InputWrapper title={"Primary Site URL"}>

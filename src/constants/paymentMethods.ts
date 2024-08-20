@@ -1,14 +1,14 @@
 const PAYMENT_METHODS = [
-  { value: 1, label: "Visa" },
-  { value: 2, label: "Mastercard" },
-  { value: 3, label: "Discover" },
-  { value: 4, label: "American Express" },
-  { value: 5, label: "JCB" },
-  { value: 6, label: "Diners Club" },
-  { value: 7, label: "UnionPay" },
-  { value: 8, label: "Maestro" },
-  { value: 9, label: "Solo" },
-  { value: 10, label: "Carte Blanche" },
+  { value: "visa", label: "Visa" },
+  { value: "mastercard", label: "Mastercard" },
+  { value: "discover", label: "Discover" },
+  { value: "american-express", label: "American Express" },
+  { value: "JCB", label: "JCB" },
+  { value: "diners-club", label: "Diners Club" },
+  { value: "unionPay", label: "UnionPay" },
+  { value: "maestro", label: "Maestro" },
+  { value: "solo", label: "Solo" },
+  { value: "carte-blanche", label: "Carte Blanche" },
 ];
 
 const RED = "red";

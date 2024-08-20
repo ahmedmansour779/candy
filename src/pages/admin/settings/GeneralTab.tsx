@@ -8,6 +8,7 @@ import SettingHeader from "../../../components/SettingHeader";
 import InputWrapper from "../../../components/UI/InputWrapper";
 import { fetchAdminSetting } from "../../../api/getAdminSetting";
 import { useEffect, useState } from "react";
+import { fetchEditAdminSetting } from "../../../api/EditAdminSettings";
 
 interface Inputs {
   app_url: string;
@@ -30,19 +31,20 @@ const GeneralTab = ({
   } = useForm<Inputs>({
     resolver: yupResolver(
       yup.object({
-        primary_site_url: yup.string().label("Required"),
-        site_homepage: yup.string().label("Required"),
-        default_theme: yup.number().label("Required"),
+        app_url: yup.string().label("Required"),
+        "homepage->type": yup.string().label("Required"),
+        "themes->default_id": yup.number().label("Required"),
       })
     ),
     defaultValues: {...data},
   });
 
   const onSubmit = (data: Inputs) => {
-    console.log(data);
-    const str = JSON.stringify(data);
-    const str2 = str.replaceAll("{","").replaceAll("}","").replaceAll(":","=").replaceAll(",","&").replaceAll('"',"").replaceAll('=//',"://")
-    console.log(str2);
+    // console.log(data);
+    fetchEditAdminSetting(data)
+    // const str = JSON.stringify(data);
+    // const str2 = str.replaceAll("{","").replaceAll("}","").replaceAll(":","=").replaceAll(",","&").replaceAll('"',"").replaceAll('=//',"://")
+    // console.log(str2);
   };
 
   return (
@@ -67,7 +69,7 @@ const GeneralTab = ({
             control={control}
             render={({ field }) => (
               <InputWrapper title={"Primary Site URL"}>
-                <Input 
+                <Input
                   {...field}
                   placeholder="Enter site url"
                   className=" rounded-2xl border-none py-3 px-3"

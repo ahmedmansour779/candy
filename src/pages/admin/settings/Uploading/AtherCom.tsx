@@ -54,10 +54,11 @@ const AtherCom = ({register,control}:{register:any,control:any}) => {
                         <label htmlFor="Blocked">Blocked extensions</label><br />
                         <Select
                         mode="tags"
+                        size="middle"
                         {...field}
                         placeholder="Add extension..."
                         id="Blocked"
-                        className="flex-1 mt-2 h-12 w-[300px] rounded border focus:border-blue-400 focus:shadow focus:shadow-blue-300"
+                        className="flex-1 mt-2 h-auto w-auto rounded border focus:border-blue-400 focus:shadow focus:shadow-blue-300"
                         ></Select>
                     </>
                     )}
