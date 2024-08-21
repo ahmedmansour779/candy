@@ -1,14 +1,15 @@
+import Cookies from "js-cookie";
 import { Dispatch, SetStateAction } from "react";
 
 export const fetchDataAboutUs = async (setData: SetStateAction<Dispatch<string | null>>) => {
     const url = `http://43.204.110.25/api/about-us`;
-
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json"
+                "Accept": "application/json",
+                "Authorization":"Bearer "+Cookies.get("user")
             }
         });
 

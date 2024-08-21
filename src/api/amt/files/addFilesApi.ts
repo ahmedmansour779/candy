@@ -1,13 +1,15 @@
+import Cookies from "js-cookie";
 import { Dispatch, SetStateAction } from "react";
 
 export const addFiles = async (setData: Dispatch<SetStateAction<string | null>>, formData: FormData) => {
     const url = `${import.meta.env.VITE_API_URL}/v1/files`;
+    const token = Cookies.get("user")
 
     try {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                "Authorization":"Bearer "+token
             },
             body: formData
         });

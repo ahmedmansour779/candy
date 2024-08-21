@@ -1,6 +1,9 @@
+import Cookies from "js-cookie";
+
 const myHeaders = new Headers();
 myHeaders.append("Accept", "application/json");
 myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", "Bearer " + Cookies.get("user"));
 
 export const postShareWithEmail = async (emails: string[]) => {
     const url = `${import.meta.env.VITE_API_URL}/file-entries/62/share`
