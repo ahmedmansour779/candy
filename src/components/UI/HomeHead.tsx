@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
@@ -26,6 +27,8 @@ import { BellIcon, DataIcon } from "../../icons/icons";
 import { WorkSpace } from "../../types/backend";
 import DeleteModal from "../modals/DeleteModal";
 import AddMemberModal from "../modals/AddMember";
+import { useDispatch } from "react-redux";
+import { addWorkspace } from "../../store/slices/workspace";
 
 const { useToken } = theme;
 const data = [
@@ -79,6 +82,11 @@ function HomeHead() {
     },
   });
 
+  const dispatch = useDispatch()
+  const clickItem = (item:any)=>{
+    console.log(item)
+    dispatch(addWorkspace(item))
+  }
   useEffect(() => {
     // Get the cookie
     const myCookie = Cookies.get("activeWorkspaceId");
@@ -91,7 +99,7 @@ function HomeHead() {
           return {
             key: item.id,
             label: (
-              <Flex
+              <Flex onClick={()=>clickItem(item)}
                 justify="space-between"
                 align="center"
                 style={{
@@ -224,9 +232,9 @@ function HomeHead() {
   };
 
   return (
-    <div className="leading-none mb-8 flex items-center w-full justify-between gap-2 lg:gap-8 ">
+    <div className="flex items-center justify-between w-full gap-2 mb-8 leading-none lg:gap-8 ">
       <SearchBar />
-      <div className="leading-none flex-center h-full">
+      <div className="h-full leading-none flex-center">
         <Button
           onClick={() => storageClosure.onOpen()}
           type="link"

@@ -11,6 +11,7 @@ import File from "./Uploading/File";
 import Chunk from "./Uploading/Chunk";
 import AtherCom from "./Uploading/AtherCom";
 import { useForm } from "react-hook-form";
+import { fetchEditAdminSetting } from "../../../api/EditAdminSettings";
 
 const UploadingTab = ({data}:{data:any}) => {
     const [method,setMethod] = useState("")
@@ -19,6 +20,7 @@ const UploadingTab = ({data}:{data:any}) => {
     })
     const onSubmit = (data:any)=>{
         console.log(data);
+        fetchEditAdminSetting(data)
     }
     return (
         <div>
@@ -40,9 +42,9 @@ const UploadingTab = ({data}:{data:any}) => {
                                 <option value="dropbox">Dropbox</option>
                                 <option value="rackspace">Rackspace</option>
                             </select>
-                            <p className="text-xs mt-1 text-gray-500">Where should user private file uploads be stored.</p>
+                            <p className="mt-1 text-xs text-gray-500">Where should user private file uploads be stored.</p>
                         </div>
-                        <div className="mt-6 border-b pb-4">
+                        <div className="pb-4 mt-6 border-b">
                             <label htmlFor="public">Public Uploads Storage Method</label><br />
                             <select {...register("uploads->uploads_driver")} onChange={(e)=>setMethod(e.target.value)} id="public" className="h-9 px-2 rounded mt-2 outline-none w-[300px] border">
                                 <option value="local">Local Disk (Default)</option>
@@ -51,7 +53,7 @@ const UploadingTab = ({data}:{data:any}) => {
                                 <option value="digital">DigitalOcean Spaces</option>
                                 <option value="backblaze">Backblaze</option>
                             </select>
-                            <p className="text-xs mt-1 text-gray-500">Where should user public uploads (like avatars) be stored.</p>
+                            <p className="mt-1 text-xs text-gray-500">Where should user public uploads (like avatars) be stored.</p>
                         </div>
                         <Ftp method={method} register={register} control={control} />
                         <Digital method={method} register={register} control={control} />
@@ -61,7 +63,7 @@ const UploadingTab = ({data}:{data:any}) => {
                         <File control={control}/>
                         <Chunk register={register}/>
                         <AtherCom register={register} control={control}/>
-                        <button className='bg-blue-500 hover:bg-blue-600 p-3 rounded text-white'>
+                        <button className='p-3 text-white bg-blue-500 rounded hover:bg-blue-600'>
                             Update
                         </button>
                     </div>

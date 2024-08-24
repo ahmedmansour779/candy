@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
 import SettingHeader from "../../../components/SettingHeader";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -9,48 +8,82 @@ import { Button, Flex, Form, Input, Switch } from "antd";
 import CheckBoxWrapper from "../../../components/UI/CheckBoxWrapper";
 import InputWrapper from "../../../components/UI/InputWrapper";
 import TextArea from "antd/es/input/TextArea";
+import { fetchEditAdminSetting } from "../../../api/EditAdminSettings";
 
 interface Inputs {
   "require_email_confirmation": boolean;
   "registration->disable": boolean;
   "single_device_login": boolean;
   "social->compact_buttons": boolean;
-  google_login: number;
-  google_client_id: string;
-  google_client_secret: string;
-  facebook_login: number;
-  facebook_app_id: string;
-  facebook_app_secret: string;
-  twitter_login: number;
+  google_login: boolean;
+  google_id: string;
+  google_secret: string;
+  facebook_login: boolean;
+  facebook_id: string;
+  facebook_secret: string;
+  twitter_login: boolean;
   twitter_id: string;
   twitter_secret: string;
   "auth->domain_blacklist": string;
 }
 
 const authenticationSchema = yup.object({
-  "require_email_confirmation": yup.number().label("Require email confirmation"),
-  "registration->disable": yup.number().label("Disable registration"),
-  "single_device_login": yup.number().label("Single device login"),
-  "social->compact_buttons": yup.number().label("Compact buttons"),
-  google_login: yup.number().label("Google login"),
-  google_client_id: yup.string().label("Google client ID"),
-  google_client_secret: yup.string().label("Google client secret"),
-  facebook_login: yup.number().label("Facebook login"),
-  facebook_app_id: yup.string().label("Facebook app ID"),
-  facebook_app_secret: yup.string().label("Facebook app secret"),
-  twitter_login: yup.number().label("Twitter login"),
+  "require_email_confirmation": yup.boolean().label("Require email confirmation"),
+  "registration->disable": yup.boolean().label("Disable registration"),
+  "single_device_login": yup.boolean().label("Single device login"),
+  "social->compact_buttons": yup.boolean().label("Compact buttons"),
+  google_login: yup.boolean().label("Google login"),
+  google_id: yup.string().label("Google client ID"),
+  google_secret: yup.string().label("Google client secret"),
+  facebook_login: yup.boolean().label("Facebook login"),
+  facebook_id: yup.string().label("Facebook app ID"),
+  facebook_secret: yup.string().label("Facebook app secret"),
+  twitter_login: yup.boolean().label("Twitter login"),
   twitter_id: yup.string().label("Twitter ID"),
   twitter_secret: yup.string().label("Twitter secret"),
   "auth->domain_blacklist": yup.string().label("Domain blacklist"),
 });
 
 const AuthenticationTab = ({data}:{data:any}) => {
+  const {google , facebook, twitter} = data 
   const { handleSubmit, control, reset } = useForm<Inputs>({
     resolver: yupResolver(authenticationSchema),
-    defaultValues: {...data},
+    defaultValues: {
+      ...data,
+      google_id:google.google_id,
+      google_secret:google.google_secret,
+      facebook_id:facebook.facebook_id,
+      facebook_secret:facebook.facebook_secret,
+      twitter_id:twitter.twitter_id,
+      twitter_secret:twitter.twitter_secret
+    },
   });
   const onSubmit = (data: Inputs) => {
     console.log(data);
+    const allData = {
+      "auth->domain_blacklist":data["auth->domain_blacklist"],
+      "registration->disable":data["registration->disable"],
+      "require_email_confirmation":data["require_email_confirmation"],
+      "single_device_login":data["single_device_login"],
+      "social->compact_buttons":data["social->compact_buttons"],
+      google:{
+        google_id:data.google_id,
+        google_secret:data.google_secret,
+        google_login:data.google_login,
+      },
+      facebook:{
+        facebook_id:data.facebook_id,
+        facebook_secret:data.facebook_secret,
+        facebook_login:data.facebook_login,
+      },
+      twitter:{
+        twitter_id:data.twitter_id,
+        twitter_secret:data.twitter_secret,
+        twitter_login:data.twitter_login,
+      }
+    }
+    console.log(allData)
+    fetchEditAdminSetting(allData)
   };
   return (
     <div className="">
@@ -138,36 +171,36 @@ const AuthenticationTab = ({data}:{data:any}) => {
                 desc="Enable logging into the site via google."
               >
                 <Switch
-                  checked={field.value === 1}
-                  onChange={(e) => field.onChange(e ? 1 : 0)}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e)}
                 />
               </CheckBoxWrapper>
             )}
           />
           <Controller
-            name="google_client_id"
+            name="google_id"
             control={control}
             render={({ field }) => (
               <InputWrapper title={"Google client ID"}>
                 <Input
                   {...field}
                   placeholder="Enter Google client ID"
-                  className=" rounded-2xl border-none py-3 px-3"
-                  defaultValue={"I9YcHbapz0hZmiR4bBSqHZZOYNYjK7"}
+                  className="px-3 py-3 border-none rounded-2xl"
+                  // defaultValue={"I9YcHbapz0hZmiR4bBSqHZZOYNYjK7"}
                 />
               </InputWrapper>
             )}
           />
           <Controller
-            name="google_client_secret"
+            name="google_secret"
             control={control}
             render={({ field }) => (
               <InputWrapper title={"Google client secret"}>
                 <Input
                   {...field}
                   placeholder="Enter Google client secret"
-                  className=" rounded-2xl border-none py-3 px-3"
-                  defaultValue={"H6VCef9bdbfVzKhCvY4fBvOKDp9RVS"}
+                  className="px-3 py-3 border-none rounded-2xl"
+                  // defaultValue={"H6VCef9bdbfVzKhCvY4fBvOKDp9RVS"}
                 />
               </InputWrapper>
             )}
@@ -181,35 +214,35 @@ const AuthenticationTab = ({data}:{data:any}) => {
                 desc="Enable logging into the site via facebook."
               >
                 <Switch
-                  checked={field.value === 1}
-                  onChange={(e) => field.onChange(e ? 1 : 0)}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e)}
                 />
               </CheckBoxWrapper>
             )}
           />
           <Controller
-            name="facebook_app_id"
+            name="facebook_id"
             control={control}
             render={({ field }) => (
               <InputWrapper title={"Facebook app ID"}>
                 <Input
                   {...field}
                   placeholder="Enter Facebook app ID"
-                  className=" rounded-2xl border-none py-3 px-3"
-                  defaultValue={"HTnVSjWjrhFa9pIYXmLlZpUk79Q60Y"}
+                  className="px-3 py-3 border-none rounded-2xl"
+                  // defaultValue={"HTnVSjWjrhFa9pIYXmLlZpUk79Q60Y"}
                 />
               </InputWrapper>
             )}
           />{" "}
           <Controller
-            name="facebook_app_secret"
+            name="facebook_secret"
             control={control}
             render={({ field }) => (
               <InputWrapper title={"Facebook app secret"}>
                 <Input
                   {...field}
                   placeholder="Enter Facebook app secret"
-                  className=" rounded-2xl border-none py-3 px-3"
+                  className="px-3 py-3 border-none rounded-2xl"
                 />
               </InputWrapper>
             )}
@@ -223,8 +256,8 @@ const AuthenticationTab = ({data}:{data:any}) => {
                 desc="Enable logging into the site via twitter."
               >
                 <Switch
-                  checked={field.value === 1}
-                  onChange={(e) => field.onChange(e ? 1 : 0)}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e)}
                 />
               </CheckBoxWrapper>
             )}
@@ -237,7 +270,7 @@ const AuthenticationTab = ({data}:{data:any}) => {
                 <Input
                   {...field}
                   placeholder="Enter Twitter ID"
-                  className=" rounded-2xl border-none py-3 px-3"
+                  className="px-3 py-3 border-none rounded-2xl"
                 />
               </InputWrapper>
             )}
@@ -250,7 +283,7 @@ const AuthenticationTab = ({data}:{data:any}) => {
                 <Input
                   {...field}
                   placeholder="Enter Twitter secret"
-                  className=" rounded-2xl border-none py-3 px-3"
+                  className="px-3 py-3 border-none rounded-2xl"
                 />
               </InputWrapper>
             )}
@@ -263,7 +296,7 @@ const AuthenticationTab = ({data}:{data:any}) => {
                 <TextArea
                   rows={8}
                   {...field}
-                  className=" rounded-2xl border-none py-3 px-3"
+                  className="px-3 py-3 border-none rounded-2xl"
                 />
               </InputWrapper>
             )}
@@ -275,7 +308,7 @@ const AuthenticationTab = ({data}:{data:any}) => {
           className="w-full max-md:flex-col-reverse "
         >
           <Button
-            className="max-md:w-full h-fit py-2 px-4"
+            className="px-4 py-2 max-md:w-full h-fit"
             onClick={() => {
               reset();
             }}
@@ -286,7 +319,7 @@ const AuthenticationTab = ({data}:{data:any}) => {
           <Button
             htmlType="submit"
             type="primary"
-            className="max-md:w-full h-fit py-2 px-4"
+            className="px-4 py-2 max-md:w-full h-fit"
           >
             {" "}
             Save

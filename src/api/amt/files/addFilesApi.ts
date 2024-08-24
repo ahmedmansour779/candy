@@ -14,12 +14,13 @@ export const addFiles = async (setData: Dispatch<SetStateAction<string | null>>,
             body: formData
         });
 
-        if (!response.ok) {
-            const errorMessage = `HTTP error! Status: ${response.status} - ${response.statusText}`;
-            throw new Error(errorMessage);
-        }
+        // if (!response.ok) {
+        //     const errorMessage = `HTTP error! Status: ${response.status} - ${response.statusText}`;
+        //     throw new Error(errorMessage);
+        // }
 
         const data = await response.json();
+        console.log(data)
         setData(data);
     } catch (error) {
         console.error('Error fetching data:', error);

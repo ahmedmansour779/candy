@@ -19,10 +19,10 @@ function HeaderContent({
   const logout = () => {
     Cookies.remove("user")
     dispatch(removeUser())
-    myUrl("/login")
+    myUrl("/")
   };
   return (
-    <div className="overflow-y-scroll h-full">
+    <div className="h-full overflow-y-scroll">
       <div className="flex px-5 justify-center sm:flex-col sm:justify-between items-center gap-[15px] sm:gap-[30px] h-full">
         <div className="flex sm:flex-col gap-[15px] sm:gap-[30px]  items-center">
           {properItems.map(({ link, icon }, index) => (

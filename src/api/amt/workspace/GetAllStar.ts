@@ -13,7 +13,7 @@ export const fetchGetAllStar = (setData:any,dispatch:any)=>{
             "Accept": "application/json"
         }
     }).then(res=>{
-        console.log(res)
+        // console.log(res)
         setData([...res.data.data])
         dispatch(getStarred([...res.data.data]))
     })

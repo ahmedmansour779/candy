@@ -10,16 +10,18 @@ import Feat3 from "../../src/assets/images/feat3.png";
 
 import { Button, Flex, Image, Input, Typography } from "antd";
 import { Link } from "react-router-dom";
-import { MenuOutlined } from "@ant-design/icons";
+import { MenuOutlined, XOutlined } from "@ant-design/icons";
 
 import { PricingComponent } from "../pages/client/Pricing";
 
 const { Text } = Typography;
 
 const LandingPage = () => {
+  const [dispaly,setDisplay] = useState("right-[-100%]")
   return (
     <>
-      <Header />
+      <Header display={dispaly} setDisplay={setDisplay}/>
+      <ASide display={dispaly}/>
       <div className="px-20 max-lg:px-4 bg-[url('./assets/images/BG.png')]">
         <div className="pt-12"></div>
         <HeroTitle />
@@ -35,7 +37,7 @@ const LandingPage = () => {
 
 export default LandingPage;
 
-const Header = () => {
+const Header = ({display,setDisplay}:{display:string,setDisplay:React.Dispatch<React.SetStateAction<string>>}) => {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -84,20 +86,54 @@ const Header = () => {
 
       <Button
         type="primary"
-        className="hidden max-lg:flex h-auto px-4 py-4 bg-[#EAEBF0] shadow-none"
-        onClick={() => alert("burger menu not implemented yet")}
+        className="hidden group max-lg:flex h-auto px-4 py-4 bg-[#EAEBF0] shadow-none"
+        onClick={() => setDisplay(display==="right-[-100%]" ? "right-0" : "right-[-100%]")}
       >
-        <MenuOutlined style={{ color: "#0154A0", width: "1rem" }} />
+        {
+          display === "right-[-100%]" ?
+          <MenuOutlined style={{ width: "1rem" }} className="text-[#0154A0] group-hover:text-white" />
+          :<XOutlined style={{ width: "1rem" }} className="text-[#0154A0] group-hover:text-white" />
+        }
       </Button>
     </Flex>
   );
 };
 
+const ASide = ({display}:{display:string})=>{
+  return(
+    <div className={`${display} duration-500 lg:hidden w-[300px] bg-[#EAEBF0] z-50 h-full fixed top-20 px-6 py-8`}>
+      <ul className="flex flex-col items-center justify-center gap-16">
+          <a href="#solutions" className="text-[#24336A] hover:text-[#69b1ff] duration-300 text-lg">
+            <li>Solutions</li>
+          </a>
+          <a href="#about_us" className="text-[#24336A] hover:text-[#69b1ff] duration-300 text-lg">
+            <li>About Us</li>
+          </a>
+          <a href="#pricing" className="text-[#24336A] hover:text-[#69b1ff] duration-300 text-lg">
+            <li>Pricing</li>
+          </a>
+      </ul>
+      <div className="flex justify-center my-16">
+        <Button type="primary" className="text-base">
+          Contact
+        </Button>
+      </div>
+      <div className="flex justify-center">
+        <Link to="/login" className="">
+          <Button type="primary" className="text-base">
+            Login
+          </Button>
+        </Link>
+      </div>
+    </div>
+  )
+}
+
 const HeroTitle = () => {
   return (
-    <div className="mt-20  flex ">
+    <div className="flex mt-20 ">
       <Flex vertical className="text-center w-full max-w-[974px] mx-auto">
-        <Flex vertical className=" text-center ">
+        <Flex vertical className="text-center ">
           {" "}
           <Text className="text-8xl text-[#222E57] font-semibold max-md:text-5xl mb-8">
             Effortless Cloud{" "}
@@ -114,12 +150,12 @@ const HeroTitle = () => {
         </Flex>
 
         <Flex className="justify-center mb-8">
-          <Flex className=" gap-2 max-w-lg w-full max-md:flex-col">
+          <Flex className="w-full max-w-lg gap-2 max-md:flex-col">
             <Input
               className="!py-3"
               placeholder="enter your email here"
             ></Input>
-            <Button type="primary" className="h-auto py-3 px-6">
+            <Button type="primary" className="h-auto px-6 py-3">
               Start free trial
             </Button>
           </Flex>
@@ -132,7 +168,7 @@ const HeroTitle = () => {
         ></Image>
         <Image
           preview={false}
-          className="max-md:block hidden"
+          className="hidden max-md:block"
           src={MockupMobile}
           alt="Mockup"
         ></Image>
@@ -143,8 +179,8 @@ const HeroTitle = () => {
 
 const Partners = () => {
   return (
-    <div id="solutions" className="py-10 max-w-full overflow-x-hidden">
-      <Flex justify="center" className="w-max overflow-x-hidden">
+    <div id="solutions" className="max-w-full py-10 overflow-x-hidden">
+      <Flex justify="center" className="overflow-x-hidden w-max">
         {Array(3).fill(
           <img
             src={Parteners}
@@ -174,7 +210,7 @@ const Features = () => {
           robust security measures in place.
         </Text>
       </Flex>
-      <Flex vertical className="mt-20 gap-20 max-md:gap-10">
+      <Flex vertical className="gap-20 mt-20 max-md:gap-10">
         {features.map((feature, index) => (
           <Feature key={index} feature={feature} reverse={index % 2 === 1} />
         ))}
@@ -256,7 +292,7 @@ const Feature = ({
       </div>
 
       <Flex vertical className="flex-1 w-full" gap={8}>
-        <Text className="text-2xl text-black font-medium mb-4">{title}</Text>
+        <Text className="mb-4 text-2xl font-medium text-black">{title}</Text>
 
         <Flex
           className="p-6 rounded-3xl border-[1px] border-[#EAEBF0]"
@@ -265,7 +301,7 @@ const Feature = ({
         >
           {desc.map((item, index) => (
             <Flex key={index} vertical gap={10} className="pb-6">
-              <Text className="text-base text-black font-medium">
+              <Text className="text-base font-medium text-black">
                 {item.title}
               </Text>
               <Text className="text-base text-[#888888] font-normal">

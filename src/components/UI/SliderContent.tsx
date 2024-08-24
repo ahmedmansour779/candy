@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Dropdown, Image, MenuProps, Typography } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -15,15 +17,15 @@ import {
   StarFilled,
   DeleteFilled
 } from "@ant-design/icons";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import SidebarFolders from "./SidebarFolders";
 
 import BottomMenuCurve from "../../assets/images/bottom-side.png";
 import TopMenuCurve from "../../assets/images/top-side.png";
 import { TrashIcon } from "../../icons/icons";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store/store";
 import { setCatchFile } from "../../store/slices/GlobalSlice";
 import { addFiles } from "../../api/amt/files/addFilesApi";
 
@@ -37,10 +39,14 @@ export default function SliderContent() {
 
   const [data, setData] = useState<string | null>(null);
 
+  const workspace:any = useSelector((state:RootState)=>state.workspace)
+  // console.log("workspace => 1",workspace)
+  
   const onDrop = useCallback((acceptedFiles: File[]) => {
+    console.log("workspace => 2",workspace)
     const formData = new FormData();
-    formData.append("workspaceId", "15");
-    formData.append("owner_id", "15");
+    formData.append("workspaceId", `${workspace.id}`);
+    formData.append("owner_id", `${workspace.owner_id}`);
 
     // Object.entries(acceptedFiles).forEach((file: any) => {
       formData.append("file", acceptedFiles[0]);
@@ -48,12 +54,20 @@ export default function SliderContent() {
 
     dispatch(setCatchFile(acceptedFiles));
     addFiles(setData,formData);
-  }, []);
+  }, [workspace]);
 
 
   const { open } = useDropzone({
     onDrop,
   });
+
+
+  const inputRef:any = useRef(null);
+
+  const handleFolderSelect = (event:any) => {
+    const files = event.target.files;
+    console.log("Selected files:", files);
+  };
 
   const uploadButtonItems: MenuProps["items"] = [
     {
@@ -63,7 +77,20 @@ export default function SliderContent() {
       onClick: () => open(),
     },
     {
-      label: "Upload folder",
+      label: 
+      <div>
+        <label htmlFor="folderInput">
+          <button onClick={() => inputRef.current.click()}>Upload Folder</button>
+        </label>
+        <input
+          type="file"
+          id="folderInput"
+          ref={inputRef}
+          multiple
+          style={{ display: 'none' }}
+          onChange={handleFolderSelect}
+          onClick={() => inputRef.current.setAttribute('webkitdirectory', 'true')}/>
+      </div>,
       key: "2",
       icon: <FolderOutlined />,
     },
@@ -75,8 +102,8 @@ export default function SliderContent() {
   ];
 
   return (
-    <div className="px-6 flex flex-col h-full gap-9 overflow-y-scroll">
-      <div className="cursor-pointer flex" onClick={() => navigate("/drive")}>
+    <div className="flex flex-col h-full px-6 overflow-y-scroll gap-9">
+      <div className="flex cursor-pointer" onClick={() => navigate("/drive")}>
         <Image src={Logo} preview={false} width={130} />
       </div>
 
@@ -88,7 +115,7 @@ export default function SliderContent() {
           className="rounded-full !w-10"
         />
         <Dropdown menu={{ items: itemsmenu }} trigger={["click"]}>
-          <div className="bg-primary-light text-primary-500 leading-none p-3 rounded-2xl text-xs gap-1 flex cursor-pointer">
+          <div className="flex gap-1 p-3 text-xs leading-none cursor-pointer bg-primary-light text-primary-500 rounded-2xl">
             {isAdminLink ? "Admin" : "My Workspace"}
             <DownOutlined />
           </div>

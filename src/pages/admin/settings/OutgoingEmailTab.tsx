@@ -6,39 +6,26 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { Button, Flex, Form, Input, Select } from "antd";
 import InputWrapper from "../../../components/UI/InputWrapper";
+import { fetchEditAdminSetting } from "../../../api/EditAdminSettings";
 
 interface Inputs {
-  require_email_confirmation: number;
-  disable_registration: number;
-  single_device_login: number;
-  compact_buttons: number;
-  google_login: number;
   "mail_from_address": string;
   "mail->contact_page_address": string;
-  facebook_login: number;
   "mail_from_name": string;
-  facebook_app_secret: string;
-  twitter_login: number;
-  twitter_id: string;
-  twitter_secret: string;
-  domain_blacklist: string;
+  mail_driver: string;
+  mailgun_domain: string;
+  mailgun_api: string;
+  mailgun_endpoint: string;
 }
 
 const outgoingEmailSchema = yup.object({
-  require_email_confirmation: yup.number().label("Require email confirmation"),
-  disable_registration: yup.number().label("Disable registration"),
-  single_device_login: yup.number().label("Single device login"),
-  compact_buttons: yup.number().label("Compact buttons"),
-  google_login: yup.number().label("Google login"),
-  google_client_id: yup.string().label("Google client ID"),
-  google_client_secret: yup.string().label("Google client secret"),
-  facebook_login: yup.number().label("Facebook login"),
-  facebook_app_id: yup.string().label("Facebook app ID"),
-  facebook_app_secret: yup.string().label("Facebook app secret"),
-  twitter_login: yup.number().label("Twitter login"),
-  twitter_id: yup.string().label("Twitter ID"),
-  twitter_secret: yup.string().label("Twitter secret"),
-  domain_blacklist: yup.string().label("Domain blacklist"),
+  "mail_from_address": yup.string().label("From address"),
+  "mail->contact_page_address": yup.string().label("Contact page address"),
+  "mail_from_name": yup.string().label("From name"),
+  mail_driver: yup.string().label("Outgoing mail method"),
+  mailgun_domain: yup.string().label("Mailgun domain"),
+  mailgun_api: yup.string().label("Mailgun API key"),
+  mailgun_endpoint: yup.string().label("Mailgun endpoint"),
 });
 
 const OutgoingEmailTab = ({data}:{data:any}) => {
@@ -48,6 +35,7 @@ const OutgoingEmailTab = ({data}:{data:any}) => {
   });
   const onSubmit = (data: Inputs) => {
     console.log(data);
+    fetchEditAdminSetting(data)
   };
   return (
     <div>
@@ -76,8 +64,8 @@ const OutgoingEmailTab = ({data}:{data:any}) => {
               >
                 <Input
                   {...field}
-                  className=" rounded-2xl border-none py-3 px-3"
-                  defaultValue={"contact@candycloudy.com"}
+                  className="px-3 py-3 border-none rounded-2xl"
+                  // defaultValue={"contact@candycloudy.com"}
                 />
               </InputWrapper>
             )}
@@ -93,8 +81,8 @@ const OutgoingEmailTab = ({data}:{data:any}) => {
               >
                 <Input
                   {...field}
-                  className=" rounded-2xl border-none py-3 px-3"
-                  defaultValue={"contact@candycloudy.com"}
+                  className="px-3 py-3 border-none rounded-2xl"
+                  // defaultValue={"contact@candycloudy.com"}
                 />
               </InputWrapper>
             )}
@@ -109,34 +97,34 @@ const OutgoingEmailTab = ({data}:{data:any}) => {
               >
                 <Input
                   {...field}
-                  className=" rounded-2xl border-none py-3 px-3"
-                  defaultValue={"candycloudy"}
+                  className="px-3 py-3 border-none rounded-2xl"
+                  // defaultValue={"candycloudy"}
                 />
               </InputWrapper>
             )}
           />{" "}
           <Controller
-            name="disable_registration"
+            name="mail_driver"
             control={control}
             render={({ field }) => (
               <InputWrapper title={"Outgoing mail method"}>
                 <Select
                   {...field}
-                  defaultValue={1}
+                  // defaultValue={1}
                   className="flex-1 h-auto w-full  [&>.ant-select-selector]:!border-none [&>.ant-select-selector]:!px-3 [&>.ant-select-selector]:!py-3       "
                   options={[
-                    { value: 1, label: "Maligun" },
-                    { value: 2, label: "Gmail Api" },
-                    { value: 3, label: "SMTP" },
-                    { value: 4, label: "Postmark" },
-                    { value: 5, label: "Ses" },
+                    { value: "maligun", label: "Maligun" },
+                    { value: "gmail api", label: "Gmail Api" },
+                    { value: "smtp", label: "SMTP" },
+                    { value: "postmark", label: "Postmark" },
+                    { value: "ses", label: "Ses" },
                   ]}
                 ></Select>
               </InputWrapper>
             )}
           />
           <Controller
-            name="facebook_app_secret"
+            name="mailgun_domain"
             control={control}
             render={({ field }) => (
               <InputWrapper
@@ -145,14 +133,14 @@ const OutgoingEmailTab = ({data}:{data:any}) => {
               >
                 <Input
                   {...field}
-                  className=" rounded-2xl border-none py-3 px-3"
-                  defaultValue={"candycloudy.com"}
+                  className="px-3 py-3 border-none rounded-2xl"
+                  // defaultValue={"candycloudy.com"}
                 />
               </InputWrapper>
             )}
           />
           <Controller
-            name="twitter_id"
+            name="mailgun_api"
             control={control}
             render={({ field }) => (
               <InputWrapper
@@ -161,14 +149,14 @@ const OutgoingEmailTab = ({data}:{data:any}) => {
               >
                 <Input
                   {...field}
-                  className=" rounded-2xl border-none py-3 px-3"
-                  defaultValue={"KwvMVMZTT0FvuglJENsb7MY3w1f6fq"}
+                  className="px-3 py-3 border-none rounded-2xl"
+                  // defaultValue={"KwvMVMZTT0FvuglJENsb7MY3w1f6fq"}
                 />
               </InputWrapper>
             )}
           />{" "}
           <Controller
-            name="twitter_secret"
+            name="mailgun_endpoint"
             control={control}
             render={({ field }) => (
               <InputWrapper
@@ -178,7 +166,7 @@ const OutgoingEmailTab = ({data}:{data:any}) => {
                 <Input
                   {...field}
                   placeholder="api.eu.mailgun.net"
-                  className=" rounded-2xl border-none py-3 px-3"
+                  className="px-3 py-3 border-none rounded-2xl"
                 />
               </InputWrapper>
             )}
@@ -190,7 +178,7 @@ const OutgoingEmailTab = ({data}:{data:any}) => {
           className="w-full max-md:flex-col-reverse "
         >
           <Button
-            className="max-md:w-full h-fit py-2 px-4"
+            className="px-4 py-2 max-md:w-full h-fit"
             onClick={() => {
               reset();
             }}
@@ -201,7 +189,7 @@ const OutgoingEmailTab = ({data}:{data:any}) => {
           <Button
             htmlType="submit"
             type="primary"
-            className="max-md:w-full h-fit py-2 px-4"
+            className="px-4 py-2 max-md:w-full h-fit"
           >
             {" "}
             Save

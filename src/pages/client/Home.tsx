@@ -66,12 +66,12 @@ export default function Home() {
 
       <Flex gap={24} className="max-xl:flex-col">
         <Flex vertical gap={32} flex={1} className="w-full">
-          <div className="grid grid-cols-3 max-lg:grid-cols-2    gap-6">
+          <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2">
             {Card1Icons.map((item, i) => (
               <Card1 key={i} icon={item.icon} text={item.text} dataSize={12} />
             ))}
           </div>
-          {/* <div className="flex flex-wrap gap-4 w-full">
+          {/* <div className="flex flex-wrap w-full gap-4">
             {fileEntries?.data?.data &&
               fileEntries?.data?.data.map((item, i) => {
                 if (item.type === "image")
@@ -80,7 +80,7 @@ export default function Home() {
           </div> */}
           <SectionTitle title="Recent view" />
 
-          <div className="grid grid-cols-3 max-xl:grid-cols-2 max-lg:grid-cols-1  gap-6">
+          <div className="grid grid-cols-3 gap-6 max-xl:grid-cols-2 max-lg:grid-cols-1">
             {
               recent.map((items,index)=>
                 <CardWithMenu key={index}
@@ -94,7 +94,7 @@ export default function Home() {
         </Flex>
         <div className="max-w-[336px] min-w-[336px] max-xl:max-w-none w-full">
           {" "}
-          <div className="flex justify-between items-center mb-4  max-md:flex-col max-md:items-start gap-4 ">
+          <div className="flex items-center justify-between gap-4 mb-4 max-md:flex-col max-md:items-start ">
             <Text className="text-lg text-[#0154A0] font-medium">
               My Activity
             </Text>
@@ -133,9 +133,9 @@ export default function Home() {
               ></Bar>
             </BarChart>
           </ResponsiveContainer>
-          <div className="flex  gap-16 mt-4">
-            <div className=" flex justify-between  rounded-lg">
-              <div className="flex gap-3 items-center">
+          <div className="flex gap-16 mt-4">
+            <div className="flex justify-between rounded-lg ">
+              <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-[#0154A0] flex justify-center items-center rounded-lg">
                   <img src={uploadIcon} alt="" />
                 </div>
@@ -147,8 +147,8 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className=" flex justify-between  rounded-lg">
-              <div className="flex gap-3 items-center">
+            <div className="flex justify-between rounded-lg ">
+              <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-[#0154A0] flex justify-center items-center rounded-lg">
                   <img src={red} alt="" />
                 </div>
@@ -162,7 +162,7 @@ export default function Home() {
             </div>
           </div>
           <SectionTitle title="File Success Upload" />
-          <div className="flex flex-col pb-20 sm:pb-0 gap-4 mt-4">
+          <div className="flex flex-col gap-4 pb-20 mt-4 sm:pb-0">
             {Card1Icons.map((item, i) => (
               <CardUpload
                 key={i}

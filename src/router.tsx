@@ -35,6 +35,7 @@ import SubsciptionsPlanEdit from "./pages/admin/plans/SubsciptionsPlanEdit";
 import ProtectRoute from "./pages/client/ProtectRoute";
 import Register from "./pages/client/Register";
 import Stareed from "./pages/client/Stareed";
+import GoglbalRoute from "./pages/client/GoglbalRoute";
 
 const router = createBrowserRouter([
   {
@@ -44,8 +45,23 @@ const router = createBrowserRouter([
 
     children: [
       {
-        index: true,
-        element: <LandingPage />,
+        element:<GoglbalRoute/>,
+        children : [
+          {
+            index: true,
+            element: <LandingPage />,
+          },
+          {
+            path: "login",
+            element: <Login />,
+            errorElement: <Error />,
+          },
+          {
+            path: "register",
+            element: <Register />,
+            errorElement: <Error />,
+          },
+        ]
       },
       {
         element: <ProtectRoute/>,
@@ -171,17 +187,6 @@ const router = createBrowserRouter([
             ]
           }
         ],
-      },
-
-      {
-        path: "login",
-        element: <Login />,
-        errorElement: <Error />,
-      },
-      {
-        path: "register",
-        element: <Register />,
-        errorElement: <Error />,
       },
     ],
   },
