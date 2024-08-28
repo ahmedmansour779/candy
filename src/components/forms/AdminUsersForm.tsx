@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+// import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { useMutation } from "@tanstack/react-query";
 import {
   Avatar,
@@ -18,9 +19,9 @@ import { UploadFile } from "antd/lib/upload/interface";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import * as yup from "yup";
+// import * as yup from "yup";
 import usersApi from "../../api/admin/usersApi";
-import { User } from "../../types/backend";
+// import { User } from "../../types/backend";
 import PageHeading from "../PageHeading";
 import CheckBoxWrapper from "../UI/CheckBoxWrapper";
 import InputWrapper from "../UI/InputWrapper";
@@ -28,12 +29,12 @@ import InputWrapper from "../UI/InputWrapper";
 const { Option } = Select;
 
 interface Inputs {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
   password_confirmation: string;
-  emailConfirmed: number;
+  emailConfirmed: boolean;
   roles: number[];
   allowedStorageSpace: number;
   avatar: UploadFile | null;
@@ -52,17 +53,17 @@ const ImageComponent: React.FC<{ file: UploadFile }> = ({ file }) => {
   const imageUrl =
     file?.originFileObj && URL.createObjectURL(file.originFileObj);
   return (
-    <div className="w-16 h-16 rounded-full overflow-hidden">
+    <div className="w-16 h-16 overflow-hidden rounded-full">
       <Image
         src={imageUrl}
         alt={file.name}
-        className="w-full h-full object-cover object-center"
+        className="object-cover object-center w-full h-full"
       />
     </div>
   );
 };
 
-const AdminUsersForm = ({ target }: { target?: User }) => {
+const AdminUsersForm = ({ target }: { target?: any }) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const navigate = useNavigate();
 
@@ -71,16 +72,15 @@ const AdminUsersForm = ({ target }: { target?: User }) => {
   };
 
   const { handleSubmit, control } = useForm<Inputs>({
-    resolver: yupResolver(
-      yup.object({
-        username: yup.string().label("Required"),
-        email: yup.string().email().label("Required"),
-        preffered_language: yup.number().label("Required"),
-      })
-    ),
-    //@ts-expect-error: IJob error
+    // resolver: yupResolver(
+    //   yup.object({
+    //     username: yup.string().label("Required"),
+    //     email: yup.string().email().label("Required"),
+    //     preffered_language: yup.number().label("Required"),
+    //   })
+    // ),
 
-    defaultValues: target ? { ...target } : {},
+    defaultValues: target ? { ...target} : {},
   });
 
   const addMutation = useMutation({
@@ -102,21 +102,22 @@ const AdminUsersForm = ({ target }: { target?: User }) => {
     },
   });
 
-  const onSubmit = (data: Inputs) => {
-    console.log({ ...data, username: `${data.firstName} ${data.lastName}` });
-    const dataReq = { ...data, username: `${data.firstName} ${data.lastName}` };
+  const onSubmit = (data: any) => {
+    console.log(data);
     if (target) {
+      console.log({...data,username:`${data.first_name} ${data.last_name}`,roles:[...target.roles]});
+      const dataReq = {...data,username:`${data.first_name} ${data.last_name}`,roles:[...target.roles]};
       editMutation.mutate(dataReq);
       return;
     }
-    addMutation.mutate(dataReq);
+    addMutation.mutate({...data,username:`${data.first_name} ${data.last_name}`});
   };
 
   return (
     <div className="p-8">
       {" "}
       <PageHeading
-        title={target ? `Edit "${target.username}"` : "Add new user"}
+        title={target ? `Edit "${target.first_name || target.username} ${target.last_name || ""}"` : "Add new user"}
       >
         <div className="flex h-full">
           {" "}
@@ -180,7 +181,7 @@ const AdminUsersForm = ({ target }: { target?: User }) => {
                 <Input
                   {...field}
                   placeholder="Enter email address"
-                  className=" rounded-2xl border-none py-3 px-3"
+                  className="px-3 py-3 border-none rounded-2xl"
                 />
               </InputWrapper>
             )}
@@ -193,7 +194,7 @@ const AdminUsersForm = ({ target }: { target?: User }) => {
                 <Input.Password
                   {...field}
                   placeholder="Enter new password"
-                  className=" rounded-2xl border-none py-3 px-3"
+                  className="px-3 py-3 border-none rounded-2xl"
                 />
               </InputWrapper>
             )}
@@ -206,35 +207,35 @@ const AdminUsersForm = ({ target }: { target?: User }) => {
                 <Input.Password
                   {...field}
                   placeholder="Enter password again"
-                  className=" rounded-2xl border-none py-3 px-3"
+                  className="px-3 py-3 border-none rounded-2xl"
                 />
               </InputWrapper>
             )}
           />
 
           <Controller
-            name="firstName"
+            name="first_name"
             control={control}
             render={({ field }) => (
               <InputWrapper title={"First Name"}>
                 <Input
                   {...field}
                   placeholder="Enter first name"
-                  className=" rounded-2xl border-none py-3 px-3"
+                  className="px-3 py-3 border-none rounded-2xl"
                 />
               </InputWrapper>
             )}
           />
 
           <Controller
-            name="lastName"
+            name="last_name"
             control={control}
             render={({ field }) => (
               <InputWrapper title={"Last Name"}>
                 <Input
                   {...field}
                   placeholder="Enter last name"
-                  className=" rounded-2xl border-none py-3 px-3"
+                  className="px-3 py-3 border-none rounded-2xl"
                 />
               </InputWrapper>
             )}
@@ -249,8 +250,8 @@ const AdminUsersForm = ({ target }: { target?: User }) => {
                 desc="Whether email address has been confirmed. User will not be able to login until address is confirmed, unless confirmation is disabled from settings page."
               >
                 <Switch
-                  checked={field.value === 1}
-                  onChange={(e) => field.onChange(e ? 1 : 0)}
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e)}
                 />
               </CheckBoxWrapper>
             )}
@@ -282,7 +283,7 @@ const AdminUsersForm = ({ target }: { target?: User }) => {
                     />
                   }
                   placeholder="Enter allowed storage space"
-                  className=" rounded-2xl border-none py-3 px-3"
+                  className="px-3 py-3 border-none rounded-2xl"
                 />
               </InputWrapper>
             )}
@@ -299,8 +300,8 @@ const AdminUsersForm = ({ target }: { target?: User }) => {
                   placeholder="Choose role..."
                   className="flex-1 h-auto w-full  [&>.ant-select-selector]:!border-none [&>.ant-select-selector]:!px-4 [&>.ant-select-selector]:!py-2 [&>.ant-select-selector]:!min-h-14      "
                   options={[
-                    { value: 1, label: "Users" },
-                    { value: 2, label: "Guests" },
+                    { value: "user", label: "User" },
+                    { value: "guest", label: "Guest" },
                   ]}
                 ></Select>
               </InputWrapper>

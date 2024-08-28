@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Button,
   DatePicker,
@@ -8,11 +10,11 @@ import {
   Modal,
   Switch,
   Table,
-  TableColumnsType,
+  // TableColumnsType,
   Tag,
   Typography,
 } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageHeading from "../../../components/PageHeading";
 const { Text } = Typography;
 
@@ -40,6 +42,7 @@ import { User } from "../../../types/backend";
 
 const UsersPage = () => {
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [lengthData, setLength] = useState<number | undefined>();
 
   return (
     <div className="p-8 mb-16 sm:mb-0 ml-[30px] side sm:ml-[160px] md:ml-[250px] lg:ml-0">
@@ -63,8 +66,8 @@ const UsersPage = () => {
           </Link>
         </div>
       </PageHeading>
-      <FilterHead setUserEmail={setUserEmail} />
-      <UsersTable userEmail={userEmail} />
+      <FilterHead setUserEmail={setUserEmail} lengthData={lengthData} />
+      <UsersTable userEmail={userEmail} setLength={setLength} />
     </div>
   );
 };
@@ -73,11 +76,13 @@ export default UsersPage;
 
 function FilterHead({
   setUserEmail,
+  lengthData
 }: {
   setUserEmail: (value: string) => void;
+  lengthData:number | undefined;
 }) {
   return (
-    <div className="flex justify-between max-md:flex-col gap-4 items-center max-md:items-start ">
+    <div className="flex items-center justify-between gap-4 max-md:flex-col max-md:items-start ">
       <Input
         className="max-w-[364px] max-md:max-w-full border-none p-4"
         placeholder="Search here"
@@ -86,7 +91,7 @@ function FilterHead({
       />
       <Text className="text-[#888888] text-base font-medium">
         Viewing
-        <Text className="text-[#0154A0]"> 10 </Text>
+        <Text className="text-[#0154A0]"> {lengthData} </Text>
         of
         <Text className="text-[#0154A0]"> 100 </Text>
         User
@@ -102,7 +107,7 @@ function FilterHead({
 //   }),
 // };
 
-function UsersTable({ userEmail }: { userEmail: string | null }) {
+function UsersTable({ userEmail,setLength }: { userEmail: string | null,setLength:React.Dispatch<React.SetStateAction<number | undefined>> }) {
   console.log("🚀 ~ UsersTable ~ userEmail:", userEmail);
   const deleteModal = useDisclosure();
   const suspendUserModal = useDisclosure();
@@ -116,8 +121,11 @@ function UsersTable({ userEmail }: { userEmail: string | null }) {
   });
   console.log("🚀 ~ UsersTable ~ usersData:", usersData.data);
 
+  useEffect(()=>{
+    setLength(usersData?.data?.data?.length);
+  },[usersData?.data])
   const deleteMutation = useMutation({
-    mutationFn: () => usersApi.deleteUser(target?.id as number),
+    mutationFn: () => usersApi.deleteUser(deleteId as number),
     onSuccess: () => {
       deleteModal.onClose();
       usersData.refetch();
@@ -125,15 +133,16 @@ function UsersTable({ userEmail }: { userEmail: string | null }) {
   });
 
   const [target, setTarget] = useState<User | null>(null);
+  const [deleteId, setId] = useState<number | null>(null);
 
   const navigate = useNavigate();
-  const columns: TableColumnsType<User> = [
+  const columns: any = [
     {
       title: "users",
       dataIndex: "username",
-      render: (value, record) => {
+      render: (value:any, record:any) => {
         return (
-          <div className="flex gap-2 flex-col">
+          <div className="flex flex-col gap-2">
             <Text>{value}</Text>
             <Text className="text-[14px] text-[#475467]">{record.email}</Text>
           </div>
@@ -143,7 +152,7 @@ function UsersTable({ userEmail }: { userEmail: string | null }) {
     {
       title: "subscribed",
       dataIndex: "subscribed",
-      render: (value) => {
+      render: (value:any) => {
         return value === 1 ? (
           <CheckOutlined style={{ color: "#22C55E" }} />
         ) : (
@@ -155,7 +164,7 @@ function UsersTable({ userEmail }: { userEmail: string | null }) {
     {
       title: "Role",
       dataIndex: "role",
-      render: (value) => {
+      render: (value:any) => {
         return (
           <Tag style={{ fontSize: "0.75rem" }} color="blue">
             {value}
@@ -166,15 +175,15 @@ function UsersTable({ userEmail }: { userEmail: string | null }) {
     {
       title: "First Name",
       dataIndex: "firstName",
-      render: (e, record) => {
-        return <Text>{record.username.split(" ")[0]}</Text>;
+      render: (e:any, record:any) => {
+        return <Text>{record.first_name || record.username}</Text>;
       },
     },
     {
       title: "Last Name",
       dataIndex: "lastName",
-      render: (e, record) => {
-        return <Text>{record.username.split(" ")[1]}</Text>;
+      render: (e:any, record:any) => {
+        return <Text>{record.last_name || record.username}</Text>;
       },
     },
     {
@@ -184,7 +193,7 @@ function UsersTable({ userEmail }: { userEmail: string | null }) {
     },
     {
       title: "Actions",
-      render: (e, record) => {
+      render: (e:any, record:any) => {
         return (
           <div className="flex gap-2">
             <Button
@@ -205,7 +214,7 @@ function UsersTable({ userEmail }: { userEmail: string | null }) {
             <Button
               type="text"
               onClick={() => {
-                setTarget(e);
+                setId(record.id);
                 deleteModal.onOpen();
               }}
               icon={<DeleteOutlined style={{ color: "#CC161D" }} />}
@@ -215,11 +224,12 @@ function UsersTable({ userEmail }: { userEmail: string | null }) {
       },
     },
   ];
+  const data = usersData.data?.data.filter(item=>item.email.includes(userEmail || ""))
   return (
     <div className="mt-4">
       <Table
         pagination={CustomPagination({ total: 100 })}
-        dataSource={usersData.data?.data || []}
+        dataSource={data || []}
         // rowSelection={{
         //   type: "checkbox",
         //   ...rowSelection,
@@ -334,7 +344,7 @@ const SuspendUserModal = ({
                     {errors.expire_date?.message}
                   </Text>
                 </Flex>
-                <Flex align="center" className="w-full justify-between">
+                <Flex align="center" className="justify-between w-full">
                   <Flex gap={"0.5rem"} align="center">
                     <Switch
                       checked={isPermanent}
@@ -362,7 +372,7 @@ const SuspendUserModal = ({
                 <TextArea
                   rows={8}
                   {...field}
-                  className=" rounded-2xl  py-3 px-3"
+                  className="px-3 py-3 rounded-2xl"
                 />
               </Flex>
             )}

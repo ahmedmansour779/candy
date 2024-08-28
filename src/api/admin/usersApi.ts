@@ -17,13 +17,16 @@ function updateUser(id: number, data: Record<string, string | number>) {
   return axiosInstance.post<null>(`/updateUser/${id}`, data, {
     params: {
       _method: "put",
+      username : "updated",
     },
   });
 }
 
 function deleteUser(id: number) {
-  return axiosInstance.post<null>(`/deleteUser/${id}`, {
-    _method: "delete",
+  return axiosInstance.post<null>(`/deleteUser/${id}`,{}, {
+    params : {
+      _method: "delete",
+    }
   });
 }
 

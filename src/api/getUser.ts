@@ -17,10 +17,7 @@ export const fetchGetUser = () => {
             "Accept": "application/json"
         }
     }).then(res=>{
-        // const token = res.data.token
         console.log(res);
-        // const cook = Cookies.set("user",token)
-        // navigate("/drive")
     })
     .catch(err=>console.log('Error fetching data'))
 };

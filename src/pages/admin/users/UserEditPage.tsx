@@ -9,6 +9,7 @@ const UserEditPage = () => {
     queryKey: ["users"],
     queryFn: () => usersApi.showUser(Number(id)),
   });
+  console.log(userData.data?.data)
 
   return userData.data?.data && <AdminUsersForm target={userData.data.data} />;
 };
